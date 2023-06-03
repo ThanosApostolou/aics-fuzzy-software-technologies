@@ -94,8 +94,8 @@ export default function HallsTableComponent(props: HallsTableComponentProps) {
                 pagination={true}
                 hideFooter={false}
                 checkboxSelection
-                disableSelectionOnClick
-                experimentalFeatures={{ newEditingApi: true }}
+                disableRowSelectionOnClick
+                // experimentalFeatures={{ newEditingApi: true }}
                 getRowId={(row) => row.hallId}
             />
         </Box>

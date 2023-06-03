@@ -76,8 +76,8 @@ export default function EventsTableComponent(props: EventsTableComponentProps) {
                 pagination={true}
                 hideFooter={false}
                 checkboxSelection
-                disableSelectionOnClick
-                experimentalFeatures={{ newEditingApi: true }}
+                disableRowSelectionOnClick
+                // experimentalFeatures={{ newEditingApi: true }}
                 getRowId={(row) => row.eventId}
             />
         </Box>

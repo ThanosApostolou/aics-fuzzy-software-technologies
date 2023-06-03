@@ -83,8 +83,8 @@ export default function MoviesTable(props: MoviesTableProps) {
                 pagination={true}
                 hideFooter={false}
                 checkboxSelection
-                disableSelectionOnClick
-                experimentalFeatures={{ newEditingApi: true }}
+                disableRowSelectionOnClick
+                // experimentalFeatures={{ newEditingApi: true }}
                 getRowId={(row) => row.movieId}
             />
         </Box>

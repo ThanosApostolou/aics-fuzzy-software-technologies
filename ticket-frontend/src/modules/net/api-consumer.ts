@@ -18,7 +18,7 @@ export function createApiConsumer(envConfig: EnvConfig): AxiosInstance {
             const kc = GlobalState.instance.kc;
             if (kc.authenticated) {
                 await AuthService.updateToken();
-                const headers = { ...axiosRequestConfig.headers } as Partial<AxiosRequestHeaders>;
+                const headers = axiosRequestConfig.headers;
                 headers["Authorization"] = GlobalState.instance.apiConsumer.defaults.headers['Authorization'];
                 axiosRequestConfig.headers = headers;
             }

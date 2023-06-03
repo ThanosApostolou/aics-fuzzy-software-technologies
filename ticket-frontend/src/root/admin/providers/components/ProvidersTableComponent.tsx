@@ -84,8 +84,8 @@ export default function ProvidersTableComponent(props: ProvidersTableComponentPr
                 pagination={true}
                 hideFooter={false}
                 checkboxSelection
-                disableSelectionOnClick
-                experimentalFeatures={{ newEditingApi: true }}
+                disableRowSelectionOnClick
+                // experimentalFeatures={{ newEditingApi: true }}
                 getRowId={(row) => row.providerId}
             />
         </Box>
