@@ -17,6 +17,7 @@ export function createRouter() {
     const AdminProvidersPageLazy = React.lazy(() => import('./root/admin/providers/AdminProvidersPage'));
     const AdminHallsPageLazy = React.lazy(() => import('./root/admin/halls/AdminHallsPage'));
     const AdminMoviesPageLazy = React.lazy(() => import('./root/admin/movies/AdminMoviesPage'));
+    const FuzzySettingsPageLazy = React.lazy(() => import('./root/admin/fuzzy-settings/FuzzySettingsPage'));
     const LoginPageLazy = React.lazy(() => import('./root/account/LoginPage'));
     const AccountPageLazy = React.lazy(() => import('./root/account/AccountPage'));
     const SignUpPageLazy = React.lazy(() => import('./root/account/SignUpPage'));
@@ -117,6 +118,10 @@ export function createRouter() {
                         {
                             path: "events",
                             element: <AdminEventsPageLazy />
+                        },
+                        {
+                            path: "fuzzy_settings",
+                            element: <FuzzySettingsPageLazy />
                         }
                     ]
                 },

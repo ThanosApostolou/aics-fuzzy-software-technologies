@@ -24,6 +24,10 @@ export default function AdminPage() {
         {
             name: 'ΠΡΟΒΟΛΕΣ',
             to: '/admin/events'
+        },
+        {
+            name: 'FUZZY SETTINGS',
+            to: '/admin/fuzzy_settings'
         }
     ];
 
@@ -48,6 +52,8 @@ export default function AdminPage() {
                 setValue(2);
             } else if (location.pathname.startsWith('/admin/events')) {
                 setValue(3);
+            } else if (location.pathname.startsWith('/admin/fuzzy_settings')) {
+                setValue(4);
             } else {
                 // console.error('unknown location: ' + location.pathname);
                 // navigate('/admin/movies');
