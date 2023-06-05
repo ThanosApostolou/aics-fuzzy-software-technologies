@@ -10,6 +10,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { AuthService } from './modules/auth/AuthService';
+import 'chart.js/auto';
 
 async function main() {
     GlobalState.initializeDefault();

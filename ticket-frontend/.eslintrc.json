@@ -38,6 +38,7 @@
                 "args": "after-used",
                 "argsIgnorePattern": "^_"
             }
-        ]
+        ],
+        "prefer-const": "warn"
     }
 }
