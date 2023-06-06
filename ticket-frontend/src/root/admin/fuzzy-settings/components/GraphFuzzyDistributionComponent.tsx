@@ -8,6 +8,7 @@ export interface GraphFuzzyDistributionComponentProps {
     datasetIdKey: string,
     xTitle: string,
     chartData: ChartData<"line", { x: number, y: number }[], number>;
+    xStepSize: number;
 }
 
 export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistributionComponentProps) {
@@ -34,6 +35,9 @@ export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistrib
                 <Line height={200} width={800}
                     datasetIdKey={props.datasetIdKey}
                     options={{
+                        layout: {
+                            autoPadding: true
+                        },
                         responsive: true,
                         scales: {
                             y: {
@@ -70,7 +74,7 @@ export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistrib
                                     },
                                 },
                                 ticks: {
-                                    stepSize: 5,
+                                    stepSize: props.xStepSize,
                                 }
                             }
                         }

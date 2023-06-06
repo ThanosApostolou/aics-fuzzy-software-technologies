@@ -1,18 +1,21 @@
 import { ChartData, ChartDataset } from "chart.js";
-import { FuzzyVariableYear } from "./fuzzy-variable-year";
-import { FuzzyVariableDistributionPart } from "./fuzzy-variable-distribution";
+import { FuzzyVariableDistributionPart, FuzzyVariableI } from "./fuzzy-variable-distribution";
 
 export class FuzzyService {
-    static convertFuzzyVariableYearToChartData(fuzzyVariableYear: FuzzyVariableYear): ChartData<"line", { x: number, y: number }[], number> {
-        // const labels: number[] = this.createChartDataLabelsFromFuzzyVariableDistributionParts([fuzzyVariableYear.varOld, fuzzyVariableYear.varRecent, fuzzyVariableYear.varNew]);
+    static convertFuzzyVariableToChartData(fuzzyVariableI: FuzzyVariableI): ChartData<"line", { x: number, y: number }[], number> {
+        const fuzzyVariableMap = fuzzyVariableI.getFuzzyVariableMap();
+        const datasets: ChartDataset<"line", {
+            x: number;
+            y: number;
+        }[]>[] = [];
 
+        const colorsMap = fuzzyVariableI.getFuzzyVariableColorsMap();
+
+        for (const [key, part] of Object.entries(fuzzyVariableMap)) {
+            datasets.push(this.createChartDatasetFromFuzzyVariableDistributionPart(part, key, colorsMap[key]))
+        }
         return {
-            // labels,
-            datasets: [
-                this.createChartDatasetFromFuzzyVariableDistributionPart(fuzzyVariableYear.varOld, 'Old', 'green'),
-                this.createChartDatasetFromFuzzyVariableDistributionPart(fuzzyVariableYear.varRecent, 'Recent', 'orange'),
-                this.createChartDatasetFromFuzzyVariableDistributionPart(fuzzyVariableYear.varNew, 'New', 'red')
-            ],
+            datasets
         }
 
     }

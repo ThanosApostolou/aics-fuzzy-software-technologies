@@ -1,24 +1,55 @@
-import { FuzzyVariableDistributionPart } from './fuzzy-variable-distribution';
+import { FuzzyVariableDistributionPart, FuzzyVariableI } from './fuzzy-variable-distribution';
 
-export class FuzzyVariableYear {
-    min: number;
-    max: number;
+export class FuzzyVariableYear implements FuzzyVariableI {
     varOld: FuzzyVariableDistributionPart;
     varRecent: FuzzyVariableDistributionPart;
     varNew: FuzzyVariableDistributionPart;
+    varVeryNew: FuzzyVariableDistributionPart;
 
     constructor(obj: {
-        min: number,
-        max: number,
         varOld: FuzzyVariableDistributionPart,
         varRecent: FuzzyVariableDistributionPart,
         varNew: FuzzyVariableDistributionPart,
+        varVeryNew: FuzzyVariableDistributionPart
     }) {
-        this.min = obj.min;
-        this.max = obj.max;
         this.varOld = obj.varOld;
         this.varRecent = obj.varRecent;
         this.varNew = obj.varNew;
+        this.varVeryNew = obj.varVeryNew;
     }
 
+    static fromObj(obj: any): FuzzyVariableYear {
+        return new FuzzyVariableYear({
+            varOld: FuzzyVariableDistributionPart.fromObj(obj.varOld),
+            varRecent: FuzzyVariableDistributionPart.fromObj(obj.varRecent),
+            varNew: FuzzyVariableDistributionPart.fromObj(obj.varNew),
+            varVeryNew: FuzzyVariableDistributionPart.fromObj(obj.varVeryNew)
+        })
+    }
+
+    getFuzzyVariableMap(): Record<string, FuzzyVariableDistributionPart> {
+        return {
+            [FuzzyVariableYearFields.OLD]: this.varOld,
+            [FuzzyVariableYearFields.RECENT]: this.varRecent,
+            [FuzzyVariableYearFields.NEW]: this.varNew,
+            [FuzzyVariableYearFields.VERY_NEW]: this.varVeryNew,
+        }
+    }
+
+    getFuzzyVariableColorsMap(): Record<string, string> {
+        return {
+            [FuzzyVariableYearFields.OLD]: 'red',
+            [FuzzyVariableYearFields.RECENT]: 'orange',
+            [FuzzyVariableYearFields.NEW]: 'yellow',
+            [FuzzyVariableYearFields.VERY_NEW]: 'green',
+        }
+    }
+
+}
+
+export enum FuzzyVariableYearFields {
+    OLD = 'OLD',
+    RECENT = 'RECENT',
+    NEW = 'NEW',
+    VERY_NEW = 'VERY_NEW',
 }

@@ -9,42 +9,23 @@ import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartTriangular 
 import { ChartData } from 'chart.js';
 import { FuzzyService } from '../../../modules/fuzzy/fuzzy-service';
 import GraphFuzzyDistributionComponent from './components/GraphFuzzyDistributionComponent';
+import { FetchFuzzyProfileResponseDto } from './dtos/fetch-fuzzy-profile-dto';
+import { FUZZY_CONSTANTS } from '../../../modules/fuzzy/fuzzy-constants';
 export default function FuzzySettingsPage() {
     const [readonly, setReadonly] = useState<boolean>(false);
     // const [yearChart, setYearChart] = useState<Chart | null>(null);
     // const yearChartRef = useRef<HTMLCanvasElement | null>(null);
-    const [fuzzyVariableYear, setFuzzyVariableYear] = useState<FuzzyVariableYear>(new FuzzyVariableYear({
-        min: 1950,
-        max: 2030,
-        varOld: new FuzzyVariableDistributionPart({
-            fuzzyVariableDistributionPartTriangular: new FuzzyVariableDistributionPartTriangular({
-                a: null,
-                b: 1950,
-                c: 2005,
-            })
-        }),
-        varRecent: new FuzzyVariableDistributionPart({
-            fuzzyVariableDistributionPartTriangular: new FuzzyVariableDistributionPartTriangular({
-                a: 2000,
-                b: 2010,
-                c: 2015,
-            })
-        }),
-        varNew: new FuzzyVariableDistributionPart({
-            fuzzyVariableDistributionPartTriangular: new FuzzyVariableDistributionPartTriangular({
-                a: 2010,
-                b: 2030,
-                c: null,
-            })
-        })
-    }))
-    const [fuzzyVariableYearChartData, setFuzzyVariableYearChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableYearToChartData(fuzzyVariableYear));
+    const [fetchFuzzyProfileResponseDto, setFetchFuzzyProfileResponseDto] = useState<FetchFuzzyProfileResponseDto | null>(null)
+    const [fuzzyVariableYearChartData, setFuzzyVariableYearChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(null);
+    const [fuzzyVariableRatingChartData, setFuzzyVariableRatingChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(null);
+    const [fuzzyVariablePopularityChartData, setFuzzyVariablePopularityChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(null);
 
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        console.log('fuzzyVariableYear', fuzzyVariableYear)
-        // createYearChart()
+        console.log('fuzzyVariableYear', fetchFuzzyProfileResponseDto)
+        loadData();
+
 
         return () => {
             // if (yearChart) {
@@ -58,6 +39,23 @@ export default function FuzzySettingsPage() {
         }
     }, [])
 
+    async function init() {
+        return fetchFuzzyProfileResponseDto;
+    }
+    async function loadData() {
+        setFetchFuzzyProfileResponseDto(null);
+        try {
+            const fetchFuzzyProfileResponseDto = await FuzzySettingsService.fetchFuzzyProfile(FUZZY_CONSTANTS.DEFAULT)
+            setFuzzyVariableYearChartData(FuzzyService.convertFuzzyVariableToChartData(fetchFuzzyProfileResponseDto.year));
+            setFuzzyVariableRatingChartData(FuzzyService.convertFuzzyVariableToChartData(fetchFuzzyProfileResponseDto.rating));
+            setFuzzyVariablePopularityChartData(FuzzyService.convertFuzzyVariableToChartData(fetchFuzzyProfileResponseDto.popularity));
+            setFetchFuzzyProfileResponseDto(fetchFuzzyProfileResponseDto);
+        } catch (e) {
+            console.error(e);
+            enqueueSnackbar('Αποτυχημένη εύρεση λίστας ταινιών', { variant: 'error' })
+        }
+    }
+
     return (
         <Fragment>
             <Box style={{ width: '100%', height: '100%' }}>
@@ -65,9 +63,22 @@ export default function FuzzySettingsPage() {
 
                 <hr></hr>
                 <h2>Year Variable</h2>
+                {fetchFuzzyProfileResponseDto && fuzzyVariableYearChartData && (
+                    <GraphFuzzyDistributionComponent datasetIdKey="yearChart" xTitle="YEAR" chartData={fuzzyVariableYearChartData} xStepSize={5}></GraphFuzzyDistributionComponent>
+                )}
 
-                <GraphFuzzyDistributionComponent datasetIdKey="yearChart" xTitle="YEAR" chartData={fuzzyVariableYearChartData}></GraphFuzzyDistributionComponent>
 
+                <hr></hr>
+                <h2>Rating Variable</h2>
+                {fetchFuzzyProfileResponseDto && fuzzyVariableRatingChartData && (
+                    <GraphFuzzyDistributionComponent datasetIdKey="ratingChart" xTitle="RATING" chartData={fuzzyVariableRatingChartData} xStepSize={1}></GraphFuzzyDistributionComponent>
+                )}
+                <hr></hr>
+
+                <h2>Popularity Variable</h2>
+                {fetchFuzzyProfileResponseDto && fuzzyVariablePopularityChartData && (
+                    <GraphFuzzyDistributionComponent datasetIdKey="popularityChart" xTitle="POPULARITY" chartData={fuzzyVariablePopularityChartData} xStepSize={10}></GraphFuzzyDistributionComponent>
+                )}
                 <hr></hr>
 
             </Box>
