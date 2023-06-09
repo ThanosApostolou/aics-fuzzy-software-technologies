@@ -64,18 +64,8 @@ export class FuzzyService {
             y: number;
         }[] = [];
 
-        if (part.fuzzyVariableDistributionPartTriangular != null) {
-            const partTriangular = part.fuzzyVariableDistributionPartTriangular;
-            if (partTriangular.a != null) {
-                data.push({ x: partTriangular.a, y: 0 });
-            }
-            data.push({ x: partTriangular.b, y: 1 });
-            if (partTriangular.c != null) {
-                data.push({ x: partTriangular.c, y: 0 });
-            }
-
-        } else if (part.fuzzyVariableDistributionPartTrapezoidal != null) {
-            const partTrapezoidal = part.fuzzyVariableDistributionPartTrapezoidal;
+         if (part.isTypeTrapezoidal()) {
+            const partTrapezoidal = part;
             if (partTrapezoidal.a != null) {
                 data.push({ x: partTrapezoidal.a, y: 0 });
             }
@@ -84,6 +74,16 @@ export class FuzzyService {
             if (partTrapezoidal.d != null) {
                 data.push({ x: partTrapezoidal.d, y: 0 });
             }
+        } else if (part.isTypeTriangular()) {
+            const partTriangular = part;
+            if (partTriangular.a != null) {
+                data.push({ x: partTriangular.a, y: 0 });
+            }
+            data.push({ x: partTriangular.b, y: 1 });
+            if (partTriangular.c != null) {
+                data.push({ x: partTriangular.c, y: 0 });
+            }
+
         }
 
         return {

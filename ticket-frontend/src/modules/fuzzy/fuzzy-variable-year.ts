@@ -1,4 +1,4 @@
-import { FuzzyVariableDistributionPart, FuzzyVariableI } from './fuzzy-variable-distribution';
+import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
 export class FuzzyVariableYear implements FuzzyVariableI {
     varOld: FuzzyVariableDistributionPart;
@@ -20,10 +20,10 @@ export class FuzzyVariableYear implements FuzzyVariableI {
 
     static fromObj(obj: any): FuzzyVariableYear {
         return new FuzzyVariableYear({
-            varOld: FuzzyVariableDistributionPart.fromObj(obj.varOld),
-            varRecent: FuzzyVariableDistributionPart.fromObj(obj.varRecent),
-            varNew: FuzzyVariableDistributionPart.fromObj(obj.varNew),
-            varVeryNew: FuzzyVariableDistributionPart.fromObj(obj.varVeryNew)
+            varOld: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varOld),
+            varRecent: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varRecent),
+            varNew: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varNew),
+            varVeryNew: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varVeryNew)
         })
     }
 

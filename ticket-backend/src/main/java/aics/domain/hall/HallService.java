@@ -22,19 +22,19 @@ import java.util.List;
 @ApplicationScoped
 public class HallService {
     @Inject
-    private HallRepository hallRepository;
+    HallRepository hallRepository;
     @Inject
-    private SeatRepository seatRepository;
+    SeatRepository seatRepository;
     @Inject
-    private TicketRepository ticketRepository;
+    TicketRepository ticketRepository;
     @Inject
-    private EventRepository eventRepository;
+    EventRepository eventRepository;
     @Inject
-    private ProviderRepository providerRepository;
+    ProviderRepository providerRepository;
     @Inject
-    private HallValidator hallValidator;
+    HallValidator hallValidator;
     @Inject
-    private ProviderService providerService;
+    ProviderService providerService;
 
     public List<Hall> fetchAllHalls() {
         List<Hall> halls = this.hallRepository.findAll().list();
@@ -57,11 +57,11 @@ public class HallService {
     public HallOptionsDto fetchHallOptions() {
         List<Provider> providers = this.providerService.fetchAllProviders();
         List<LabelValue<Long>> providersRefs = CollectionUtils.isNotEmpty(providers)
-            ? providers.stream().map((provider -> new LabelValue<Long>(provider.getName(), provider.getProviderId()))).toList()
-            : new ArrayList<>();
+                ? providers.stream().map((provider -> new LabelValue<Long>(provider.getName(), provider.getProviderId()))).toList()
+                : new ArrayList<>();
 
         return new HallOptionsDto()
-            .setProvidersRefs(providersRefs);
+                .setProvidersRefs(providersRefs);
     }
 
     public String createHall(HallDto hallDto) {
@@ -77,19 +77,19 @@ public class HallService {
         }
 
         Hall newHall = new Hall()
-            .setProvider(findValidProviderResult.getLeft())
-            .setName(hallDto.getName())
-            .setSeatsRows(hallDto.getSeatsRows())
-            .setSeatsColumns(hallDto.getSeatsColumns())
-            .setDescription(hallDto.getDescription());
+                .setProvider(findValidProviderResult.getLeft())
+                .setName(hallDto.getName())
+                .setSeatsRows(hallDto.getSeatsRows())
+                .setSeatsColumns(hallDto.getSeatsColumns())
+                .setDescription(hallDto.getDescription());
 
         List<Seat> seats = new ArrayList<>();
         for (int row = 0; row < newHall.getSeatsRows(); row++) {
             for (int column = 0; column < newHall.getSeatsColumns(); column++) {
                 Seat newSeat = new Seat()
-                    .setHall(newHall)
-                    .setSeatRow(row)
-                    .setSeatColumn(column);
+                        .setHall(newHall)
+                        .setSeatRow(row)
+                        .setSeatColumn(column);
                 seats.add(newSeat);
             }
         }
@@ -115,7 +115,7 @@ public class HallService {
         }
 
         hall.setName(hallDto.getName())
-            .setDescription(hallDto.getDescription());
+                .setDescription(hallDto.getDescription());
 
         this.hallRepository.persist(hall);
 

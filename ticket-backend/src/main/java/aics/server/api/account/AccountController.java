@@ -20,7 +20,7 @@ import javax.ws.rs.core.MediaType;
 @PermitAll
 public class AccountController {
     @Inject
-    private AccountActions accountActions;
+    AccountActions accountActions;
 
     @Path("/user-events")
     @GET

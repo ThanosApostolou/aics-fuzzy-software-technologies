@@ -1,4 +1,4 @@
-import { FuzzyVariableDistributionPart, FuzzyVariableI } from './fuzzy-variable-distribution';
+import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
 export class FuzzyVariableRating implements FuzzyVariableI {
     varBad: FuzzyVariableDistributionPart;
@@ -20,10 +20,10 @@ export class FuzzyVariableRating implements FuzzyVariableI {
 
     static fromObj(obj: any): FuzzyVariableRating {
         return new FuzzyVariableRating({
-            varBad: FuzzyVariableDistributionPart.fromObj(obj.varBad),
-            varAverage: FuzzyVariableDistributionPart.fromObj(obj.varAverage),
-            varGood: FuzzyVariableDistributionPart.fromObj(obj.varGood),
-            varVeryGood: FuzzyVariableDistributionPart.fromObj(obj.varVeryGood)
+            varBad: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varBad),
+            varAverage: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varAverage),
+            varGood: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varGood),
+            varVeryGood: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varVeryGood)
         })
     }
 

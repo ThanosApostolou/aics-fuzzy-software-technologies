@@ -13,7 +13,7 @@ public class SeatRepository implements PanacheRepository<Seat> {
     public List<Seat> fetchListByHallId(Long hallId) {
         Parameters parameters = Parameters.with("hallId", hallId);
         return find("hall.hallId = :hallId ORDER BY seatRow ASC, seatColumn", parameters)
-            .list();
+                .list();
     }
 
     public Long deleteByHallId(Long hallId) {

@@ -22,14 +22,14 @@ public class HallListItemDto implements Serializable {
             return null;
         }
         LabelValue<Long> providerRef = hall.getProvider() != null
-            ? new LabelValue<>(hall.getProvider().getName(), hall.getProvider().getProviderId())
-            : null;
+                ? new LabelValue<>(hall.getProvider().getName(), hall.getProvider().getProviderId())
+                : null;
         return new HallListItemDto()
-            .setHallId(hall.getHallId())
-            .setName(hall.getName())
-            .setDescription(hall.getDescription())
-            .setSeatsRows(hall.getSeatsRows())
-            .setSeatsColumns(hall.getSeatsColumns())
-            .setProviderRef(providerRef);
+                .setHallId(hall.getHallId())
+                .setName(hall.getName())
+                .setDescription(hall.getDescription())
+                .setSeatsRows(hall.getSeatsRows())
+                .setSeatsColumns(hall.getSeatsColumns())
+                .setProviderRef(providerRef);
     }
 }

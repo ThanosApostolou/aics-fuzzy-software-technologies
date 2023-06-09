@@ -20,9 +20,9 @@ import java.util.List;
 @ApplicationScoped
 public class EventsActions {
     @Inject
-    private EventService eventService;
+    EventService eventService;
     @Inject
-    private ProviderService providerService;
+    ProviderService providerService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchEventsListResponseDto doFetchEventsList() throws TicketException {

@@ -26,22 +26,22 @@ public class TicketDto implements Serializable {
             return null;
         }
         LabelValue<Long> eventRef = ticket.getEvent() != null
-            ? new LabelValue<>(ticket.getEvent().getName(), ticket.getEvent().getEventId())
-            : null;
+                ? new LabelValue<>(ticket.getEvent().getName(), ticket.getEvent().getEventId())
+                : null;
         LabelValue<Long> seatRef = ticket.getSeat() != null
-            ? new LabelValue<>(String.valueOf(ticket.getSeat().getSeatRow()) + String.valueOf(ticket.getSeat().getSeatColumn()), ticket.getSeat().getSeatId())
-            : null;
+                ? new LabelValue<>(String.valueOf(ticket.getSeat().getSeatRow()) + String.valueOf(ticket.getSeat().getSeatColumn()), ticket.getSeat().getSeatId())
+                : null;
         LabelValue<Long> userRef = ticket.getUser() != null
-            ? new LabelValue<>(ticket.getUser().getName(), ticket.getUser().getUserId())
-            : null;
+                ? new LabelValue<>(ticket.getUser().getName(), ticket.getUser().getUserId())
+                : null;
         return new TicketDto()
-            .setTicketId(ticket.getTicketId())
-            .setDateOfBooking(ticket.getDateOfBooking())
-            .setDescription(ticket.getDescription())
-            .setEventRef(eventRef)
-            .setSeatRef(seatRef)
-            .setSeatRow(ticket.getSeat().getSeatRow())
-            .setSeatColumn(ticket.getSeat().getSeatColumn())
-            .setUserRef(userRef);
+                .setTicketId(ticket.getTicketId())
+                .setDateOfBooking(ticket.getDateOfBooking())
+                .setDescription(ticket.getDescription())
+                .setEventRef(eventRef)
+                .setSeatRef(seatRef)
+                .setSeatRow(ticket.getSeat().getSeatRow())
+                .setSeatColumn(ticket.getSeat().getSeatColumn())
+                .setUserRef(userRef);
     }
 }

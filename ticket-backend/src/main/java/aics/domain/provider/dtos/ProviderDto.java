@@ -25,12 +25,12 @@ public class ProviderDto implements Serializable {
             return null;
         }
         return new ProviderDto()
-            .setProviderId(provider.getProviderId())
-            .setName(provider.getName())
-            .setAddress(provider.getAddress())
-            .setPhone(provider.getPhone())
-            .setDescription(provider.getDescription())
-            .setGoogleMapsSrc(provider.getGoogleMapsSrc())
-            .setHalls(provider.getHalls().stream().map(HallListItemDto::fromHall).collect(Collectors.toList()));
+                .setProviderId(provider.getProviderId())
+                .setName(provider.getName())
+                .setAddress(provider.getAddress())
+                .setPhone(provider.getPhone())
+                .setDescription(provider.getDescription())
+                .setGoogleMapsSrc(provider.getGoogleMapsSrc())
+                .setHalls(provider.getHalls().stream().map(HallListItemDto::fromHall).collect(Collectors.toList()));
     }
 }

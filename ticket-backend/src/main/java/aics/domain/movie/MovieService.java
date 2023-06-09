@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class MovieService {
     @Inject
-    private MovieRepository movieRepository;
+    MovieRepository movieRepository;
     @Inject
-    private EventRepository eventRepository;
+    EventRepository eventRepository;
     @Inject
-    private MovieValidator movieValidator;
+    MovieValidator movieValidator;
 
     public List<Movie> fetchAllMovies() {
         List<Movie> movies = this.movieRepository.findAll().list();
@@ -38,7 +38,7 @@ public class MovieService {
 
     public List<Movie> fetchMoviesPlayingNow() {
         EventFilters eventFilters = new EventFilters()
-            .setFromDate(LocalDateTime.now());
+                .setFromDate(LocalDateTime.now());
         List<Event> eventsPlayingNow = this.eventRepository.findFiltered(eventFilters);
         List<Movie> moviesPlayingNow = eventsPlayingNow.stream().map(Event::getMovie).collect(Collectors.toList());
         return moviesPlayingNow;
@@ -52,18 +52,18 @@ public class MovieService {
         }
 
         Movie newMovie = new Movie()
-            .setDescription(movieDto.getDescription())
-            .setImage(Base64.getDecoder().decode(movieDto.getImage()))
-            .setImageName(movieDto.getImageName())
-            .setImageMimePrefix(movieDto.getImageMimePrefix())
-            .setName(movieDto.getName())
-            .setDirectors(movieDto.getDirectors())
-            .setScript(movieDto.getScript())
-            .setActors(movieDto.getActors())
-            .setAppropriateness(movieDto.getAppropriateness())
-            .setDuration(movieDto.getDuration())
-            .setTrailerSrcUrl(movieDto.getTrailerSrcUrl())
-            .setYear(movieDto.getYear());
+                .setDescription(movieDto.getDescription())
+                .setImage(Base64.getDecoder().decode(movieDto.getImage()))
+                .setImageName(movieDto.getImageName())
+                .setImageMimePrefix(movieDto.getImageMimePrefix())
+                .setName(movieDto.getName())
+                .setDirectors(movieDto.getDirectors())
+                .setScript(movieDto.getScript())
+                .setActors(movieDto.getActors())
+                .setAppropriateness(movieDto.getAppropriateness())
+                .setDuration(movieDto.getDuration())
+                .setTrailerSrcUrl(movieDto.getTrailerSrcUrl())
+                .setYear(movieDto.getYear());
 
         this.movieRepository.persist(newMovie);
 
@@ -82,17 +82,17 @@ public class MovieService {
         }
 
         movie.setDescription(movieDto.getDescription())
-            .setImage(Base64.getDecoder().decode(movieDto.getImage()))
-            .setImageName(movieDto.getImageName())
-            .setImageMimePrefix(movieDto.getImageMimePrefix())
-            .setName(movieDto.getName())
-            .setDirectors(movieDto.getDirectors())
-            .setScript(movieDto.getScript())
-            .setActors(movieDto.getActors())
-            .setAppropriateness(movieDto.getAppropriateness())
-            .setDuration(movieDto.getDuration())
-            .setTrailerSrcUrl(movieDto.getTrailerSrcUrl())
-            .setYear(movieDto.getYear());
+                .setImage(Base64.getDecoder().decode(movieDto.getImage()))
+                .setImageName(movieDto.getImageName())
+                .setImageMimePrefix(movieDto.getImageMimePrefix())
+                .setName(movieDto.getName())
+                .setDirectors(movieDto.getDirectors())
+                .setScript(movieDto.getScript())
+                .setActors(movieDto.getActors())
+                .setAppropriateness(movieDto.getAppropriateness())
+                .setDuration(movieDto.getDuration())
+                .setTrailerSrcUrl(movieDto.getTrailerSrcUrl())
+                .setYear(movieDto.getYear());
 
         this.movieRepository.persist(movie);
 

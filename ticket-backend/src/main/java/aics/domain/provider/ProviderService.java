@@ -11,9 +11,9 @@ import java.util.List;
 @ApplicationScoped
 public class ProviderService {
     @Inject
-    private ProviderRepository providerRepository;
+    ProviderRepository providerRepository;
     @Inject
-    private ProviderValidator providerValidator;
+    ProviderValidator providerValidator;
 
     public List<Provider> fetchAllProviders() {
         List<Provider> providers = this.providerRepository.findAll().list();
@@ -36,11 +36,11 @@ public class ProviderService {
         }
 
         Provider newProvider = new Provider()
-            .setName(providerDto.getName())
-            .setAddress(providerDto.getAddress())
-            .setPhone(providerDto.getPhone())
-            .setDescription(providerDto.getDescription())
-            .setGoogleMapsSrc(providerDto.getGoogleMapsSrc());
+                .setName(providerDto.getName())
+                .setAddress(providerDto.getAddress())
+                .setPhone(providerDto.getPhone())
+                .setDescription(providerDto.getDescription())
+                .setGoogleMapsSrc(providerDto.getGoogleMapsSrc());
 
         this.providerRepository.persist(newProvider);
 
@@ -61,11 +61,11 @@ public class ProviderService {
         }
 
         provider.setProviderId(providerDto.getProviderId())
-            .setName(providerDto.getName())
-            .setAddress(providerDto.getAddress())
-            .setPhone(providerDto.getPhone())
-            .setDescription(providerDto.getDescription())
-            .setGoogleMapsSrc(providerDto.getGoogleMapsSrc());
+                .setName(providerDto.getName())
+                .setAddress(providerDto.getAddress())
+                .setPhone(providerDto.getPhone())
+                .setDescription(providerDto.getDescription())
+                .setGoogleMapsSrc(providerDto.getGoogleMapsSrc());
 
         this.providerRepository.persist(provider);
 

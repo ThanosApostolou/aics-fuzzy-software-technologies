@@ -23,12 +23,12 @@ public class MovieListItemDto implements Serializable {
             return null;
         }
         return new MovieListItemDto()
-            .setMovieId(movie.getMovieId())
-            .setName(movie.getName())
-            .setDescription(movie.getDescription())
-            .setImage(Base64.getEncoder().encodeToString(movie.getImage()))
-            .setImageName(movie.getImageName())
-            .setImageMimePrefix(movie.getImageMimePrefix())
-            .setYear(movie.getYear());
+                .setMovieId(movie.getMovieId())
+                .setName(movie.getName())
+                .setDescription(movie.getDescription())
+                .setImage(Base64.getEncoder().encodeToString(movie.getImage()))
+                .setImageName(movie.getImageName())
+                .setImageMimePrefix(movie.getImageMimePrefix())
+                .setYear(movie.getYear());
     }
 }

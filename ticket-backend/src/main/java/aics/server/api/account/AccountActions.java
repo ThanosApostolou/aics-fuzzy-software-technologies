@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class AccountActions {
     @Inject
-    private AuthService authService;
+    AuthService authService;
     @Inject
-    private EventService eventService;
+    EventService eventService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchUserEventsResponseDto doFetchUserEvents() throws TicketException {

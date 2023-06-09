@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @PermitAll
 public class HomeController {
     @Inject
-    private HomeActions homeActions;
+    HomeActions homeActions;
 
     @Path("/movies-playing-now")
     @GET

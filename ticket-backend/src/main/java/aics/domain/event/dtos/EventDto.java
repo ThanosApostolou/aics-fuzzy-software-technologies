@@ -29,16 +29,16 @@ public class EventDto implements Serializable {
             return null;
         }
         LabelValue<Long> hallRef = event.getHall() != null
-            ? new LabelValue<>(event.getHall().getProvider().getName() + "-" + event.getHall().getName(), event.getHall().getHallId())
-            : null;
+                ? new LabelValue<>(event.getHall().getProvider().getName() + "-" + event.getHall().getName(), event.getHall().getHallId())
+                : null;
         return new EventDto()
-            .setEventId(event.getEventId())
-            .setName(event.getName())
-            .setEventDatetime(event.getEventDatetime())
-            .setDescription(event.getDescription())
-            .setEventPrice(event.getEventPrice())
-            .setMovieRef(MovieListItemDto.fromMovie(event.getMovie()))
-            .setHallRef(hallRef)
-            .setTickets(event.getTickets().stream().map(TicketDto::fromTicket).collect(Collectors.toList()));
+                .setEventId(event.getEventId())
+                .setName(event.getName())
+                .setEventDatetime(event.getEventDatetime())
+                .setDescription(event.getDescription())
+                .setEventPrice(event.getEventPrice())
+                .setMovieRef(MovieListItemDto.fromMovie(event.getMovie()))
+                .setHallRef(hallRef)
+                .setTickets(event.getTickets().stream().map(TicketDto::fromTicket).collect(Collectors.toList()));
     }
 }

@@ -22,9 +22,9 @@ import java.util.List;
 @ApplicationScoped
 public class HallsActions {
     @Inject
-    private HallService hallService;
+    HallService hallService;
     @Inject
-    private ProviderService providerService;
+    ProviderService providerService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchHallsListResponseDto doFetchHallsList() throws TicketException {

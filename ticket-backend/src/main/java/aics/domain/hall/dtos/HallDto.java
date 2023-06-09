@@ -27,15 +27,15 @@ public class HallDto implements Serializable {
             return null;
         }
         LabelValue<Long> providerRef = hall.getProvider() != null
-            ? new LabelValue<>(hall.getProvider().getName(), hall.getProvider().getProviderId())
-            : null;
+                ? new LabelValue<>(hall.getProvider().getName(), hall.getProvider().getProviderId())
+                : null;
         return new HallDto()
-            .setHallId(hall.getHallId())
-            .setName(hall.getName())
-            .setDescription(hall.getDescription())
-            .setSeatsRows(hall.getSeatsRows())
-            .setSeatsColumns(hall.getSeatsColumns())
-            .setSeats(seats.stream().map(SeatListItemDto::fromSeat).collect(Collectors.toList()))
-            .setProviderRef(providerRef);
+                .setHallId(hall.getHallId())
+                .setName(hall.getName())
+                .setDescription(hall.getDescription())
+                .setSeatsRows(hall.getSeatsRows())
+                .setSeatsColumns(hall.getSeatsColumns())
+                .setSeats(seats.stream().map(SeatListItemDto::fromSeat).collect(Collectors.toList()))
+                .setProviderRef(providerRef);
     }
 }

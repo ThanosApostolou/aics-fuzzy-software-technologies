@@ -16,11 +16,11 @@ import java.util.List;
 @ApplicationScoped
 public class TicketService {
     @Inject
-    private TicketRepository ticketRepository;
+    TicketRepository ticketRepository;
     @Inject
-    private TicketValidator ticketValidator;
+    TicketValidator ticketValidator;
     @Inject
-    private AuthService authService;
+    AuthService authService;
     @Inject
     Mailer mailer;
 

@@ -17,7 +17,7 @@ import java.util.List;
 @ApplicationScoped
 public class ProvidersActions {
     @Inject
-    private ProviderService providerService;
+    ProviderService providerService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchProvidersListResponseDto doFetchProvidersList() throws TicketException {

@@ -12,14 +12,6 @@ public enum RoleEnum {
     offline_access(Values.offline_access),
     uma_authorization(Values.uma_authorization);
 
-    public static class Values {
-        public static final String TICKET_USER = "TICKET_USER";
-        public static final String TICKET_ADMIN = "TICKET_ADMIN";
-        public static final String default_roles_ticket = "default-roles-ticket";
-        public static final String offline_access = "offline_access";
-        public static final String uma_authorization = "uma_authorization";
-    }
-
     private final String value;
 
     public static RoleEnum fromValue(String value) {
@@ -32,5 +24,13 @@ public enum RoleEnum {
             }
         }
         return null;
+    }
+
+    public static class Values {
+        public static final String TICKET_USER = "TICKET_USER";
+        public static final String TICKET_ADMIN = "TICKET_ADMIN";
+        public static final String default_roles_ticket = "default-roles-ticket";
+        public static final String offline_access = "offline_access";
+        public static final String uma_authorization = "uma_authorization";
     }
 }

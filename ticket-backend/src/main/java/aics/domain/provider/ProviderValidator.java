@@ -9,7 +9,7 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class ProviderValidator {
     @Inject
-    private ProviderRepository providerRepository;
+    ProviderRepository providerRepository;
 
     public String validateForCreateProvider(ProviderDto providerDto) {
         final String error = this.validateMandatory(providerDto);

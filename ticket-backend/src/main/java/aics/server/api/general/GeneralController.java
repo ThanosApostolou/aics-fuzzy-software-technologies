@@ -19,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 @PermitAll
 public class GeneralController {
     @Inject
-    private GeneralActions generalActions;
+    GeneralActions generalActions;
 
 
     @Path("/logged-user-details")

@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @RolesAllowed(RoleEnum.Values.TICKET_ADMIN)
 public class ProvidersController {
     @Inject
-    private ProvidersActions providersActions;
+    ProvidersActions providersActions;
 
     @Path("/list")
     @GET

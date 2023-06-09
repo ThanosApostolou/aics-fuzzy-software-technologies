@@ -19,9 +19,9 @@ public class SeatListItemDto implements Serializable {
             return null;
         }
         return new SeatListItemDto()
-            .setSeatId(seat.getSeatId())
-            .setSeatRow(seat.getSeatRow())
-            .setSeatColumn(seat.getSeatColumn())
-            .setDescription(seat.getDescription());
+                .setSeatId(seat.getSeatId())
+                .setSeatRow(seat.getSeatRow())
+                .setSeatColumn(seat.getSeatColumn())
+                .setDescription(seat.getDescription());
     }
 }

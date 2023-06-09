@@ -14,7 +14,7 @@ import java.util.Objects;
 @ApplicationScoped
 public class TicketValidator {
     @Inject
-    private TicketRepository ticketRepository;
+    TicketRepository ticketRepository;
 
     public List<String> validateForBookTicket(List<Ticket> tickets) {
         List<String> errors = new ArrayList<>();

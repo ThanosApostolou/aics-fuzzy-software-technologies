@@ -21,11 +21,11 @@ public class ProviderListItemDto implements Serializable {
             return null;
         }
         return new ProviderListItemDto()
-            .setProviderId(provider.getProviderId())
-            .setName(provider.getName())
-            .setAddress(provider.getAddress())
-            .setPhone(provider.getPhone())
-            .setDescription(provider.getDescription())
-            .setGoogleMapsSrc(provider.getGoogleMapsSrc());
+                .setProviderId(provider.getProviderId())
+                .setName(provider.getName())
+                .setAddress(provider.getAddress())
+                .setPhone(provider.getPhone())
+                .setDescription(provider.getDescription())
+                .setGoogleMapsSrc(provider.getGoogleMapsSrc());
     }
 }

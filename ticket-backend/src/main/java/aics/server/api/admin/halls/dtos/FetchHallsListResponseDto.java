@@ -1,7 +1,6 @@
 package aics.server.api.admin.halls.dtos;
 
 import aics.domain.hall.dtos.HallListItemDto;
-import aics.domain.provider.dtos.ProviderListItemDto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

@@ -24,9 +24,9 @@ import java.util.List;
 @ApplicationScoped
 public class EventsActions {
     @Inject
-    private EventService eventService;
+    EventService eventService;
     @Inject
-    private TicketService ticketService;
+    TicketService ticketService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchEventsFilteredResponseDto doFetchEventsFiltered(FetchEventsFilteredRequestDto fetchEventsFilteredRequestDto) throws TicketException {

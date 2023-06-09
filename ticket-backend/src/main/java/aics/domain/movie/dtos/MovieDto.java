@@ -29,18 +29,18 @@ public class MovieDto implements Serializable {
             return null;
         }
         return new MovieDto()
-            .setMovieId(movie.getMovieId())
-            .setName(movie.getName())
-            .setDescription(movie.getDescription())
-            .setImage(Base64.getEncoder().encodeToString(movie.getImage()))
-            .setImageName(movie.getImageName())
-            .setImageMimePrefix(movie.getImageMimePrefix())
-            .setDirectors(movie.getDirectors())
-            .setScript(movie.getScript())
-            .setActors(movie.getActors())
-            .setAppropriateness(movie.getAppropriateness())
-            .setDuration(movie.getDuration())
-            .setTrailerSrcUrl(movie.getTrailerSrcUrl())
-            .setYear(movie.getYear());
+                .setMovieId(movie.getMovieId())
+                .setName(movie.getName())
+                .setDescription(movie.getDescription())
+                .setImage(Base64.getEncoder().encodeToString(movie.getImage()))
+                .setImageName(movie.getImageName())
+                .setImageMimePrefix(movie.getImageMimePrefix())
+                .setDirectors(movie.getDirectors())
+                .setScript(movie.getScript())
+                .setActors(movie.getActors())
+                .setAppropriateness(movie.getAppropriateness())
+                .setDuration(movie.getDuration())
+                .setTrailerSrcUrl(movie.getTrailerSrcUrl())
+                .setYear(movie.getYear());
     }
 }

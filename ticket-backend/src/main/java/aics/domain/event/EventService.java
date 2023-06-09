@@ -38,23 +38,23 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class EventService {
     @Inject
-    private EventRepository eventRepository;
+    EventRepository eventRepository;
     @Inject
-    private MovieRepository movieRepository;
+    MovieRepository movieRepository;
     @Inject
-    private HallRepository hallRepository;
+    HallRepository hallRepository;
     @Inject
-    private ProviderRepository providerRepository;
+    ProviderRepository providerRepository;
     @Inject
-    private TicketRepository ticketRepository;
+    TicketRepository ticketRepository;
     @Inject
-    private SeatRepository seatRepository;
+    SeatRepository seatRepository;
     @Inject
-    private EventValidator eventValidator;
+    EventValidator eventValidator;
     @Inject
-    private MovieService movieService;
+    MovieService movieService;
     @Inject
-    private AuthService authService;
+    AuthService authService;
 
     public List<Event> fetchAllEvents() {
         List<Event> events = this.eventRepository.findAll().list();
@@ -82,9 +82,9 @@ public class EventService {
 
         List<Event> userEvents = events.stream().filter(event -> {
             List<User> users = (event.getTickets()).stream()
-                .filter(Objects::nonNull)
-                .map(Ticket::getUser)
-                .toList();
+                    .filter(Objects::nonNull)
+                    .map(Ticket::getUser)
+                    .toList();
             List<Long> userIds = users.stream().filter(Objects::nonNull).map(User::getUserId).toList();
             return userIds.contains(loggedUserDetails.getUserId());
         }).collect(Collectors.toList());
@@ -101,7 +101,7 @@ public class EventService {
 
     public List<Event> fetchEventsPlayingNow() {
         EventFilters eventFilters = new EventFilters()
-            .setFromDate(LocalDateTime.now());
+                .setFromDate(LocalDateTime.now());
         List<Event> events = this.eventRepository.findFiltered(eventFilters);
         return events;
     }
@@ -109,17 +109,17 @@ public class EventService {
     public EventOptionsDto fetchEventOptions() {
         List<Movie> movies = this.movieRepository.findAll().list();
         List<MovieListItemDto> moviesRefs = CollectionUtils.isNotEmpty(movies)
-            ? movies.stream().map(MovieListItemDto::fromMovie).toList()
-            : new ArrayList<>();
+                ? movies.stream().map(MovieListItemDto::fromMovie).toList()
+                : new ArrayList<>();
 
         List<Hall> halls = this.hallRepository.findAll().list();
         List<LabelValue<Long>> hallsRefs = CollectionUtils.isNotEmpty(halls)
-            ? halls.stream().map((hall -> new LabelValue<Long>(hall.getProvider().getName() + "-" + hall.getName(), hall.getHallId()))).toList()
-            : new ArrayList<>();
+                ? halls.stream().map((hall -> new LabelValue<Long>(hall.getProvider().getName() + "-" + hall.getName(), hall.getHallId()))).toList()
+                : new ArrayList<>();
 
         return new EventOptionsDto()
-            .setMoviesRefs(moviesRefs)
-            .setHallsRefs(hallsRefs);
+                .setMoviesRefs(moviesRefs)
+                .setHallsRefs(hallsRefs);
     }
 
 
@@ -128,21 +128,21 @@ public class EventService {
         List<LabelValue<Long>> moviesRefs = new ArrayList<>();
         moviesRefs.add(new LabelValue<Long>("ΟΛΕΣ", 0L));
         moviesRefs.addAll(CollectionUtils.isNotEmpty(movies)
-            ? movies.stream().map((movie -> new LabelValue<Long>(movie.getName(), movie.getMovieId()))).toList()
-            : new ArrayList<>()
+                ? movies.stream().map((movie -> new LabelValue<Long>(movie.getName(), movie.getMovieId()))).toList()
+                : new ArrayList<>()
         );
 
         List<Provider> providers = this.providerRepository.findAll().list();
         List<LabelValue<Long>> providersRefs = new ArrayList<>();
         providersRefs.add(new LabelValue<Long>("ΟΛΑ", 0L));
         providersRefs.addAll(CollectionUtils.isNotEmpty(providers)
-            ? providers.stream().map((provider -> new LabelValue<Long>(provider.getName(), provider.getProviderId()))).toList()
-            : new ArrayList<>()
+                ? providers.stream().map((provider -> new LabelValue<Long>(provider.getName(), provider.getProviderId()))).toList()
+                : new ArrayList<>()
         );
 
         return new EventsFilterOptionsDto()
-            .setMoviesRefs(moviesRefs)
-            .setProvidersRefs(providersRefs);
+                .setMoviesRefs(moviesRefs)
+                .setProvidersRefs(providersRefs);
     }
 
     public String createEvent(EventDto eventDto) {
@@ -163,19 +163,19 @@ public class EventService {
         }
 
         Event newEvent = new Event()
-            .setName(eventDto.getName())
-            .setEventDatetime(eventDto.getEventDatetime())
-            .setDescription(eventDto.getDescription())
-            .setEventPrice(eventDto.getEventPrice())
-            .setMovie(findValidMovieResult.left)
-            .setHall(findValidHallResult.left);
+                .setName(eventDto.getName())
+                .setEventDatetime(eventDto.getEventDatetime())
+                .setDescription(eventDto.getDescription())
+                .setEventPrice(eventDto.getEventPrice())
+                .setMovie(findValidMovieResult.left)
+                .setHall(findValidHallResult.left);
 
         List<Seat> eventHallSeats = this.seatRepository.fetchListByHallId(newEvent.getHall().getHallId());
         List<Ticket> tickets = new ArrayList<>();
         for (Seat seat : eventHallSeats) {
             Ticket newTicket = new Ticket()
-                .setEvent(newEvent)
-                .setSeat(seat);
+                    .setEvent(newEvent)
+                    .setSeat(seat);
             tickets.add(newTicket);
         }
         this.eventRepository.persist(newEvent);
@@ -200,9 +200,9 @@ public class EventService {
         }
 
         event.setName(eventDto.getName())
-            .setEventDatetime(eventDto.getEventDatetime())
-            .setDescription(eventDto.getDescription())
-            .setEventPrice(eventDto.getEventPrice());
+                .setEventDatetime(eventDto.getEventDatetime())
+                .setDescription(eventDto.getDescription())
+                .setEventPrice(eventDto.getEventPrice());
 
         this.eventRepository.persist(event);
 

@@ -1,4 +1,4 @@
-import { FuzzyVariableDistributionPart, FuzzyVariableI } from './fuzzy-variable-distribution';
+import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
 export class FuzzyVariablePopularity implements FuzzyVariableI {
     varVeryPopular: FuzzyVariableDistributionPart;
@@ -20,10 +20,10 @@ export class FuzzyVariablePopularity implements FuzzyVariableI {
 
     static fromObj(obj: any): FuzzyVariablePopularity {
         return new FuzzyVariablePopularity({
-            varVeryPopular: FuzzyVariableDistributionPart.fromObj(obj.varVeryPopular),
-            varPopular: FuzzyVariableDistributionPart.fromObj(obj.varPopular),
-            varAverage: FuzzyVariableDistributionPart.fromObj(obj.varAverage),
-            varUnpopular: FuzzyVariableDistributionPart.fromObj(obj.varUnpopular)
+            varVeryPopular: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varVeryPopular),
+            varPopular: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varPopular),
+            varAverage: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varAverage),
+            varUnpopular: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varUnpopular)
         })
     }
 

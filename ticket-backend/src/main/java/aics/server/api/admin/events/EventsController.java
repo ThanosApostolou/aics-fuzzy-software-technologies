@@ -18,7 +18,7 @@ import javax.ws.rs.core.MediaType;
 @RolesAllowed(RoleEnum.Values.TICKET_ADMIN)
 public class EventsController {
     @Inject
-    private EventsActions eventsActions;
+    EventsActions eventsActions;
 
     @Path("/list")
     @GET

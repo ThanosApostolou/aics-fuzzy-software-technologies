@@ -18,10 +18,10 @@ import java.util.List;
 @ApplicationScoped
 public class HomeActions {
     @Inject
-    private MovieService movieService;
+    MovieService movieService;
 
     @Inject
-    private AuthService authService;
+    AuthService authService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchMoviesPlayingNowResponseDto doFetchMoviesPlayingNow() throws TicketException {
@@ -29,8 +29,8 @@ public class HomeActions {
         FetchMoviesPlayingNowResponseDto fetchMoviesPlayingNowResponseDto = new FetchMoviesPlayingNowResponseDto();
         List<Movie> moviesPlayingNow = this.movieService.fetchMoviesPlayingNow();
         List<MovieListItemDto> movieDtos = CollectionUtils.isNotEmpty(moviesPlayingNow)
-            ? moviesPlayingNow.stream().map(MovieListItemDto::fromMovie).toList()
-            : new ArrayList<>();
+                ? moviesPlayingNow.stream().map(MovieListItemDto::fromMovie).toList()
+                : new ArrayList<>();
 
         fetchMoviesPlayingNowResponseDto.setMovies(movieDtos);
         Log.info("End HomeActions.doFetchMoviesPlayingNow");

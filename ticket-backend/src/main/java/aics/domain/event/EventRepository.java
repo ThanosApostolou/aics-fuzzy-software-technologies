@@ -32,7 +32,7 @@ public class EventRepository implements PanacheRepository<Event> {
             queryString += " AND (eventDatetime <= :toDate)";
         }
         return find(queryString, parameters)
-            .list();
+                .list();
     }
 
     public List<Event> findCurrent() {
@@ -42,7 +42,7 @@ public class EventRepository implements PanacheRepository<Event> {
         String queryString = "eventDatetime >= :fromDate";
 
         return find(queryString, parameters)
-            .list();
+                .list();
     }
 
     public Long deleteByHallId(Long hallId) {

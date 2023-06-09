@@ -1,35 +1,38 @@
+import { FuzzyVariableDistributionType } from "./fuzzy-constants";
+
 export interface FuzzyVariableI {
     getFuzzyVariableMap: () => Record<string, FuzzyVariableDistributionPart>;
     getFuzzyVariableColorsMap: () => Record<string, string>;
 
 }
 
-export class FuzzyVariableDistributionPart {
-    fuzzyVariableDistributionPartTriangular: FuzzyVariableDistributionPartTriangular | null;
-    fuzzyVariableDistributionPartTrapezoidal: FuzzyVariableDistributionPartTrapezoidal | null;
+export type FuzzyVariableDistributionPart = FuzzyVariableDistributionPartTriangular | FuzzyVariableDistributionPartTrapezoidal;
 
-    constructor(obj: {
-        fuzzyVariableDistributionPartTriangular?: FuzzyVariableDistributionPartTriangular | null,
-        fuzzyVariableDistributionPartTrapezoidal?: FuzzyVariableDistributionPartTrapezoidal | null,
-    }) {
-        if ((!obj.fuzzyVariableDistributionPartTriangular && !obj.fuzzyVariableDistributionPartTrapezoidal)
-            || (obj.fuzzyVariableDistributionPartTriangular && obj.fuzzyVariableDistributionPartTrapezoidal)
-        ) {
-            throw new Error('FuzzyVariableDistributionPart should only have either fuzzyVariableDistributionPartTriangular or fuzzyVariableDistributionPartTrapezoidal')
+export class FuzzyVariableDistributionPartUtils {
+
+    static fuzzyVariableDistributionPartFromObjNullable(obj: any): FuzzyVariableDistributionPart | null {
+        if (obj == null) {
+            return null;
         }
-        this.fuzzyVariableDistributionPartTriangular = obj.fuzzyVariableDistributionPartTriangular ? obj.fuzzyVariableDistributionPartTriangular : null;
-        this.fuzzyVariableDistributionPartTrapezoidal = obj.fuzzyVariableDistributionPartTrapezoidal ? obj.fuzzyVariableDistributionPartTrapezoidal : null;
+        return this.fuzzyVariableDistributionPartFromObj(obj);
     }
 
-    static fromObj(obj: any): FuzzyVariableDistributionPart {
-        return new FuzzyVariableDistributionPart({
-            fuzzyVariableDistributionPartTriangular: FuzzyVariableDistributionPartTriangular.fromObjNullable(obj.fuzzyVariableDistributionPartTriangular),
-            fuzzyVariableDistributionPartTrapezoidal: FuzzyVariableDistributionPartTrapezoidal.fromObjNullable(obj.fuzzyVariableDistributionPartTrapezoidal),
-        })
+    static fuzzyVariableDistributionPartFromObj(obj: any): FuzzyVariableDistributionPart {
+        if (obj == null) {
+            throw new Error('obj cannot be null');
+        }
+        if (FuzzyVariableDistributionType.TRIANGULAR === obj.type) {
+            return FuzzyVariableDistributionPartTriangular.fromObj(obj);
+        } else if (FuzzyVariableDistributionType.TRAPEZOIDAL === obj.type) {
+            return FuzzyVariableDistributionPartTrapezoidal.fromObj(obj);
+        } else {
+            throw new Error('wrong FuzzyVariableDistributionType')
+        }
     }
 }
 
 export class FuzzyVariableDistributionPartTriangular {
+    type: FuzzyVariableDistributionType;
     a: number | null;
     b: number;
     c: number | null;
@@ -39,14 +42,30 @@ export class FuzzyVariableDistributionPartTriangular {
         b: number,
         c: number | null,
     }) {
+        this.type = FuzzyVariableDistributionType.TRIANGULAR;
         this.a = obj.a;
         this.b = obj.b;
         this.c = obj.c;
     }
 
+    isTypeTriangular(): this is FuzzyVariableDistributionPartTriangular {
+        return true;
+    }
+
+    isTypeTrapezoidal(): this is FuzzyVariableDistributionPartTrapezoidal {
+        return false;
+    }
+
     static fromObjNullable(obj: any): FuzzyVariableDistributionPartTriangular | null {
         if (obj == null) {
             return null;
+        }
+        return this.fromObj(obj);
+    }
+
+    static fromObj(obj: any): FuzzyVariableDistributionPartTriangular {
+        if (obj == null) {
+            throw new Error('obj cannot be null');
         }
         return new FuzzyVariableDistributionPartTriangular({
             a: obj.a,
@@ -58,6 +77,7 @@ export class FuzzyVariableDistributionPartTriangular {
 
 
 export class FuzzyVariableDistributionPartTrapezoidal {
+    type: FuzzyVariableDistributionType;
     a: number | null;
     b: number;
     c: number;
@@ -69,15 +89,31 @@ export class FuzzyVariableDistributionPartTrapezoidal {
         c: number;
         d: number | null;
     }) {
+        this.type = FuzzyVariableDistributionType.TRAPEZOIDAL;
         this.a = obj.a;
         this.b = obj.b;
         this.c = obj.c;
         this.d = obj.d;
     }
 
+    isTypeTriangular(): this is FuzzyVariableDistributionPartTriangular {
+        return false;
+    }
+
+    isTypeTrapezoidal(): this is FuzzyVariableDistributionPartTrapezoidal {
+        return true;
+    }
+
     static fromObjNullable(obj: any): FuzzyVariableDistributionPartTrapezoidal | null {
         if (obj == null) {
             return null;
+        }
+        return this.fromObj(obj);
+    }
+
+    static fromObj(obj: any): FuzzyVariableDistributionPartTrapezoidal {
+        if (obj == null) {
+            throw new Error('obj cannot be null');
         }
         return new FuzzyVariableDistributionPartTrapezoidal({
             a: obj.a,

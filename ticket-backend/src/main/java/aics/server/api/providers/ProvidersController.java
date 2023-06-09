@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 @Path(ApiConstants.API_PATH + "/providers")
 public class ProvidersController {
     @Inject
-    private ProvidersActions providersActions;
+    ProvidersActions providersActions;
 
     @Path("/providers-list")
     @GET

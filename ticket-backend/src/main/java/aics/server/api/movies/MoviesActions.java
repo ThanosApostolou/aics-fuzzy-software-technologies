@@ -19,7 +19,7 @@ import java.util.List;
 @ApplicationScoped
 public class MoviesActions {
     @Inject
-    private MovieService movieService;
+    MovieService movieService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchMoviesPlayingNowResponseDto doFetchMoviesPlayingNow() throws TicketException {

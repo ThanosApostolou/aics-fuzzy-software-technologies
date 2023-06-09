@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @ApplicationScoped
 public class GeneralActions {
     @Inject
-    private AuthService authService;
+    AuthService authService;
 
     @Transactional(rollbackOn = Exception.class)
     public FetchLoggedUserDetailsDto doFetchLoggedUserDetails() throws TicketException {

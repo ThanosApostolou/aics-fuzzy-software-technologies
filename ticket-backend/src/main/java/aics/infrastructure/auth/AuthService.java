@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class AuthService {
     @Inject
-    private SecurityIdentity securityIdentity;
+    SecurityIdentity securityIdentity;
     @Inject
-    private JsonWebToken jwt;
+    JsonWebToken jwt;
     @Inject
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     public Principal getPrincipal() {
         return this.securityIdentity.getPrincipal();
