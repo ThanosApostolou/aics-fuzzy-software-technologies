@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 
 import jakarta.persistence.*;
 import org.hibernate.type.SqlTypes;
@@ -19,10 +18,14 @@ public class FuzzyProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "FUZZY_PROFILE_ID")
     private Long fuzzyProfileId;
+    @Column(name = "NAME", nullable = false, unique = true)
+    private String name;
     @Column(name = "FUZZY_PROFILE_DATA", columnDefinition = "json", nullable = false)
     @JdbcTypeCode(SqlTypes.JSON)
     private FuzzyProfileData fuzzyProfileData;
     @Column(name = "ENABLE_DEBUG", nullable = false)
     private boolean enableDebug;
+    @Column(name = "ACTIVE", nullable = false)
+    private boolean active;
 
 }

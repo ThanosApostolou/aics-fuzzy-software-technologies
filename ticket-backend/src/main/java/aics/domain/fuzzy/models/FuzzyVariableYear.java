@@ -21,9 +21,9 @@ public class FuzzyVariableYear implements Serializable, FuzzyVariableI {
     public HashMap<String, FuzzyVariableDistributionPart> getFuzzyVariableMap() {
         HashMap<String, FuzzyVariableDistributionPart> fuzzyVariableMap = new HashMap<>();
         fuzzyVariableMap.put(FuzzyVariableYearFields.OLD.name(), this.varOld);
-        fuzzyVariableMap.put(FuzzyVariableYearFields.RECENT.name(), this.varOld);
-        fuzzyVariableMap.put(FuzzyVariableYearFields.NEW.name(), this.varOld);
-        fuzzyVariableMap.put(FuzzyVariableYearFields.VERY_NEW.name(), this.varOld);
+        fuzzyVariableMap.put(FuzzyVariableYearFields.RECENT.name(), this.varRecent);
+        fuzzyVariableMap.put(FuzzyVariableYearFields.NEW.name(), this.varNew);
+        fuzzyVariableMap.put(FuzzyVariableYearFields.VERY_NEW.name(), this.varVeryNew);
         return fuzzyVariableMap;
     }
 }

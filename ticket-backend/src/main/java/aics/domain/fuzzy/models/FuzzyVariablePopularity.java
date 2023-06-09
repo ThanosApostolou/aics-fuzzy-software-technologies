@@ -21,9 +21,9 @@ public class FuzzyVariablePopularity implements Serializable, FuzzyVariableI {
     public HashMap<String, FuzzyVariableDistributionPart> getFuzzyVariableMap() {
         HashMap<String, FuzzyVariableDistributionPart> fuzzyVariableMap = new HashMap<>();
         fuzzyVariableMap.put(FuzzyVariablePopularityFields.VERY_POPULAR.name(), this.varVeryPopular);
-        fuzzyVariableMap.put(FuzzyVariablePopularityFields.POPULAR.name(), this.varVeryPopular);
-        fuzzyVariableMap.put(FuzzyVariablePopularityFields.AVERAGE.name(), this.varVeryPopular);
-        fuzzyVariableMap.put(FuzzyVariablePopularityFields.UNPOPULAR.name(), this.varVeryPopular);
+        fuzzyVariableMap.put(FuzzyVariablePopularityFields.POPULAR.name(), this.varPopular);
+        fuzzyVariableMap.put(FuzzyVariablePopularityFields.AVERAGE.name(), this.varAverage);
+        fuzzyVariableMap.put(FuzzyVariablePopularityFields.UNPOPULAR.name(), this.varUnpopular);
         return fuzzyVariableMap;
     }
 }

@@ -21,9 +21,9 @@ public class FuzzyVariableRating implements Serializable, FuzzyVariableI {
     public HashMap<String, FuzzyVariableDistributionPart> getFuzzyVariableMap() {
         HashMap<String, FuzzyVariableDistributionPart> fuzzyVariableMap = new HashMap<>();
         fuzzyVariableMap.put(FuzzyVariableRatingFields.BAD.name(), this.varBad);
-        fuzzyVariableMap.put(FuzzyVariableRatingFields.AVERAGE.name(), this.varBad);
-        fuzzyVariableMap.put(FuzzyVariableRatingFields.GOOD.name(), this.varBad);
-        fuzzyVariableMap.put(FuzzyVariableRatingFields.VERY_GOOD.name(), this.varBad);
+        fuzzyVariableMap.put(FuzzyVariableRatingFields.AVERAGE.name(), this.varAverage);
+        fuzzyVariableMap.put(FuzzyVariableRatingFields.GOOD.name(), this.varGood);
+        fuzzyVariableMap.put(FuzzyVariableRatingFields.VERY_GOOD.name(), this.varVeryGood);
         return fuzzyVariableMap;
     }
 }
