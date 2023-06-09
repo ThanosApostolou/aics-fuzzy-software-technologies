@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class Event {
     private LocalDateTime eventDatetime;
     @Column(name = "DESCRIPTION", nullable = true, length = 2048)
     private String description;
-    @Column(name = "EVENT_PRICE", nullable = false, precision = 10, scale = 2)
+    @Column(name = "EVENT_PRICE", nullable = false, precision = 10)
     private Double eventPrice;
     @Column(name = "CREATED_ON", nullable = false)
     @CreationTimestamp

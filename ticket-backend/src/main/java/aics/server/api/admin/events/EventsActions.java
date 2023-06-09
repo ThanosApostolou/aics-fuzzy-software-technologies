@@ -11,9 +11,9 @@ import aics.server.api.admin.events.dtos.*;
 import io.quarkus.logging.Log;
 import org.apache.commons.collections4.CollectionUtils;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 

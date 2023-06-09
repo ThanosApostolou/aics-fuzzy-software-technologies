@@ -10,9 +10,9 @@ import aics.infrastructure.errors.TicketException;
 import aics.server.api.account.dtos.FetchUserEventsResponseDto;
 import io.quarkus.logging.Log;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

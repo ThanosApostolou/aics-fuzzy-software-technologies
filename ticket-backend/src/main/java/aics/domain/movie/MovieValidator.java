@@ -4,8 +4,8 @@ import aics.domain.movie.dtos.MovieDto;
 import aics.domain.provider.ProviderRepository;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class MovieValidator {

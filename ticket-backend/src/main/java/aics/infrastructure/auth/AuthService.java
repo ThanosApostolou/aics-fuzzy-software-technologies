@@ -8,8 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.eclipse.microprofile.jwt.Claims;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.security.Principal;
 import java.util.Set;
 import java.util.stream.Collectors;

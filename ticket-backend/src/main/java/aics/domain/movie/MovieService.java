@@ -7,8 +7,8 @@ import aics.domain.movie.dtos.MovieDto;
 import aics.domain.movie.entities.Movie;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;

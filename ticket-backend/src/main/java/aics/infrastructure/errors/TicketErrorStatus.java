@@ -3,7 +3,7 @@ package aics.infrastructure.errors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 
 @Getter
 @AllArgsConstructor

@@ -3,8 +3,8 @@ package aics.domain.hall;
 import aics.domain.hall.dtos.HallDto;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class HallValidator {

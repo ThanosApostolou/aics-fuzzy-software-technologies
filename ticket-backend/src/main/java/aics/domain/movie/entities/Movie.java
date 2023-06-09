@@ -4,9 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import org.hibernate.type.SqlTypes;
+
 import java.time.LocalDateTime;
 
 @Entity(name = "MOVIES")
@@ -22,8 +25,8 @@ public class Movie {
     private String name;
     @Column(name = "DESCRIPTION", nullable = true, length = 2048)
     private String description;
-    @Column(name = "IMAGE", nullable = false)
-    @Lob
+    @Column(name = "IMAGE", nullable = false, columnDefinition = "longblob")
+    @JdbcTypeCode(SqlTypes.BLOB)
     private byte[] image;
     @Column(name = "IMAGE_NAME", nullable = false)
     private String imageName;

@@ -7,9 +7,9 @@ import aics.infrastructure.errors.TicketException;
 import aics.server.api.general.dtos.FetchLoggedUserDetailsDto;
 import io.quarkus.logging.Log;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class GeneralActions {

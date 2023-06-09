@@ -8,10 +8,10 @@ import io.quarkus.logging.Log;
 import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 
-import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 
 @Path(AdminConstants.ADMIN_PATH + "/providers")
 @RolesAllowed(RoleEnum.Values.TICKET_ADMIN)

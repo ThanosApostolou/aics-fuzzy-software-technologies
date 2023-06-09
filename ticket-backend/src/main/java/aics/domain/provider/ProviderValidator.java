@@ -3,8 +3,8 @@ package aics.domain.provider;
 import aics.domain.provider.dtos.ProviderDto;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ProviderValidator {

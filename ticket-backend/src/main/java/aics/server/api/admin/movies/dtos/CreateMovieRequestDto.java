@@ -4,7 +4,7 @@ import aics.domain.movie.dtos.MovieDto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MediaType;
 import java.io.Serializable;
 
 @Data
