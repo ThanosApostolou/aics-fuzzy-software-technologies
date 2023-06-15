@@ -1,7 +1,6 @@
 package aics.domain.fuzzy.models;
 
 import aics.domain.fuzzy.constants.FuzzyVariableDurationFields;
-import aics.domain.fuzzy.constants.FuzzyVariableYearFields;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;

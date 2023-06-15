@@ -5,10 +5,10 @@ import aics.domain.event.entities.Event;
 import aics.domain.event.models.EventFilters;
 import aics.domain.movie.dtos.MovieDto;
 import aics.domain.movie.entities.Movie;
-import org.apache.commons.lang3.StringUtils;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -63,7 +63,9 @@ public class MovieService {
                 .setAppropriateness(movieDto.getAppropriateness())
                 .setDuration(movieDto.getDuration())
                 .setTrailerSrcUrl(movieDto.getTrailerSrcUrl())
-                .setYear(movieDto.getYear());
+                .setYear(movieDto.getYear())
+                .setRating(movieDto.getRating())
+                .setPopularity(movieDto.getPopularity());
 
         this.movieRepository.persist(newMovie);
 
@@ -92,7 +94,9 @@ public class MovieService {
                 .setAppropriateness(movieDto.getAppropriateness())
                 .setDuration(movieDto.getDuration())
                 .setTrailerSrcUrl(movieDto.getTrailerSrcUrl())
-                .setYear(movieDto.getYear());
+                .setYear(movieDto.getYear())
+                .setRating(movieDto.getRating())
+                .setPopularity(movieDto.getPopularity());
 
         this.movieRepository.persist(movie);
 

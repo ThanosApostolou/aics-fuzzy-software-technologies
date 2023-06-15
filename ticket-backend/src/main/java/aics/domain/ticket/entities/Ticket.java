@@ -3,13 +3,13 @@ package aics.domain.ticket.entities;
 import aics.domain.event.entities.Event;
 import aics.domain.hall.entities.Seat;
 import aics.domain.user.entities.User;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity(name = "TICKETS")

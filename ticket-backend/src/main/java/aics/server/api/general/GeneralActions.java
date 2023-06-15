@@ -6,7 +6,6 @@ import aics.infrastructure.auth.LoggedUserDetailsDto;
 import aics.infrastructure.errors.TicketException;
 import aics.server.api.general.dtos.FetchLoggedUserDetailsDto;
 import io.quarkus.logging.Log;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

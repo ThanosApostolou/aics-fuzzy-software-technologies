@@ -2,7 +2,6 @@ package aics.infrastructure.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.jackson.ObjectMapperCustomizer;
-
 import jakarta.inject.Singleton;
 
 @Singleton

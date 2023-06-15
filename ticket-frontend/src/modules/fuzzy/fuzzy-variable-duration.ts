@@ -1,5 +1,12 @@
 import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
+export enum FuzzyVariableDurationFields {
+    SMALL = 'SMALL',
+    AVERAGE = 'AVERAGE',
+    BIG = 'BIG',
+    HUGE = 'HUGE',
+}
+
 export class FuzzyVariableDuration implements FuzzyVariableI {
     varSmall: FuzzyVariableDistributionPart;
     varAverage: FuzzyVariableDistributionPart;
@@ -45,11 +52,4 @@ export class FuzzyVariableDuration implements FuzzyVariableI {
         }
     }
 
-}
-
-export enum FuzzyVariableDurationFields {
-    SMALL = 'SMALL',
-    AVERAGE = 'AVERAGE',
-    BIG = 'BIG',
-    HUGE = 'HUGE',
 }

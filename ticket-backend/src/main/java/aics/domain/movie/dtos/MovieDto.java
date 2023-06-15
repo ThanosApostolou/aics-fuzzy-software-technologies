@@ -23,6 +23,8 @@ public class MovieDto implements Serializable {
     private int duration;
     private String trailerSrcUrl;
     private int year;
+    private int rating;
+    private int popularity;
 
     public static MovieDto fromMovie(Movie movie) {
         if (movie == null) {
@@ -41,6 +43,8 @@ public class MovieDto implements Serializable {
                 .setAppropriateness(movie.getAppropriateness())
                 .setDuration(movie.getDuration())
                 .setTrailerSrcUrl(movie.getTrailerSrcUrl())
-                .setYear(movie.getYear());
+                .setYear(movie.getYear())
+                .setRating(movie.getRating())
+                .setPopularity(movie.getPopularity());
     }
 }

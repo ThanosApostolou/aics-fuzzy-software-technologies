@@ -2,10 +2,10 @@ package aics.domain.provider;
 
 import aics.domain.provider.dtos.ProviderDto;
 import aics.domain.provider.entities.Provider;
-import org.apache.commons.lang3.StringUtils;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 @ApplicationScoped

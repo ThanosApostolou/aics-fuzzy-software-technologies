@@ -14,6 +14,8 @@ export class MovieDto {
     duration: number = 0;
     trailerSrcUrl: string = '';
     year: number = 0;
+    rating: number = 0;
+    popularity: number = 0;
 
     static fromObj(obj: any): MovieDto | null {
         if (!obj) {
@@ -33,6 +35,8 @@ export class MovieDto {
         movieModel.duration = obj.duration;
         movieModel.trailerSrcUrl = obj.trailerSrcUrl;
         movieModel.year = obj.year;
+        movieModel.rating = obj.rating;
+        movieModel.popularity = obj.popularity;
         return movieModel;
     }
 

@@ -4,8 +4,8 @@ import aics.domain.event.entities.Event;
 import aics.domain.event.models.EventFilters;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
-
 import jakarta.enterprise.context.ApplicationScoped;
+
 import java.time.LocalDateTime;
 import java.util.List;
 

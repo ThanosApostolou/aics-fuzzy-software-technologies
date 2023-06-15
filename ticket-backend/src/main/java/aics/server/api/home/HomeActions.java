@@ -7,11 +7,11 @@ import aics.infrastructure.auth.AuthService;
 import aics.infrastructure.errors.TicketException;
 import aics.server.api.home.dtos.FetchMoviesPlayingNowResponseDto;
 import io.quarkus.logging.Log;
-import org.apache.commons.collections4.CollectionUtils;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 

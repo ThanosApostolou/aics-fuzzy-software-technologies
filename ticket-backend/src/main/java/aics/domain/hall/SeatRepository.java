@@ -3,8 +3,8 @@ package aics.domain.hall;
 import aics.domain.hall.entities.Seat;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
-
 import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.List;
 
 @ApplicationScoped

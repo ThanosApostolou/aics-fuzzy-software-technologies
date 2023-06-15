@@ -8,7 +8,9 @@
         "year": "2012",
         "duration": 83,
         "trailer": "https://www.youtube.com/watch?v=eOrNdBpGMv8",
-        "description": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity."
+        "description": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
+        "rating": 8,
+        "popularity": 524
     },
     {
         "name": "Ant-Man",
@@ -19,7 +21,9 @@
         "year": "2015",
         "duration": 97,
         "trailer": "https://www.youtube.com/watch?v=pWdKf3MneyI",
-        "description": "Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, pull off a plan that will save the world."
+        "description": "Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, pull off a plan that will save the world.",
+        "rating": 7,
+        "popularity": 652
     },
     {
         "name": "Schindler's List",
@@ -30,7 +34,9 @@
         "year": "1993",
         "duration": 195,
         "trailer": "https://www.youtube.com/watch?v=gG22XNhtnoY",
-        "description": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis."
+        "description": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.",
+        "rating": 9,
+        "popularity": 195
     },
     {
         "name": "Creed III",
@@ -41,9 +47,10 @@
         "year": "2023",
         "duration": 116,
         "trailer": "https://www.youtube.com/watch?v=AHmCH7iB_IM",
-        "description": "Adonis has been thriving in both his career and family life, but when a childhood friend and former boxing prodigy resurfaces, the face-off is more than just a fight."
+        "description": "Adonis has been thriving in both his career and family life, but when a childhood friend and former boxing prodigy resurfaces, the face-off is more than just a fight.",
+        "rating": 7,
+        "popularity": 72
     },
-    // DEMONSTRATION
     {
         "name": "Harry Potter and the Prisoner of Azkaban",
         "director": "Alfonso Cuarón",
@@ -53,6 +60,8 @@
         "year": "2004",
         "duration": 142,
         "trailer": "https://www.youtube.com/watch?v=lAxgztbYDbs",
-        "description": "Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard."
+        "description": "Harry Potter, Ron and Hermione return to Hogwarts School of Witchcraft and Wizardry for their third year of study, where they delve into the mystery surrounding an escaped prisoner who poses a dangerous threat to the young wizard.",
+        "rating": 8,
+        "popularity": 410
     }
 ]

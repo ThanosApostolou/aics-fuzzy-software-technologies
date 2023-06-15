@@ -10,12 +10,12 @@ import aics.domain.provider.ProviderService;
 import aics.domain.provider.entities.Provider;
 import aics.domain.ticket.TicketRepository;
 import aics.infrastructure.core.LabelValue;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 

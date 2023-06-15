@@ -17,6 +17,8 @@ public class MovieListItemDto implements Serializable {
     private String imageName;
     private String imageMimePrefix;
     private int year;
+    private int rating;
+    private int popularity;
 
     public static MovieListItemDto fromMovie(Movie movie) {
         if (movie == null) {
@@ -29,6 +31,8 @@ public class MovieListItemDto implements Serializable {
                 .setImage(Base64.getEncoder().encodeToString(movie.getImage()))
                 .setImageName(movie.getImageName())
                 .setImageMimePrefix(movie.getImageMimePrefix())
-                .setYear(movie.getYear());
+                .setYear(movie.getYear())
+                .setRating(movie.getRating())
+                .setPopularity(movie.getPopularity());
     }
 }

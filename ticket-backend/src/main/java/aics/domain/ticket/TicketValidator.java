@@ -2,10 +2,10 @@ package aics.domain.ticket;
 
 import aics.domain.event.entities.Event;
 import aics.domain.ticket.entities.Ticket;
-import org.apache.commons.collections4.CollectionUtils;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

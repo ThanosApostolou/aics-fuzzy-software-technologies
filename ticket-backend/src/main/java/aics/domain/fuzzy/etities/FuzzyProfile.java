@@ -1,12 +1,11 @@
 package aics.domain.fuzzy.etities;
 
 import aics.domain.fuzzy.models.FuzzyProfileData;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.JdbcTypeCode;
-
-import jakarta.persistence.*;
 import org.hibernate.type.SqlTypes;
 
 @Entity(name = "FUZZY_PROFILE")

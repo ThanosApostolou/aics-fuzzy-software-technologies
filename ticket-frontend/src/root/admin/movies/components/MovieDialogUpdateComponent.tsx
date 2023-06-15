@@ -114,6 +114,12 @@ export default function MovieDialogCreateComponent(props: MovieDialogCreateCompo
                                 <TextField disabled={props.readonly} multiline label="Περιγραφή" value={movie.description} onChange={(e) => setMovie({ ...movie, description: e.target.value })} />
                             </Grid>
                             <Grid item xs={12} sm={6} md={4} lg={3}>
+                                <TextField disabled={props.readonly} type='number' inputProps={{min: 1, max: 10}} label="Rating" value={movie.rating} onChange={(e) => setMovie({ ...movie, rating: e.target.value ? parseInt(e.target.value) : 0 })} />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4} lg={3}>
+                                <TextField disabled={props.readonly} type='number' inputProps={{min: 1}} label="Popularity" value={movie.popularity} onChange={(e) => setMovie({ ...movie, popularity: e.target.value ? parseInt(e.target.value) : 0 })} />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4} lg={3}>
                                 <FormControl>
                                     <FormLabel id="demo-radio-buttons-group-label">Εικόνα</FormLabel>
                                     <input disabled={props.readonly} type="file"

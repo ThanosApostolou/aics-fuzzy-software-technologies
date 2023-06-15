@@ -3,13 +3,13 @@ package aics.domain.event.entities;
 import aics.domain.hall.entities.Hall;
 import aics.domain.movie.entities.Movie;
 import aics.domain.ticket.entities.Ticket;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

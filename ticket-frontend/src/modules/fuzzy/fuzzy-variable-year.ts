@@ -1,5 +1,12 @@
 import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
+export enum FuzzyVariableYearFields {
+    OLD = 'OLD',
+    RECENT = 'RECENT',
+    NEW = 'NEW',
+    VERY_NEW = 'VERY_NEW',
+}
+
 export class FuzzyVariableYear implements FuzzyVariableI {
     varOld: FuzzyVariableDistributionPart;
     varRecent: FuzzyVariableDistributionPart;
@@ -45,11 +52,4 @@ export class FuzzyVariableYear implements FuzzyVariableI {
         }
     }
 
-}
-
-export enum FuzzyVariableYearFields {
-    OLD = 'OLD',
-    RECENT = 'RECENT',
-    NEW = 'NEW',
-    VERY_NEW = 'VERY_NEW',
 }

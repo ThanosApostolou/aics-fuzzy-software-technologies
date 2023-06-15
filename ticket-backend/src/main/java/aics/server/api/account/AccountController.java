@@ -5,9 +5,6 @@ import aics.infrastructure.errors.TicketException;
 import aics.server.api.account.dtos.FetchUserEventsResponseDto;
 import aics.server.api.api_shared.ApiConstants;
 import io.quarkus.logging.Log;
-import org.jboss.resteasy.reactive.RestPath;
-import org.jboss.resteasy.reactive.RestResponse;
-
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -15,6 +12,8 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.jboss.resteasy.reactive.RestPath;
+import org.jboss.resteasy.reactive.RestResponse;
 
 @Path(ApiConstants.API_PATH + "/account")
 @PermitAll

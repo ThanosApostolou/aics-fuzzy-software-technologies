@@ -1,7 +1,6 @@
 package aics.server.api.admin.movies.dtos;
 
 import aics.domain.movie.dtos.MovieListItemDto;
-import aics.domain.provider.dtos.ProviderListItemDto;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

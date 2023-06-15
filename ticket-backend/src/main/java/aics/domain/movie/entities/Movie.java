@@ -1,13 +1,12 @@
 package aics.domain.movie.entities;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.*;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
@@ -46,6 +45,10 @@ public class Movie {
     private int duration;
     @Column(name = "YEAR", nullable = false)
     private int year;
+    @Column(name = "RATING", nullable = false)
+    private int rating;
+    @Column(name = "POPULARITY", nullable = false)
+    private int popularity;
     @Column(name = "CREATED_ON", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdOn;

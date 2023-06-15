@@ -2,10 +2,9 @@ package aics.infrastructure.conf;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
-import org.jboss.logging.Logger;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
+import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class AppLifecycleBean {

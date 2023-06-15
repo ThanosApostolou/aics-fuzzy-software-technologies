@@ -8,6 +8,8 @@ export class MovieListItemDto {
     imageName: string = '';
     imageMimePrefix: string = '';
     year: number = 0;
+    rating: number = 0;
+    popularity: number = 0;
 
     static fromObj(obj: any): MovieListItemDto | null {
         if (!obj) {
@@ -21,6 +23,8 @@ export class MovieListItemDto {
         movieModel.imageName = obj.imageName;
         movieModel.imageMimePrefix = obj.imageMimePrefix;
         movieModel.year = obj.year;
+        movieModel.rating = obj.rating;
+        movieModel.popularity = obj.popularity;
         return movieModel;
     }
 

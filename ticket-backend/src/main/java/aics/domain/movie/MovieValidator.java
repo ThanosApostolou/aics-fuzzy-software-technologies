@@ -2,10 +2,9 @@ package aics.domain.movie;
 
 import aics.domain.movie.dtos.MovieDto;
 import aics.domain.provider.ProviderRepository;
-import org.apache.commons.lang3.StringUtils;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 
 @ApplicationScoped
 public class MovieValidator {
@@ -72,6 +71,15 @@ public class MovieValidator {
         }
         if (StringUtils.isEmpty(movieDto.getTrailerSrcUrl())) {
             return "movieModel.getTrailerSrcUrl() was empty";
+        }
+        if (movieDto.getRating() < 1) {
+            return "movieModel.getRating() was below 1";
+        }
+        if (movieDto.getRating() > 10) {
+            return "movieModel.getRating() was above 10";
+        }
+        if (movieDto.getPopularity() < 1) {
+            return "movieModel.getPopularity() was below 1";
         }
         return null;
     }

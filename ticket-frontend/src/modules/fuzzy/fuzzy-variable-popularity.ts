@@ -1,5 +1,12 @@
 import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
+export enum FuzzyVariablePopularityFields {
+    VERY_POPULAR = 'VERY_POPULAR',
+    POPULAR = 'POPULAR',
+    AVERAGE = 'AVERAGE',
+    UNPOPULAR = 'UNPOPULAR',
+}
+
 export class FuzzyVariablePopularity implements FuzzyVariableI {
     varVeryPopular: FuzzyVariableDistributionPart;
     varPopular: FuzzyVariableDistributionPart;
@@ -46,11 +53,4 @@ export class FuzzyVariablePopularity implements FuzzyVariableI {
         }
     }
 
-}
-
-export enum FuzzyVariablePopularityFields {
-    VERY_POPULAR = 'VERY_POPULAR',
-    POPULAR = 'POPULAR',
-    AVERAGE = 'AVERAGE',
-    UNPOPULAR = 'UNPOPULAR',
 }

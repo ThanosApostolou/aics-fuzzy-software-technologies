@@ -1,5 +1,12 @@
 import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartUtils, FuzzyVariableI } from './fuzzy-variable-distribution';
 
+export enum FuzzyVariableRatingFields {
+    BAD = 'BAD',
+    AVERAGE = 'AVERAGE',
+    GOOD = 'GOOD',
+    VERY_GOOD = 'VERY_GOOD',
+}
+
 export class FuzzyVariableRating implements FuzzyVariableI {
     varBad: FuzzyVariableDistributionPart;
     varAverage: FuzzyVariableDistributionPart;
@@ -44,11 +51,4 @@ export class FuzzyVariableRating implements FuzzyVariableI {
             [FuzzyVariableRatingFields.VERY_GOOD]: 'green',
         }
     }
-}
-
-export enum FuzzyVariableRatingFields {
-    BAD = 'BAD',
-    AVERAGE = 'AVERAGE',
-    GOOD = 'GOOD',
-    VERY_GOOD = 'VERY_GOOD',
 }

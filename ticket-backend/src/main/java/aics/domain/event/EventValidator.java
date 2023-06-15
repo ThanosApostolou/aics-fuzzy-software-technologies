@@ -1,10 +1,9 @@
 package aics.domain.event;
 
 import aics.domain.event.dtos.EventDto;
-import org.apache.commons.lang3.StringUtils;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 
 @ApplicationScoped
 public class EventValidator {

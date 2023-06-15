@@ -1,10 +1,9 @@
 package aics.domain.user.entities;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import jakarta.persistence.*;
 
 @Entity(name = "USER_NOTIFICATIONS")
 @Getter

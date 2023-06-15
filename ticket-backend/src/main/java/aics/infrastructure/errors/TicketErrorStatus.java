@@ -1,9 +1,8 @@
 package aics.infrastructure.errors;
 
+import jakarta.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import jakarta.ws.rs.core.Response;
 
 @Getter
 @AllArgsConstructor

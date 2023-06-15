@@ -23,12 +23,12 @@ import aics.infrastructure.auth.LoggedUserDetails;
 import aics.infrastructure.core.LabelValue;
 import aics.infrastructure.errors.TicketErrorStatus;
 import aics.infrastructure.errors.TicketException;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
