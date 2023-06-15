@@ -46,6 +46,9 @@ export default function FuzzySettingsPage() {
         setFetchFuzzyProfileResponseDto(null);
         try {
             const fetchFuzzyProfileResponseDto = await FuzzySettingsService.fetchFuzzyProfile(FUZZY_CONSTANTS.DEFAULT)
+
+            const fetchFuzzyProfilesResponseDto = await FuzzySettingsService.fetchFuzzyProfiles();
+            console.log('fetchFuzzyProfilesResponseDto', fetchFuzzyProfilesResponseDto)
             setFuzzyVariableYearChartData(FuzzyService.convertFuzzyVariableToChartData(fetchFuzzyProfileResponseDto.year));
             setFuzzyVariableRatingChartData(FuzzyService.convertFuzzyVariableToChartData(fetchFuzzyProfileResponseDto.rating));
             setFuzzyVariablePopularityChartData(FuzzyService.convertFuzzyVariableToChartData(fetchFuzzyProfileResponseDto.popularity));

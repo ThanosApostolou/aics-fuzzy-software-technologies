@@ -70,7 +70,7 @@ export default function AdminPage() {
     return (
         <Fragment>
             {isUserAuthorizedForRoles && (
-                <Box style={{ width: '100%', height: '100%' }}>
+                <Box style={{ width: '100%', height: '100%', padding: '1rem' }}>
                     <Box sx={{ width: '100%' }}>
                         <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
                             {tabs.map((tab, index) =>

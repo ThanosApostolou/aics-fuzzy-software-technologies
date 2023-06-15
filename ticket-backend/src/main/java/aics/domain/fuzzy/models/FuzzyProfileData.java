@@ -1,14 +1,14 @@
 package aics.domain.fuzzy.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 @Data
 @Accessors(chain = true)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FuzzyProfileData implements Serializable {
     private FuzzyVariableYear fuzzyVariableYear;
     private FuzzyVariableRating fuzzyVariableRating;

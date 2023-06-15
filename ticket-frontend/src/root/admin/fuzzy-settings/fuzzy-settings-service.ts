@@ -1,9 +1,11 @@
+import { GlobalState } from "../../../modules/core/global-state";
 import { FUZZY_CONSTANTS } from "../../../modules/fuzzy/fuzzy-constants";
 import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartTrapezoidal, FuzzyVariableDistributionPartTriangular } from "../../../modules/fuzzy/fuzzy-variable-distribution";
 import { FuzzyVariablePopularity } from "../../../modules/fuzzy/fuzzy-variable-popularity";
 import { FuzzyVariableRating } from "../../../modules/fuzzy/fuzzy-variable-rating";
 import { FuzzyVariableYear } from "../../../modules/fuzzy/fuzzy-variable-year";
 import { FetchFuzzyProfileResponseDto } from "./dtos/fetch-fuzzy-profile-dto";
+import { FetchFuzzyProfilesResponseDto } from "./dtos/fetch-fuzzy-profiles-dto";
 
 export class FuzzySettingsService {
     static async fetchAllFuzzyProfiles(): Promise<string[]> {
@@ -88,5 +90,14 @@ export class FuzzySettingsService {
                 })
             })
         }))
+    }
+
+    static async fetchFuzzyProfiles(): Promise<FetchFuzzyProfilesResponseDto> {
+        const apiConsumer = GlobalState.instance.apiConsumer;
+        const fetchFuzzyProfilesUrl = '/admin/fuzzy_settings/fetch_fuzzy_profiles'
+
+        const response = await apiConsumer.get(fetchFuzzyProfilesUrl);
+        const fetchProvidersListResponseDto: FetchFuzzyProfilesResponseDto = FetchFuzzyProfilesResponseDto.fromObj(response.data);
+        return fetchProvidersListResponseDto;
     }
 }

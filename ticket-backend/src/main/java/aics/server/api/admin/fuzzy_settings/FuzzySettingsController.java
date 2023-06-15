@@ -3,108 +3,36 @@ package aics.server.api.admin.fuzzy_settings;
 import aics.domain.user.RoleEnum;
 import aics.infrastructure.errors.TicketException;
 import aics.server.api.admin.admin_shared.AdminConstants;
-import aics.server.api.admin.providers.ProvidersActions;
-import aics.server.api.admin.providers.dtos.*;
+import aics.server.api.admin.fuzzy_settings.dtos.FetchFuzzyProfilesResponseDto;
 import io.quarkus.logging.Log;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestResponse;
 
 @Path(AdminConstants.ADMIN_PATH + "/fuzzy_settings")
 @RolesAllowed(RoleEnum.Values.TICKET_ADMIN)
 public class FuzzySettingsController {
     @Inject
-    ProvidersActions providersActions;
+    FuzzySettingsActions fuzzySettingsActions;
 
-    @Path("/fetch_fuzzy_profiles_names")
+    @Path("/fetch_fuzzy_profiles")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public RestResponse<FetchProvidersListResponseDto> handleFetchFuzzyProfilesNames() {
+    public RestResponse<FetchFuzzyProfilesResponseDto> handleFetchFuzzyProfiles() {
         Log.info("Start ProvidersController.handleFetchProvidersList");
         try {
-            FetchProvidersListResponseDto fetchProvidersListResponseDto = this.providersActions.doFetchProvidersList();
+            FetchFuzzyProfilesResponseDto fetchFuzzyProfilesResponseDto = this.fuzzySettingsActions.doFetchFuzzyProfiles();
             Log.info("End ProvidersController.handleFetchProvidersList");
-            return RestResponse.ok(fetchProvidersListResponseDto);
+            return RestResponse.ok(fetchFuzzyProfilesResponseDto);
         } catch (TicketException e) {
             Log.error("End ProvidersController.handleFetchProvidersList with error", e);
             return RestResponse.status(e.getStatus(), null);
         } catch (Exception e) {
             Log.error("End ProvidersController.handleFetchProvidersList with error", e);
-            return RestResponse.status(RestResponse.Status.INTERNAL_SERVER_ERROR, null);
-        }
-    }
-
-    @Path("/details/{id}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public RestResponse<FetchProviderDetailsResponseDto> handleFetchProviderDetails(@RestPath Long id) {
-        Log.info("Start ProvidersController.handleFetchProviderDetails");
-        try {
-            FetchProviderDetailsResponseDto fetchProviderDetailsResponseDto = this.providersActions.doFetchProvidersDetails(id);
-            Log.info("End ProvidersController.handleFetchProviderDetails");
-            return RestResponse.ok(fetchProviderDetailsResponseDto);
-        } catch (TicketException e) {
-            Log.error("End ProvidersController.handleFetchProviderDetails with error", e);
-            return RestResponse.status(e.getStatus(), null);
-        } catch (Exception e) {
-            Log.error("End ProvidersController.handleFetchProviderDetails with error", e);
-            return RestResponse.status(RestResponse.Status.INTERNAL_SERVER_ERROR, null);
-        }
-    }
-
-    @Path("/new")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public RestResponse<CreateProviderResponseDto> handleCreateProvider(CreateProviderRequestDto createProviderRequestDto) {
-        Log.info("Start ProvidersController.handleCreateProvider");
-        try {
-            CreateProviderResponseDto createProviderResponseDto = this.providersActions.doCreateProvider(createProviderRequestDto);
-            Log.info("End ProvidersController.handleCreateProvider");
-            return RestResponse.ok(createProviderResponseDto);
-        } catch (TicketException e) {
-            Log.error("End ProvidersController.handleCreateProvider with error", e);
-            return RestResponse.status(e.getStatus(), null);
-        } catch (Exception e) {
-            Log.error("End ProvidersController.handleCreateProvider with error", e);
-            return RestResponse.status(RestResponse.Status.INTERNAL_SERVER_ERROR, null);
-        }
-    }
-
-    @Path("/update")
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    public RestResponse<UpdateProviderResponseDto> handleUpdateProvider(UpdateProviderRequestDto updateProviderRequestDto) {
-        Log.info("Start ProvidersController.handleUpdateProvider");
-        try {
-            UpdateProviderResponseDto updateProviderResponseDto = this.providersActions.doUpdateProvider(updateProviderRequestDto);
-            Log.info("End ProvidersController.handleUpdateProvider");
-            return RestResponse.ok(updateProviderResponseDto);
-        } catch (TicketException e) {
-            Log.error("End ProvidersController.handleUpdateProvider with error", e);
-            return RestResponse.status(e.getStatus(), null);
-        } catch (Exception e) {
-            Log.error("End ProvidersController.handleUpdateProvider with error", e);
-            return RestResponse.status(RestResponse.Status.INTERNAL_SERVER_ERROR, null);
-        }
-    }
-
-    @Path("/id/{id}")
-    @DELETE
-    @Produces(MediaType.APPLICATION_JSON)
-    public RestResponse<DeleteProviderResponseDto> handleDeleteProvider(@RestPath Long id) {
-        Log.info("Start ProvidersController.handleDeleteProvider");
-        try {
-            DeleteProviderResponseDto deleteProviderResponseDto = this.providersActions.doDeleteProvider(id);
-            Log.info("End ProvidersController.handleDeleteProvider");
-            return RestResponse.ok(deleteProviderResponseDto);
-        } catch (TicketException e) {
-            Log.error("End ProvidersController.handleDeleteProvider with error", e);
-            return RestResponse.status(e.getStatus(), null);
-        } catch (Exception e) {
-            Log.error("End ProvidersController.handleDeleteProvider with error", e);
             return RestResponse.status(RestResponse.Status.INTERNAL_SERVER_ERROR, null);
         }
     }
