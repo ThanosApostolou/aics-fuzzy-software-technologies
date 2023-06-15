@@ -10,9 +10,7 @@ import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @ApplicationScoped
 public class MovieService {
@@ -40,7 +38,17 @@ public class MovieService {
         EventFilters eventFilters = new EventFilters()
                 .setFromDate(LocalDateTime.now());
         List<Event> eventsPlayingNow = this.eventRepository.findFiltered(eventFilters);
-        List<Movie> moviesPlayingNow = eventsPlayingNow.stream().map(Event::getMovie).collect(Collectors.toList());
+        Set<Long> moviesIds = new HashSet<>();
+        List<Movie> moviesPlayingNow = new ArrayList<>();
+        for (Event event : eventsPlayingNow) {
+            Movie movie = event.getMovie();
+            Long movieId = movie.getMovieId();
+            if (!moviesIds.contains(movieId)) {
+                moviesIds.add(movieId);
+                moviesPlayingNow.add(movie);
+            }
+        }
+        moviesPlayingNow.sort(Comparator.comparing(Movie::getName));
         return moviesPlayingNow;
     }
 
