@@ -58,30 +58,7 @@ const HomePage = () => {
 
     return (
         <Box style={{ width: '100%', height: '100%' }}>
-            {isWaitingFetch
-                ? (
-                    <CircularProgress />
-                )
-                : (
-                    <React.Fragment>
-                        <CarouselComponent movies={movies} />
-
-                        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                            <Stack direction={'row'} alignContent='center' alignItems={'center'}>
-                                <MovieIcon sx={{ marginLeft: 4 }} fontSize='large' />
-                                <Typography sx={{ fontSize: 'xx-large', marginLeft: 2, fontWeight: 'bolder' }}>ΠΑΙΖΟΝΤΑΙ ΤΩΡΑ</Typography>
-
-                            </Stack>
-
-                            <Link to={'/events'}>
-                                <Button sx={{ textDecoration: 'underline', marginRight: 5 }}> ΟΛΕΣ ΟΙ ΤΑΙΝΙΕΣ </Button>
-                            </Link>
-                        </div>
-
-                        <Divider variant="middle" style={{ marginBottom: 10 }} />
-                        <MoviesGridLayoutComponent movies={movies} />
-                    </React.Fragment>
-                )}
+            
 
         </Box>
     )
