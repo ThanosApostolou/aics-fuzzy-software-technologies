@@ -7,6 +7,7 @@ import GraphFuzzyDistributionComponent from './GraphFuzzyDistributionComponent';
 import { FuzzyProfileDto } from '../../../../modules/fuzzy/dtos/fuzzy-profile-dto';
 import { FUZZY_CONSTANTS, FuzzyVariableDistributionType, FuzzyVariablePartPosition } from '../../../../modules/fuzzy/fuzzy-constants';
 import { FuzzyVariableDistributionPart, FuzzyVariableI } from '../../../../modules/fuzzy/models/fuzzy-variable-distribution';
+import MyKatexComponent from '../../../../modules/mykatex/MyKatexComponent';
 
 export interface FuzzyVarPartComponentProps {
     fuzzyVariableDistributionPart: FuzzyVariableDistributionPart;
@@ -44,13 +45,57 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
         setType(type);
     }
 
+    function createLatexEquals(): string {
+        const partName = fuzzyVariableDistributionPart.partName.replace('_', '\\_');
+
+        let branches = '';
+        if (type === FuzzyVariableDistributionType.TRIANGULAR) {
+            if (a != null && c != null) {
+                branches += String.raw`0 & \text{, } x \leq ${a} \text{ or } x \geq ${c} \\\\`
+            } else if (a != null) {
+                branches += String.raw`0 & \text{, } x \leq ${a} \\\\`
+            } else if (c != null) {
+                branches += String.raw`0 & \text{, } x \geq ${c} \\\\`
+            }
+            if (a != null) {
+                branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\\\`
+            }
+            if (c != null) {
+                branches += String.raw`{${b} - x} \over {${c - b}} & \text{, } ${b} \leq x \leq ${c} \\\\`
+            }
+        } else if (type === FuzzyVariableDistributionType.TRAPEZOIDAL) {
+            if (a != null && d != null) {
+                branches += String.raw`0 & \text{, } x \leq ${a} \text{ or } x \geq ${d} \\\\`
+            } else if (a != null) {
+                branches += String.raw`0 & \text{, } x \leq ${a} \\\\`
+            } else if (d != null) {
+                branches += String.raw`0 & \text{, } x \geq ${d} \\\\`
+            }
+            if (a != null) {
+                branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\\\`
+            }
+            branches += String.raw`1 & \text{, } ${b} \leq x \leq ${c} \\\\`
+            if (c != null && d != null) {
+                branches += String.raw`{${c} - x} \over {${d - c}} & \text{, } ${c} \leq x \leq ${d} \\\\`
+            }
+        }
+        return String.raw`μ_{${partName}}(x) =
+        \left\{
+            \begin{array}{ll}
+                ${branches}
+            \end{array}
+        \right.`
+    }
+
     return (
         <Fragment>
-            <h5>{fuzzyVariableDistributionPart.partName}</h5>
+            <Grid container spacing={2} sx={{ justifyContent: 'center', justifyItems: 'center' }}>
+                <h5 style={{ textAlign: 'center' }}>{fuzzyVariableDistributionPart.partName}</h5>
+            </Grid>
 
             <Grid container spacing={2} sx={{ padding: 1 }}>
 
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={6}>
                     <FormControl disabled={readonly} size='small'>
                         <InputLabel id="label-select-type">Type</InputLabel>
                         <Select
@@ -82,6 +127,9 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                             disabled={readonly} type="number" label="d" value={d != null ? d : ''} onChange={(e) => setD(e.target.value != null ? parseInt(e.target.value) : null)} />
                     )}
 
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <MyKatexComponent latexStr={createLatexEquals()}></MyKatexComponent>
                 </Grid>
 
             </Grid>

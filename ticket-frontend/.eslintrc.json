@@ -39,6 +39,7 @@
                 "argsIgnorePattern": "^_"
             }
         ],
-        "prefer-const": "warn"
+        "prefer-const": "warn",
+        "no-empty": "warn"
     }
 }

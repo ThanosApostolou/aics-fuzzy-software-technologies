@@ -41,22 +41,22 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto }: FuzzyProfileC
         <Fragment>
             <Box style={{ width: '100%', height: '100%' }}>
                 <h2>Fuzzy Profile: {fuzzyProfileDto.name}</h2>
-                <hr></hr>
 
                 <FuzzyVarComponent fuzzyVariable={fuzzyVariableYear} readonly={readonly} xStepSize={5}></FuzzyVarComponent>
                 <hr></hr>
+                <br></br>
 
-                <h3>Rating Variable</h3>
                 <FuzzyVarComponent fuzzyVariable={fuzzyVariableRating} readonly={readonly} xStepSize={1}></FuzzyVarComponent>
                 <hr></hr>
+                <br></br>
 
-                <h3>Popularity Variable</h3>
                 <FuzzyVarComponent fuzzyVariable={fuzzyVariablePopularity} readonly={readonly} xStepSize={10}></FuzzyVarComponent>
                 <hr></hr>
+                <br></br>
 
-                <h3>Duration Variable</h3>
                 <FuzzyVarComponent fuzzyVariable={fuzzyVariableDuration} readonly={readonly} xStepSize={20}></FuzzyVarComponent>
                 <hr></hr>
+                <br></br>
 
                 <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={readonly} xStepSize={1}></FuzzyVarComponent>
                 <h3>Weights </h3>

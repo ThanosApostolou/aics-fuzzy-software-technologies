@@ -46,11 +46,21 @@ export default function FuzzyVarComponent({ fuzzyVariable, readonly, xStepSize }
     return (
         <Fragment>
             <Box style={{ width: '100%', height: '100%' }}>
-                <h3>{name} Variable</h3>
-                <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart1} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.START}></FuzzyVarPartComponent>
-                <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart2} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}></FuzzyVarPartComponent>
-                <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart3} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}></FuzzyVarPartComponent>
-                <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart4} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.END}></FuzzyVarPartComponent>
+                <h3 style={{ textAlign: 'center' }}>{name} Variable</h3>
+                <Grid container spacing={2} sx={{ padding: 1 }}>
+                    <Grid item container xs={12} lg={6} boxShadow={1}>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart1} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.START}></FuzzyVarPartComponent>
+                    </Grid>
+                    <Grid item container xs={12} lg={6} boxShadow={1}>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart2} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}></FuzzyVarPartComponent>
+                    </Grid>
+                    <Grid item container xs={12} lg={6} boxShadow={1}>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart3} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}></FuzzyVarPartComponent>
+                    </Grid>
+                    <Grid item container xs={12} lg={6} boxShadow={1}>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart4} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.END}></FuzzyVarPartComponent>
+                    </Grid>
+                </Grid>
 
                 {fuzzyVariableChartData && (
                     <div>
