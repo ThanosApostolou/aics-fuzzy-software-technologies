@@ -6,3 +6,9 @@ export enum FuzzyVariableDistributionType {
     TRIANGULAR = 'TRIANGULAR',
     TRAPEZOIDAL = 'TRAPEZOIDAL'
 }
+
+export enum FuzzyVariablePartPosition {
+    START = 'START',
+    MIDDLE = 'MIDDLE',
+    END = 'END'
+}

@@ -11,7 +11,7 @@ export interface GraphFuzzyDistributionComponentProps {
     xStepSize: number;
 }
 
-export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistributionComponentProps) {
+export default function GraphFuzzyDistributionComponent({ datasetIdKey, xTitle, chartData, xStepSize }: GraphFuzzyDistributionComponentProps) {
 
     const { enqueueSnackbar } = useSnackbar();
 
@@ -33,7 +33,7 @@ export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistrib
         <Fragment>
             <div style={{ height: 200, width: "100%" }}>
                 <Line height={200} width={800}
-                    datasetIdKey={props.datasetIdKey}
+                    datasetIdKey={datasetIdKey}
                     options={{
                         layout: {
                             autoPadding: true
@@ -64,7 +64,7 @@ export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistrib
                                 type: 'linear',
                                 title: {
                                     display: true,
-                                    text: props.xTitle,
+                                    text: xTitle,
                                     color: '#911',
                                     font: {
                                         family: 'Comic Sans MS',
@@ -74,12 +74,12 @@ export default function GraphFuzzyDistributionComponent(props: GraphFuzzyDistrib
                                     },
                                 },
                                 ticks: {
-                                    stepSize: props.xStepSize,
+                                    stepSize: xStepSize,
                                 }
                             }
                         }
                     }}
-                    data={props.chartData}
+                    data={chartData}
                 />
             </div>
         </Fragment>

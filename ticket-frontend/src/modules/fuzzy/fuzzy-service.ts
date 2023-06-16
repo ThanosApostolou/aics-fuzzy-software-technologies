@@ -1,5 +1,5 @@
 import { ChartData, ChartDataset } from "chart.js";
-import { FuzzyVariableDistributionPart, FuzzyVariableI } from "./fuzzy-variable-distribution";
+import { FuzzyVariableDistributionPart, FuzzyVariableI } from "./models/fuzzy-variable-distribution";
 
 export class FuzzyService {
     static convertFuzzyVariableToChartData(fuzzyVariableI: FuzzyVariableI): ChartData<"line", { x: number, y: number }[], number> {

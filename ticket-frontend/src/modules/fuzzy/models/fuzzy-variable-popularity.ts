@@ -25,6 +25,26 @@ export class FuzzyVariablePopularity implements FuzzyVariableI {
         this.varUnpopular = obj.varUnpopular;
     }
 
+    getName(): string {
+        return "POPULARITY";
+    }
+
+    get1stPart() {
+        return this.varVeryPopular;
+    }
+
+    get2ndPart() {
+        return this.varPopular;
+    }
+
+    get3rdPart() {
+        return this.varAverage;
+    }
+
+    get4thPart() {
+        return this.varUnpopular;
+    }
+
     static fromObj(obj: any): FuzzyVariablePopularity {
         return new FuzzyVariablePopularity({
             varVeryPopular: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varVeryPopular),

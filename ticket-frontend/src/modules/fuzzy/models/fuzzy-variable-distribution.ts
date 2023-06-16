@@ -1,8 +1,15 @@
-import { FuzzyVariableDistributionType } from "./fuzzy-constants";
+import { FuzzyVariableDistributionType } from "../fuzzy-constants";
 
 export interface FuzzyVariableI {
     getFuzzyVariableMap: () => Record<string, FuzzyVariableDistributionPart>;
     getFuzzyVariableColorsMap: () => Record<string, string>;
+
+    getName(): string;
+
+    get1stPart: () => FuzzyVariableDistributionPart;
+    get2ndPart: () => FuzzyVariableDistributionPart;
+    get3rdPart: () => FuzzyVariableDistributionPart;
+    get4thPart: () => FuzzyVariableDistributionPart;
 
 }
 
@@ -33,16 +40,19 @@ export class FuzzyVariableDistributionPartUtils {
 
 export class FuzzyVariableDistributionPartTriangular {
     type: FuzzyVariableDistributionType;
+    partName: string;
     a: number | null;
     b: number;
     c: number | null;
 
     constructor(obj: {
+        partName: string,
         a: number | null,
         b: number,
         c: number | null,
     }) {
         this.type = FuzzyVariableDistributionType.TRIANGULAR;
+        this.partName = obj.partName;
         this.a = obj.a;
         this.b = obj.b;
         this.c = obj.c;
@@ -68,6 +78,7 @@ export class FuzzyVariableDistributionPartTriangular {
             throw new Error('obj cannot be null');
         }
         return new FuzzyVariableDistributionPartTriangular({
+            partName: obj.partName,
             a: obj.a,
             b: obj.b,
             c: obj.c
@@ -78,18 +89,21 @@ export class FuzzyVariableDistributionPartTriangular {
 
 export class FuzzyVariableDistributionPartTrapezoidal {
     type: FuzzyVariableDistributionType;
+    partName: string;
     a: number | null;
     b: number;
     c: number;
     d: number | null;
 
     constructor(obj: {
+        partName: string,
         a: number | null;
         b: number;
         c: number;
         d: number | null;
     }) {
         this.type = FuzzyVariableDistributionType.TRAPEZOIDAL;
+        this.partName = obj.partName;
         this.a = obj.a;
         this.b = obj.b;
         this.c = obj.c;
@@ -116,6 +130,7 @@ export class FuzzyVariableDistributionPartTrapezoidal {
             throw new Error('obj cannot be null');
         }
         return new FuzzyVariableDistributionPartTrapezoidal({
+            partName: obj.partName,
             a: obj.a,
             b: obj.b,
             c: obj.c,

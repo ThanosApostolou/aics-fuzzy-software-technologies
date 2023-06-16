@@ -1,70 +1,66 @@
 import { Box, Button, Grid } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { ChartData } from 'chart.js';
+import { } from 'chart.js';
 import { FuzzyService } from '../../../../modules/fuzzy/fuzzy-service';
-import GraphFuzzyDistributionComponent from '../components/GraphFuzzyDistributionComponent';
+import GraphFuzzyDistributionComponent from './GraphFuzzyDistributionComponent';
 import { FuzzyProfileDto } from '../../../../modules/fuzzy/dtos/fuzzy-profile-dto';
 import { FUZZY_CONSTANTS } from '../../../../modules/fuzzy/fuzzy-constants';
+import { FuzzyVariableYear } from '../../../../modules/fuzzy/models/fuzzy-variable-year';
+import FuzzyVarComponent from './FuzzyVarComponent';
+import { FuzzyVariableDuration } from '../../../../modules/fuzzy/models/fuzzy-variable-duration';
+import { FuzzyVariableI } from '../../../../modules/fuzzy/models/fuzzy-variable-distribution';
+import { FuzzyVariableRating } from '../../../../modules/fuzzy/models/fuzzy-variable-rating';
+import { FuzzyVariablePopularity } from '../../../../modules/fuzzy/models/fuzzy-variable-popularity';
+import { FuzzyWeights } from '../../../../modules/fuzzy/models/fuzzy-weights';
 
 export interface FuzzyProfileComponentProps {
     fuzzyProfileDto: FuzzyProfileDto
 }
 
-export default function FuzzyProfileComponent(props: FuzzyProfileComponentProps) {
-    const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto>(props.fuzzyProfileDto)
-    const [fuzzyVariableYearChartData, setFuzzyVariableYearChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableToChartData(props.fuzzyProfileDto.fuzzyProfileData.fuzzyVariableYear));
-    const [fuzzyVariableRatingChartData, setFuzzyVariableRatingChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableToChartData(props.fuzzyProfileDto.fuzzyProfileData.fuzzyVariableRating));
-    const [fuzzyVariablePopularityChartData, setFuzzyVariablePopularityChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableToChartData(props.fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity));
-    const [fuzzyVariableDurationChartData, setFuzzyVariableDurationChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableToChartData(props.fuzzyProfileDto.fuzzyProfileData.fuzzyVariableDuration));
-    const [fuzzyWeightsChartData, setFuzzyWeightsChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableToChartData(props.fuzzyProfileDto.fuzzyProfileData.fuzzyWeights));
-    const [readonly, setReadonly] = useState<boolean>(props.fuzzyProfileDto.name === FUZZY_CONSTANTS.DEFAULT);
+export default function FuzzyProfileComponent({ fuzzyProfileDto }: FuzzyProfileComponentProps) {
+    // const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto>(fuzzyProfileDto)
+    const [fuzzyVariableYear, setFuzzyVariableYear] = useState<FuzzyVariableYear>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableYear);
+    const [fuzzyVariableRating, setFuzzyVariableRating] = useState<FuzzyVariableRating>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableRating);
+    const [fuzzyVariablePopularity, setFuzzyVariablePopularity] = useState<FuzzyVariablePopularity>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity);
+    const [fuzzyVariableDuration, setFuzzyVariableDuration] = useState<FuzzyVariableDuration>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableDuration);
+    const [fuzzyWeights, setFuzzyWeights] = useState<FuzzyWeights>(fuzzyProfileDto.fuzzyProfileData.fuzzyWeights);
+    const [readonly, setReadonly] = useState<boolean>(fuzzyProfileDto.name === FUZZY_CONSTANTS.DEFAULT);
 
 
     const { enqueueSnackbar } = useSnackbar();
 
     // useEffect(() => {
-    //     setFuzzyVariableYearChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableYear));
-    //     setFuzzyVariableRatingChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableRating));
-    //     setFuzzyVariablePopularityChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity));
+    //     setFuzzyVariableYear(FuzzyService.convertFuzzyVariableTo(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableYear));
+    //     setFuzzyVariableRating(FuzzyService.convertFuzzyVariableTo(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableRating));
+    //     setFuzzyVariablePopularity(FuzzyService.convertFuzzyVariableTo(fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity));
     // }, [])
 
 
     return (
         <Fragment>
             <Box style={{ width: '100%', height: '100%' }}>
-                <h2>Fuzzy Profile</h2>
-
+                <h2>Fuzzy Profile: {fuzzyProfileDto.name}</h2>
                 <hr></hr>
-                <h3>Year Variable</h3>
-                {fuzzyProfileDto && fuzzyVariableYearChartData && (
-                    <GraphFuzzyDistributionComponent datasetIdKey="yearChart" xTitle="YEAR" chartData={fuzzyVariableYearChartData} xStepSize={5}></GraphFuzzyDistributionComponent>
-                )}
 
-
+                <FuzzyVarComponent fuzzyVariable={fuzzyVariableYear} readonly={readonly} xStepSize={5}></FuzzyVarComponent>
                 <hr></hr>
+
                 <h3>Rating Variable</h3>
-                {fuzzyProfileDto && fuzzyVariableRatingChartData && (
-                    <GraphFuzzyDistributionComponent datasetIdKey="ratingChart" xTitle="RATING" chartData={fuzzyVariableRatingChartData} xStepSize={1}></GraphFuzzyDistributionComponent>
-                )}
+                <FuzzyVarComponent fuzzyVariable={fuzzyVariableRating} readonly={readonly} xStepSize={1}></FuzzyVarComponent>
                 <hr></hr>
 
                 <h3>Popularity Variable</h3>
-                {fuzzyProfileDto && fuzzyVariablePopularityChartData && (
-                    <GraphFuzzyDistributionComponent datasetIdKey="popularityChart" xTitle="POPULARITY" chartData={fuzzyVariablePopularityChartData} xStepSize={10}></GraphFuzzyDistributionComponent>
-                )}
+                <FuzzyVarComponent fuzzyVariable={fuzzyVariablePopularity} readonly={readonly} xStepSize={10}></FuzzyVarComponent>
                 <hr></hr>
 
                 <h3>Duration Variable</h3>
-                {fuzzyProfileDto && fuzzyVariableDurationChartData && (
-                    <GraphFuzzyDistributionComponent datasetIdKey="durationChart" xTitle="DURATION" chartData={fuzzyVariableDurationChartData} xStepSize={20}></GraphFuzzyDistributionComponent>
-                )}
+                <FuzzyVarComponent fuzzyVariable={fuzzyVariableDuration} readonly={readonly} xStepSize={20}></FuzzyVarComponent>
                 <hr></hr>
 
+                <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={readonly} xStepSize={1}></FuzzyVarComponent>
                 <h3>Weights </h3>
-                {fuzzyProfileDto && fuzzyWeightsChartData && (
-                    <GraphFuzzyDistributionComponent datasetIdKey="weightsChart" xTitle="WEIGHTS" chartData={fuzzyWeightsChartData} xStepSize={1}></GraphFuzzyDistributionComponent>
-                )}
+
             </Box>
         </Fragment>
     );

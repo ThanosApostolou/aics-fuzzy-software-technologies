@@ -1,8 +1,8 @@
-import { FuzzyVariableDuration } from "../fuzzy-variable-duration";
-import { FuzzyVariablePopularity } from "../fuzzy-variable-popularity";
-import { FuzzyVariableRating } from "../fuzzy-variable-rating";
-import { FuzzyVariableYear } from "../fuzzy-variable-year";
-import { FuzzyWeights } from "../fuzzy-weights";
+import { FuzzyVariableDuration } from "./fuzzy-variable-duration";
+import { FuzzyVariablePopularity } from "./fuzzy-variable-popularity";
+import { FuzzyVariableRating } from "./fuzzy-variable-rating";
+import { FuzzyVariableYear } from "./fuzzy-variable-year";
+import { FuzzyWeights } from "./fuzzy-weights";
 
 export class FuzzyProfileData {
     fuzzyVariableYear: FuzzyVariableYear;

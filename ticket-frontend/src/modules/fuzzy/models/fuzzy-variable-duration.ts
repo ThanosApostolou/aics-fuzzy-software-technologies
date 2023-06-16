@@ -25,6 +25,26 @@ export class FuzzyVariableDuration implements FuzzyVariableI {
         this.varHuge = obj.varHuge;
     }
 
+    getName(): string {
+        return "DURATION";
+    }
+
+    get1stPart() {
+        return this.varSmall;
+    }
+
+    get2ndPart() {
+        return this.varAverage;
+    }
+
+    get3rdPart() {
+        return this.varBig;
+    }
+
+    get4thPart() {
+        return this.varHuge;
+    }
+
     static fromObj(obj: any): FuzzyVariableDuration {
         return new FuzzyVariableDuration({
             varSmall: FuzzyVariableDistributionPartUtils.fuzzyVariableDistributionPartFromObj(obj.varSmall),
@@ -51,5 +71,6 @@ export class FuzzyVariableDuration implements FuzzyVariableI {
             [FuzzyVariableDurationFields.HUGE]: 'green',
         }
     }
+
 
 }

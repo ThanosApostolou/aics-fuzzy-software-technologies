@@ -9,13 +9,15 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 public class FuzzyVariableDistributionPartTrapezoidal extends FuzzyVariableDistributionPart implements Serializable {
+    private String partName;
     private final Integer a;
     private final int b;
     private final int c;
     private final Integer d;
 
-    public FuzzyVariableDistributionPartTrapezoidal(Integer a, int b, int c, Integer d) {
+    public FuzzyVariableDistributionPartTrapezoidal(String partName, Integer a, int b, int c, Integer d) {
         this.setType(FuzzyVariableDistributionType.TRAPEZOIDAL);
+        this.partName = partName;
         this.a = a;
         this.b = b;
         this.c = c;
