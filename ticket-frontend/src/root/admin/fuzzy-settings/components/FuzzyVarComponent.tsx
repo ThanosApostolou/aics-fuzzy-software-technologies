@@ -13,10 +13,11 @@ export interface FuzzyVarComponentProps {
     fuzzyVariable: FuzzyVariableI;
     readonly: boolean;
     xStepSize: number;
+    fuzzyVarUpdated?: (fuzzyVariable: FuzzyVariableI) => void;
 }
 
 export default function FuzzyVarComponent({ fuzzyVariable, readonly, xStepSize }: FuzzyVarComponentProps) {
-    const [fuzzyVariableChartData, setFuzzyVariableChartData] = useState<ChartData<"line", { x: number, y: number }[], number>>(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));
+    const [fuzzyVariableChartData, setFuzzyVariableChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));
     const [fuzzyVartPart1, setFuzzyVartPart1] = useState<FuzzyVariableDistributionPart>(fuzzyVariable.get1stPart());
     const [fuzzyVartPart2, setFuzzyVartPart2] = useState<FuzzyVariableDistributionPart>(fuzzyVariable.get2ndPart());
     const [fuzzyVartPart3, setFuzzyVartPart3] = useState<FuzzyVariableDistributionPart>(fuzzyVariable.get3rdPart());
@@ -40,6 +41,31 @@ export default function FuzzyVarComponent({ fuzzyVariable, readonly, xStepSize }
         // return fuzzyVariable.getFuzzyVariableMap;
         return fuzzyVariable;
 
+
+    }
+
+    function fuzzyVarPart1Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        setFuzzyVartPart1(fuzzyVariableDistributionPart);
+        fuzzyVariable.set1stPart(fuzzyVariableDistributionPart);
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+    }
+
+    function fuzzyVarPart2Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        setFuzzyVartPart2(fuzzyVariableDistributionPart);
+        fuzzyVariable.set2ndPart(fuzzyVariableDistributionPart);
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+    }
+
+    function fuzzyVarPart3Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        setFuzzyVartPart3(fuzzyVariableDistributionPart);
+        fuzzyVariable.set3rdPart(fuzzyVariableDistributionPart);
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+    }
+
+    function fuzzyVarPart4Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        setFuzzyVartPart4(fuzzyVariableDistributionPart);
+        fuzzyVariable.set4thPart(fuzzyVariableDistributionPart);
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
     }
 
 
@@ -49,16 +75,20 @@ export default function FuzzyVarComponent({ fuzzyVariable, readonly, xStepSize }
                 <h3 style={{ textAlign: 'center' }}>{name} Variable</h3>
                 <Grid container spacing={2} sx={{ padding: 1 }}>
                     <Grid item container xs={12} lg={6} boxShadow={1}>
-                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart1} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.START}></FuzzyVarPartComponent>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart1} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.START}
+                            fuzzyVarPartUpdated={fuzzyVarPart1Updated}></FuzzyVarPartComponent>
                     </Grid>
                     <Grid item container xs={12} lg={6} boxShadow={1}>
-                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart2} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}></FuzzyVarPartComponent>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart2} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}
+                            fuzzyVarPartUpdated={fuzzyVarPart2Updated}></FuzzyVarPartComponent>
                     </Grid>
                     <Grid item container xs={12} lg={6} boxShadow={1}>
-                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart3} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}></FuzzyVarPartComponent>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart3} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.MIDDLE}
+                            fuzzyVarPartUpdated={fuzzyVarPart3Updated}></FuzzyVarPartComponent>
                     </Grid>
                     <Grid item container xs={12} lg={6} boxShadow={1}>
-                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart4} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.END}></FuzzyVarPartComponent>
+                        <FuzzyVarPartComponent fuzzyVariableDistributionPart={fuzzyVartPart4} readonly={readonly} fuzzyVariablePartPosition={FuzzyVariablePartPosition.END}
+                            fuzzyVarPartUpdated={fuzzyVarPart4Updated}></FuzzyVarPartComponent>
                     </Grid>
                 </Grid>
 

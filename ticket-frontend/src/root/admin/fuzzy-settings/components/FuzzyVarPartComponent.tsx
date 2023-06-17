@@ -1,12 +1,12 @@
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { ChartData } from 'chart.js';
 import { FuzzyService } from '../../../../modules/fuzzy/fuzzy-service';
 import GraphFuzzyDistributionComponent from './GraphFuzzyDistributionComponent';
 import { FuzzyProfileDto } from '../../../../modules/fuzzy/dtos/fuzzy-profile-dto';
 import { FUZZY_CONSTANTS, FuzzyVariableDistributionType, FuzzyVariablePartPosition } from '../../../../modules/fuzzy/fuzzy-constants';
-import { FuzzyVariableDistributionPart, FuzzyVariableI } from '../../../../modules/fuzzy/models/fuzzy-variable-distribution';
+import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartTrapezoidal, FuzzyVariableDistributionPartTriangular, FuzzyVariableI } from '../../../../modules/fuzzy/models/fuzzy-variable-distribution';
 import MyKatexComponent from '../../../../modules/mykatex/MyKatexComponent';
 
 export interface FuzzyVarPartComponentProps {
@@ -23,14 +23,31 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
     const [c, setC] = useState<number | null>(fuzzyVariableDistributionPart.c);
     const [d, setD] = useState<number | null>(fuzzyVariableDistributionPart.isTypeTrapezoidal() ? fuzzyVariableDistributionPart.d : null);
     const { enqueueSnackbar } = useSnackbar();
+    const latexStr = useMemo(() => createLatexEquals(), [a, b, c, d]);
 
     useEffect(() => {
-        // setFuzzyVariableYearChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableYear));
-        // setFuzzyVariableRatingChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableRating));
-        // setFuzzyVariablePopularityChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity));
-    }, [])
+        if (fuzzyVarPartUpdated) {
+            fuzzyVarPartUpdated(stateToFuzzyVariableDistributionPart())
+        }
+    }, [type, a, b, c, d])
 
-    function fuzzyVariableDistributionPartToState(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+    function stateToFuzzyVariableDistributionPart(): FuzzyVariableDistributionPart {
+        if (FuzzyVariableDistributionType.TRIANGULAR === type) {
+            return new FuzzyVariableDistributionPartTriangular({
+                partName: fuzzyVariableDistributionPart.partName,
+                a: a,
+                b: b,
+                c: c,
+            })
+        } else {
+            return new FuzzyVariableDistributionPartTrapezoidal({
+                partName: fuzzyVariableDistributionPart.partName,
+                a: a,
+                b: b,
+                c: c != null ? c : 0,
+                d: d
+            })
+        }
 
     }
 
@@ -43,6 +60,23 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
     function handleTypeChange(event: SelectChangeEvent<FuzzyVariableDistributionType>) {
         const type = event.target.value as FuzzyVariableDistributionType;
         setType(type);
+        if (FuzzyVariablePartPosition.END !== fuzzyVariablePartPosition) {
+            if (FuzzyVariableDistributionType.TRIANGULAR === type) {
+                setD(null);
+            } else if (FuzzyVariableDistributionType.TRAPEZOIDAL === type) {
+                setD(c);
+            }
+        } else {
+            if (FuzzyVariablePartPosition.END !== fuzzyVariablePartPosition) {
+                if (FuzzyVariableDistributionType.TRIANGULAR === type) {
+                    setC(null);
+                    setD(null);
+                } else if (FuzzyVariableDistributionType.TRAPEZOIDAL === type) {
+                    setC(b);
+                    setD(null);
+                }
+            }
+        }
     }
 
     function createLatexEquals(): string {
@@ -113,23 +147,23 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
 
                     {fuzzyVariablePartPosition !== FuzzyVariablePartPosition.START && (
                         <TextField size='small' sx={{ width: '6rem' }}
-                            disabled={readonly} type="number" label="a" value={a != null ? a : ''} onChange={(e) => setA(e.target.value != null ? parseInt(e.target.value) : null)} />
+                            disabled={readonly} type="number" label="a" value={a != null ? a : ''} onChange={(e) => setA(e.target.value ? parseInt(e.target.value) : null)} />
                     )}
                     <TextField size='small' sx={{ width: '6rem' }}
-                        disabled={readonly} type="number" label="b" value={b} onChange={(e) => setB(e.target.value != null ? parseInt(e.target.value) : 0)} />
+                        disabled={readonly} type="number" label="b" value={b} onChange={(e) => setB(e.target.value ? parseInt(e.target.value) : 0)} />
                     {!(type === FuzzyVariableDistributionType.TRIANGULAR && fuzzyVariablePartPosition === FuzzyVariablePartPosition.END) && (
                         <TextField size='small' sx={{ width: '6rem' }}
-                            disabled={readonly} type="number" label="c" value={c != null ? c : ''} onChange={(e) => setC(e.target.value != null ? parseInt(e.target.value) : null)} />
+                            disabled={readonly} type="number" label="c" value={c != null ? c : ''} onChange={(e) => setC(e.target.value ? parseInt(e.target.value) : null)} />
 
                     )}
                     {type === FuzzyVariableDistributionType.TRAPEZOIDAL && fuzzyVariablePartPosition !== FuzzyVariablePartPosition.END && (
                         <TextField size='small' sx={{ width: '6rem' }}
-                            disabled={readonly} type="number" label="d" value={d != null ? d : ''} onChange={(e) => setD(e.target.value != null ? parseInt(e.target.value) : null)} />
+                            disabled={readonly} type="number" label="d" value={d != null ? d : ''} onChange={(e) => setD(e.target.value ? parseInt(e.target.value) : null)} />
                     )}
 
                 </Grid>
                 <Grid item xs={12} sm={8}>
-                    <MyKatexComponent latexStr={createLatexEquals()}></MyKatexComponent>
+                    <MyKatexComponent latexStr={latexStr}></MyKatexComponent>
                 </Grid>
 
             </Grid>

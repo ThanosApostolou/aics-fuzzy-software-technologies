@@ -11,5 +11,5 @@ import java.io.Serializable;
 @RequiredArgsConstructor
 public class CreateFuzzyProfileResponseDto implements Serializable {
     final String name;
-    final String error;
+    final Serializable error;
 }

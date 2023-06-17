@@ -25,6 +25,19 @@ export class FuzzyWeights implements FuzzyVariableI {
         this.varVeryHighImportance = obj.varVeryHighImportance;
     }
 
+    set1stPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varLowImportance = fuzzyVariableDistributionPart;
+    }
+    set2ndPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varAverageImportance = fuzzyVariableDistributionPart;
+    }
+    set3rdPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varHighImportance = fuzzyVariableDistributionPart;
+    }
+    set4thPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varVeryHighImportance = fuzzyVariableDistributionPart;
+    }
+
     getName(): string {
         return "WEIGHTS";
     }

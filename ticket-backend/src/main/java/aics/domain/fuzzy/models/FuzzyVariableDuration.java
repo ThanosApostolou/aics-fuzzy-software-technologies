@@ -3,6 +3,7 @@ package aics.domain.fuzzy.models;
 import aics.domain.fuzzy.constants.FuzzyVariableDurationFields;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
+@NoArgsConstructor
 public class FuzzyVariableDuration implements Serializable, FuzzyVariableI {
     private FuzzyVariableDistributionPart varSmall;
     private FuzzyVariableDistributionPart varAverage;

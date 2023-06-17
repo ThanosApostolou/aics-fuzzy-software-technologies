@@ -25,6 +25,19 @@ export class FuzzyVariableYear implements FuzzyVariableI {
         this.varVeryNew = obj.varVeryNew;
     }
 
+    set1stPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varOld = fuzzyVariableDistributionPart;
+    }
+    set2ndPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varRecent = fuzzyVariableDistributionPart;
+    }
+    set3rdPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varNew = fuzzyVariableDistributionPart;
+    }
+    set4thPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varVeryNew = fuzzyVariableDistributionPart;
+    }
+
     getName(): string {
         return "YEAR";
     }

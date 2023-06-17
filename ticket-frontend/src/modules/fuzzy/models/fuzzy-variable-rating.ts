@@ -25,6 +25,20 @@ export class FuzzyVariableRating implements FuzzyVariableI {
         this.varVeryGood = obj.varVeryGood;
     }
 
+
+    set1stPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varBad = fuzzyVariableDistributionPart;
+    }
+    set2ndPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varAverage = fuzzyVariableDistributionPart;
+    }
+    set3rdPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varGood = fuzzyVariableDistributionPart;
+    }
+    set4thPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varVeryGood = fuzzyVariableDistributionPart;
+    }
+
     getName(): string {
         return "RATING";
     }

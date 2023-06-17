@@ -6,17 +6,19 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 @Data
 @Accessors(chain = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = FuzzyVariableDistributionPartTriangular.class, name = FuzzyVariableDistributionType.CONSTANT_NAME_TRIANGULAR),
-        @JsonSubTypes.Type(value = FuzzyVariableDistributionPartTriangular.class, name = FuzzyVariableDistributionType.CONSTANT_NAME_TRAPEZOIDAL),
+        @JsonSubTypes.Type(value = FuzzyVariableDistributionPartTrapezoidal.class, name = FuzzyVariableDistributionType.CONSTANT_NAME_TRAPEZOIDAL),
 })
-public abstract class FuzzyVariableDistributionPart {
-    private FuzzyVariableDistributionType type;
+public abstract class FuzzyVariableDistributionPart implements Serializable {
+    FuzzyVariableDistributionType type;
 
-    abstract public int getFirstValue();
+    abstract public int findFirstValue();
 
-    abstract public int getLastValue();
+    abstract public int findLastValue();
 }

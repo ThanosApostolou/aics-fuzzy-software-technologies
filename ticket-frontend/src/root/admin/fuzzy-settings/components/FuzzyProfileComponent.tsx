@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, TextField } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { } from 'chart.js';
@@ -14,6 +14,8 @@ import { FuzzyVariableRating } from '../../../../modules/fuzzy/models/fuzzy-vari
 import { FuzzyVariablePopularity } from '../../../../modules/fuzzy/models/fuzzy-variable-popularity';
 import { FuzzyWeights } from '../../../../modules/fuzzy/models/fuzzy-weights';
 import { Add, Edit, Delete } from '@mui/icons-material';
+import { FuzzyProfileData } from '../../../../modules/fuzzy/models/fuzzy-profile-data';
+import { FuzzySettingsService } from '../fuzzy-settings-service';
 
 export interface FuzzyProfileComponentProps {
     fuzzyProfileDto: FuzzyProfileDto;
@@ -28,6 +30,8 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
     const [fuzzyVariableDuration, setFuzzyVariableDuration] = useState<FuzzyVariableDuration>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableDuration);
     const [fuzzyWeights, setFuzzyWeights] = useState<FuzzyWeights>(fuzzyProfileDto.fuzzyProfileData.fuzzyWeights);
     const [name, setName] = useState<string>(fuzzyProfileDto.name)
+    const [enableDebug, setEnableDebug] = useState<boolean>(fuzzyProfileDto.enableDebug)
+    const [active, setActive] = useState<boolean>(fuzzyProfileDto.active)
 
 
     const { enqueueSnackbar } = useSnackbar();
@@ -38,17 +42,55 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
     //     setFuzzyVariablePopularity(FuzzyService.convertFuzzyVariableTo(fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity));
     // }, [])
 
+    function stateToFuzzyProfileDto(): FuzzyProfileDto {
+        return new FuzzyProfileDto({
+            fuzzyProfileId: null,
+            name: name,
+            fuzzyProfileData: new FuzzyProfileData({
+                fuzzyVariableYear,
+                fuzzyVariableRating,
+                fuzzyVariablePopularity,
+                fuzzyVariableDuration,
+                fuzzyWeights
+            }),
+            enableDebug,
+            active
+        })
+    }
 
-    function handleCreateProfile() {
+    async function handleCreateProfile() {
+        const newFuzzyProfileDto = stateToFuzzyProfileDto();
+        console.log('newFuzzyProfileDto', newFuzzyProfileDto)
+        try {
+            const response = await FuzzySettingsService.createFuzzyProfile(newFuzzyProfileDto);
+            enqueueSnackbar('Επιτυχημένη δημιουργία Fuzzy Profile', { variant: 'success' })
+            // props.afterAdd(e);
+        } catch (e: any) {
+            if (e?.response?.status === 422) {
+                console.error(e?.response?.data?.error);
+                enqueueSnackbar('Αποτυχημένη δημιουργία Fuzzy Profile: ' + e?.response?.data?.error, { variant: 'error' })
+            } else {
+                console.error(e);
+                enqueueSnackbar('Αποτυχημένη δημιουργία Fuzzy Profile', { variant: 'error' })
+            }
+            // if (e.response.statu)
+        }
 
     }
 
     function handleUpdateProfile() {
-
+        console.log('fuzzyVariableYear', fuzzyVariableYear)
     }
 
     function handleDeleteProfile() {
 
+    }
+
+    function handleEnableDebugChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setEnableDebug(event.target.checked);
+    }
+    function handleActiveChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setActive(event.target.checked);
     }
 
     return (
@@ -81,6 +123,10 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
                         )}
                     </Grid>
                 </Grid>
+                <FormGroup>
+                    <FormControlLabel disabled={readonly} control={<Switch onChange={handleEnableDebugChange} />} label="EnableDebug" checked={enableDebug} />
+                    <FormControlLabel disabled={readonly} control={<Switch onChange={handleActiveChange} />} label="Active" checked={active} />
+                </FormGroup>
                 <hr></hr>
 
                 <FuzzyVarComponent fuzzyVariable={fuzzyVariableYear} readonly={readonly} xStepSize={5}></FuzzyVarComponent>

@@ -11,6 +11,12 @@ export interface FuzzyVariableI {
     get3rdPart: () => FuzzyVariableDistributionPart;
     get4thPart: () => FuzzyVariableDistributionPart;
 
+
+    set1stPart: (fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) => void;
+    set2ndPart: (fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) => void;
+    set3rdPart: (fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) => void;
+    set4thPart: (fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) => void;
+
 }
 
 export type FuzzyVariableDistributionPart = FuzzyVariableDistributionPartTriangular | FuzzyVariableDistributionPartTrapezoidal;

@@ -45,13 +45,15 @@ public class FuzzySettingsController {
     @Produces(MediaType.APPLICATION_JSON)
     public RestResponse<CreateFuzzyProfileResponseDto> handleCreateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) {
         Log.info("Start ProvidersController.handleCreateFuzzyProfile");
+        System.out.println("THANOS_CONTROLLER");
+        System.out.println(fuzzyProfileDto);
         try {
             CreateFuzzyProfileResponseDto fetchFuzzyProfilesResponseDto = this.fuzzySettingsActions.doCreateFuzzyProfile(fuzzyProfileDto);
             Log.info("End ProvidersController.handleCreateFuzzyProfile");
             return RestResponse.ok(fetchFuzzyProfilesResponseDto);
         } catch (TicketException e) {
             Log.error("End ProvidersController.handleCreateFuzzyProfile with error", e);
-            return RestResponse.status(e.getStatus(), new CreateFuzzyProfileResponseDto(null, e.getMessage()));
+            return RestResponse.status(e.getStatus(), new CreateFuzzyProfileResponseDto(null, e.getErrors()));
         } catch (Exception e) {
             Log.error("End ProvidersController.handleCreateFuzzyProfile with error", e);
             return RestResponse.status(RestResponse.Status.INTERNAL_SERVER_ERROR, null);

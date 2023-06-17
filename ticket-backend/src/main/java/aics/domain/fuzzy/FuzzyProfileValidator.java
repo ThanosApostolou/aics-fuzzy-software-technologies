@@ -33,6 +33,12 @@ public class FuzzyProfileValidator {
         if (StringUtils.isEmpty(fuzzyProfileDto.getName())) {
             return "fuzzyProfileDto.getName() was empty";
         }
+
+        if (StringUtils.equals(fuzzyProfileDto.getName(), FuzzyConstants.DEFAULT)
+                || StringUtils.equals(fuzzyProfileDto.getName(), FuzzyConstants.NEW)
+        ) {
+            return "fuzzyProfileDto.getName() cannot be DEFAULT or NEW";
+        }
         return this.validateFuzzyProfileData(fuzzyProfileDto.getFuzzyProfileData());
     }
 
@@ -92,7 +98,7 @@ public class FuzzyProfileValidator {
         if (fuzzyVariableDuration == null) {
             return "fuzzyVariableDuration was null";
         }
-        final int min = 5;
+        final int min = 1;
         final int max = 400;
         String error = this.validateFuzzyVariableDistributionPart(fuzzyVariableDuration.getVarSmall(), FuzzyVariableDurationFields.SMALL.name(), FuzzyVariablePartPosition.START, min, max);
         if (error != null) {
@@ -108,6 +114,8 @@ public class FuzzyProfileValidator {
         }
         error = this.validateFuzzyVariableDistributionPart(fuzzyVariableDuration.getVarHuge(), FuzzyVariableDurationFields.HUGE.name(), FuzzyVariablePartPosition.END, min, max);
         if (error != null) {
+            System.out.println("THANOS1");
+            System.out.println(fuzzyVariableDuration);
             return error;
         }
         return this.validateFuzzyVariableDistributionPartsBoundaries(List.of(fuzzyVariableDuration.getVarSmall(), fuzzyVariableDuration.getVarAverage(), fuzzyVariableDuration.getVarBig(), fuzzyVariableDuration.getVarHuge()));
@@ -194,48 +202,18 @@ public class FuzzyProfileValidator {
         if (fuzzyVariableDistributionPart == null) {
             return "fuzzyVariableDistributionPart was null";
         }
-        if (fuzzyVariableDistributionPart instanceof FuzzyVariableDistributionPartTriangular fuzzyVariableDistributionPartTriangular) {
-            if (!StringUtils.equals(expectedPartName, fuzzyVariableDistributionPartTriangular.getPartName())) {
-                return "expectedPartName was %s but got %s".formatted(expectedPartName, fuzzyVariableDistributionPartTriangular.getPartName());
-            }
-            if (FuzzyVariablePartPosition.START == fuzzyVariablePartPosition) {
-                if (fuzzyVariableDistributionPartTriangular.getA() != null) {
-                    return "fuzzyVariableDistributionPartTrapezoidal.getA() should be null";
-                }
-            } else if (FuzzyVariablePartPosition.MIDDLE == fuzzyVariablePartPosition) {
-                if (fuzzyVariableDistributionPartTriangular.getA() == null || fuzzyVariableDistributionPartTriangular.getC() == null) {
-                    return "fuzzyVariableDistributionPartTrapezoidal.getA() and getC() should not be null";
-                }
-            } else if (FuzzyVariablePartPosition.END == fuzzyVariablePartPosition) {
-                if (fuzzyVariableDistributionPartTriangular.getC() != null) {
-                    return "fuzzyVariableDistributionPartTrapezoidal.getC() should be null";
-                }
-            }
-            if (fuzzyVariableDistributionPartTriangular.getA() != null) {
-                String error = this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTriangular.getA(), null, minValue, maxValue);
-                if (error != null) {
-                    return error;
-                }
-            }
-            String error = this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTriangular.getB(), fuzzyVariableDistributionPartTriangular.getA(), minValue, maxValue);
-            if (error != null) {
-                return error;
-            }
-            if (fuzzyVariableDistributionPartTriangular.getC() != null) {
-                return this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTriangular.getC(), fuzzyVariableDistributionPartTriangular.getB(), minValue, maxValue);
-            }
-        } else if (fuzzyVariableDistributionPart instanceof FuzzyVariableDistributionPartTrapezoidal fuzzyVariableDistributionPartTrapezoidal) {
+        if (fuzzyVariableDistributionPart instanceof FuzzyVariableDistributionPartTrapezoidal fuzzyVariableDistributionPartTrapezoidal) {
             if (FuzzyVariablePartPosition.START == fuzzyVariablePartPosition) {
                 if (fuzzyVariableDistributionPartTrapezoidal.getA() != null) {
-                    return "fuzzyVariableDistributionPartTrapezoidal.getA() should be null";
+                    return "PART %S: fuzzyVariableDistributionPartTrapezoidal.getA() should be null".formatted(fuzzyVariableDistributionPartTrapezoidal.getPartName());
                 }
             } else if (FuzzyVariablePartPosition.MIDDLE == fuzzyVariablePartPosition) {
                 if (fuzzyVariableDistributionPartTrapezoidal.getA() == null || fuzzyVariableDistributionPartTrapezoidal.getD() == null) {
-                    return "fuzzyVariableDistributionPartTrapezoidal.getA() and getD() should not be null";
+                    return "PART %S: fuzzyVariableDistributionPartTrapezoidal.getA() and getD() should not be null".formatted(fuzzyVariableDistributionPartTrapezoidal.getPartName());
                 }
             } else if (FuzzyVariablePartPosition.END == fuzzyVariablePartPosition) {
                 if (fuzzyVariableDistributionPartTrapezoidal.getD() != null) {
-                    return "fuzzyVariableDistributionPartTrapezoidal.getD() should be null";
+                    return "PART %S: fuzzyVariableDistributionPartTrapezoidal.getD() should be null".formatted(fuzzyVariableDistributionPartTrapezoidal.getPartName());
                 }
             }
             if (fuzzyVariableDistributionPartTrapezoidal.getA() != null) {
@@ -255,12 +233,44 @@ public class FuzzyProfileValidator {
             if (fuzzyVariableDistributionPartTrapezoidal.getD() != null) {
                 return this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTrapezoidal.getD(), fuzzyVariableDistributionPartTrapezoidal.getC(), minValue, maxValue);
             }
+        } else if (fuzzyVariableDistributionPart instanceof FuzzyVariableDistributionPartTriangular fuzzyVariableDistributionPartTriangular) {
+            if (!StringUtils.equals(expectedPartName, fuzzyVariableDistributionPartTriangular.getPartName())) {
+                return "expectedPartName was %s but got %s".formatted(expectedPartName, fuzzyVariableDistributionPartTriangular.getPartName());
+            }
+            if (FuzzyVariablePartPosition.START == fuzzyVariablePartPosition) {
+                if (fuzzyVariableDistributionPartTriangular.getA() != null) {
+                    return "PART %S: fuzzyVariableDistributionPartTriangular.getA() should be null".formatted(fuzzyVariableDistributionPartTriangular.getPartName());
+                }
+            } else if (FuzzyVariablePartPosition.MIDDLE == fuzzyVariablePartPosition) {
+                if (fuzzyVariableDistributionPartTriangular.getA() == null || fuzzyVariableDistributionPartTriangular.getC() == null) {
+                    return "PART %S: fuzzyVariableDistributionPartTriangular.getA() and getC() should not be null".formatted(fuzzyVariableDistributionPartTriangular.getPartName());
+                }
+            } else if (FuzzyVariablePartPosition.END == fuzzyVariablePartPosition) {
+                if (fuzzyVariableDistributionPartTriangular.getC() != null) {
+                    System.out.println("THANOS2");
+                    System.out.println(fuzzyVariableDistributionPartTriangular);
+                    return "PART %S: fuzzyVariableDistributionPartTriangular.getC() should be null".formatted(fuzzyVariableDistributionPartTriangular.getPartName());
+                }
+            }
+            if (fuzzyVariableDistributionPartTriangular.getA() != null) {
+                String error = this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTriangular.getA(), null, minValue, maxValue);
+                if (error != null) {
+                    return error;
+                }
+            }
+            String error = this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTriangular.getB(), fuzzyVariableDistributionPartTriangular.getA(), minValue, maxValue);
+            if (error != null) {
+                return error;
+            }
+            if (fuzzyVariableDistributionPartTriangular.getC() != null) {
+                return this.validateFuzzyVariableDistributionPartNumberLimits(fuzzyVariableDistributionPartTriangular.getC(), fuzzyVariableDistributionPartTriangular.getB(), minValue, maxValue);
+            }
         }
         return null;
     }
 
     private String validateFuzzyVariableDistributionPartNumberLimits(int value, Integer previousValue, int minValue, int maxValue) {
-        int previousValueOrMin = previousValue != null ? previousValue : minValue;
+        int previousValueOrMin = previousValue != null ? previousValue : minValue - 1;
         if (value <= previousValueOrMin) {
             return "value %s must be higher than previous value %s".formatted(value, previousValueOrMin);
         }
@@ -279,16 +289,23 @@ public class FuzzyProfileValidator {
         FuzzyVariableDistributionPart previousFuzzyVariableDistributionPart = fuzzyVariableDistributionParts.get(0);
         for (FuzzyVariableDistributionPart fuzzyVariableDistributionPart : fuzzyVariableDistributionParts) {
             if (index > 0) {
-                if (fuzzyVariableDistributionPart.getFirstValue() <= previousFuzzyVariableDistributionPart.getFirstValue()
-                        || fuzzyVariableDistributionPart.getFirstValue() >= previousFuzzyVariableDistributionPart.getLastValue()
-                ) {
-                    return "firstValue %s must be between %s and %s".formatted(fuzzyVariableDistributionPart.getFirstValue(), previousFuzzyVariableDistributionPart.getFirstValue(), previousFuzzyVariableDistributionPart.getLastValue());
+                String partName = "";
+                if (fuzzyVariableDistributionPart instanceof FuzzyVariableDistributionPartTriangular fuzzyVariableDistributionPartTriangular) {
+                    partName = fuzzyVariableDistributionPartTriangular.getPartName();
+                } else if (fuzzyVariableDistributionPart instanceof FuzzyVariableDistributionPartTrapezoidal fuzzyVariableDistributionPartTrapezoidal) {
+                    partName = fuzzyVariableDistributionPartTrapezoidal.getPartName();
                 }
-                if (fuzzyVariableDistributionPart.getLastValue() <= previousFuzzyVariableDistributionPart.getLastValue()) {
-                    return "lastValue %s must be greater than %s".formatted(fuzzyVariableDistributionPart.getLastValue(), previousFuzzyVariableDistributionPart.getLastValue());
+                if (fuzzyVariableDistributionPart.findFirstValue() <= previousFuzzyVariableDistributionPart.findFirstValue()
+                        || fuzzyVariableDistributionPart.findFirstValue() >= previousFuzzyVariableDistributionPart.findLastValue()
+                ) {
+                    return "PART %s: firstValue %s must be between %s and %s".formatted(partName, fuzzyVariableDistributionPart.findFirstValue(), previousFuzzyVariableDistributionPart.findFirstValue(), previousFuzzyVariableDistributionPart.findLastValue());
+                }
+                if (fuzzyVariableDistributionPart.findLastValue() <= previousFuzzyVariableDistributionPart.findLastValue()) {
+                    return "PART %s:lastValue %s must be greater than %s".formatted(partName, fuzzyVariableDistributionPart.findLastValue(), previousFuzzyVariableDistributionPart.findLastValue());
                 }
             }
             index++;
+            previousFuzzyVariableDistributionPart = fuzzyVariableDistributionPart;
         }
         return null;
     }

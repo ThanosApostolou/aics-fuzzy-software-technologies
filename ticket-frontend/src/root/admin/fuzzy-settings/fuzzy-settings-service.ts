@@ -1,5 +1,7 @@
 import { GlobalState } from "../../../modules/core/global-state";
+import { FuzzyProfileDto } from '../../../modules/fuzzy/dtos/fuzzy-profile-dto';
 import { FUZZY_CONSTANTS } from "../../../modules/fuzzy/fuzzy-constants";
+import { CreateFuzzyProfileResponseDto } from './dtos/create-fuzzy-profile-dto';
 import { FetchFuzzyProfilesResponseDto } from "./dtos/fetch-fuzzy-profiles-dto";
 
 export class FuzzySettingsService {
@@ -15,5 +17,14 @@ export class FuzzySettingsService {
         const response = await apiConsumer.get(fetchFuzzyProfilesUrl);
         const fetchProvidersListResponseDto: FetchFuzzyProfilesResponseDto = FetchFuzzyProfilesResponseDto.fromObj(response.data);
         return fetchProvidersListResponseDto;
+    }
+
+    static async createFuzzyProfile(fuzzyProfileDto: FuzzyProfileDto): Promise<CreateFuzzyProfileResponseDto> {
+        const apiConsumer = GlobalState.instance.apiConsumer;
+        const createFuzzyProfileUrl = '/admin/fuzzy_settings/create_fuzzy_profile'
+
+        const response = await apiConsumer.post(createFuzzyProfileUrl, fuzzyProfileDto);
+        const createFuzzyProfileResponseDto: CreateFuzzyProfileResponseDto = CreateFuzzyProfileResponseDto.fromObj(response.data);
+        return createFuzzyProfileResponseDto;
     }
 }

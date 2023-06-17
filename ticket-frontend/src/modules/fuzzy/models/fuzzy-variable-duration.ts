@@ -25,6 +25,19 @@ export class FuzzyVariableDuration implements FuzzyVariableI {
         this.varHuge = obj.varHuge;
     }
 
+    set1stPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varSmall = fuzzyVariableDistributionPart;
+    }
+    set2ndPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varAverage = fuzzyVariableDistributionPart;
+    }
+    set3rdPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varBig = fuzzyVariableDistributionPart;
+    }
+    set4thPart(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
+        this.varHuge = fuzzyVariableDistributionPart;
+    }
+
     getName(): string {
         return "DURATION";
     }
