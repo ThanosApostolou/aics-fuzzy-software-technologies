@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 @Accessors(chain = true)
@@ -20,5 +21,15 @@ public class FuzzyVariableDistributionPartTriangular extends FuzzyVariableDistri
         this.a = a;
         this.b = b;
         this.c = c;
+    }
+
+    @Override
+    public int getFirstValue() {
+        return Objects.requireNonNullElse(this.a, this.b);
+    }
+
+    @Override
+    public int getLastValue() {
+        return Objects.requireNonNullElse(this.c, this.b);
     }
 }

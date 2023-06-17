@@ -54,6 +54,15 @@ export class FuzzyVariableYear implements FuzzyVariableI {
         })
     }
 
+    deepClone(): FuzzyVariableYear {
+        return new FuzzyVariableYear({
+            varOld: this.varOld.deepClone(),
+            varRecent: this.varRecent.deepClone(),
+            varNew: this.varNew.deepClone(),
+            varVeryNew: this.varVeryNew.deepClone(),
+        })
+    }
+
     getFuzzyVariableMap(): Record<string, FuzzyVariableDistributionPart> {
         return {
             [FuzzyVariableYearFields.OLD]: this.varOld,

@@ -7,6 +7,7 @@ import { FetchFuzzyProfilesResponseDto } from './dtos/fetch-fuzzy-profiles-dto';
 import FuzzyProfileComponent from './components/FuzzyProfileComponent';
 import React from 'react';
 import { FuzzyProfileDto } from '../../../modules/fuzzy/dtos/fuzzy-profile-dto';
+import { Add, Delete, Edit } from '@mui/icons-material';
 export default function FuzzySettingsPage() {
     const [fetchFuzzyProfilesResponseDto, setFetchFuzzyProfilesResponseDto] = useState<FetchFuzzyProfilesResponseDto | null>(null)
     const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto | null>(null);
@@ -30,7 +31,7 @@ export default function FuzzySettingsPage() {
             console.log('fetchFuzzyProfilesResponseDto', fetchFuzzyProfilesResponseDto)
             const fuzzyProfileDto: FuzzyProfileDto = fetchFuzzyProfilesResponseDto.fuzzyProfilesMap[FUZZY_CONSTANTS.DEFAULT];
             setFetchFuzzyProfilesResponseDto(fetchFuzzyProfilesResponseDto);
-            setFuzzyProfileDto(fuzzyProfileDto);
+            setFuzzyProfileDto(fuzzyProfileDto.deepClone());
         } catch (e) {
             console.error(e);
             enqueueSnackbar('Αποτυχημένη εύρεση των Fuzzy Profiles', { variant: 'error' })
@@ -39,16 +40,31 @@ export default function FuzzySettingsPage() {
 
     function handleProfileChange(event: SelectChangeEvent<string>) {
         const newProfileName = event.target.value;
-        const newProfile = fetchFuzzyProfilesResponseDto?.fuzzyProfilesMap[newProfileName];
-        if (!newProfile) {
-            console.error(`cannot find ${newProfileName}`);
-            return;
+        if (FUZZY_CONSTANTS.NEW === newProfileName) {
+            const defaultProfile = fetchFuzzyProfilesResponseDto?.fuzzyProfilesMap[FUZZY_CONSTANTS.DEFAULT];
+            if (!defaultProfile) {
+                console.error(`cannot find DEFAULT profile`);
+                return;
+            }
+            const newProfile = defaultProfile.deepClone()
+            newProfile.name = '';
+            setSelectedProfileName(FUZZY_CONSTANTS.NEW)
+            setFuzzyProfileDto(null)
+            setTimeout(() => {
+                setFuzzyProfileDto(newProfile);
+            })
+        } else {
+            const newProfile = fetchFuzzyProfilesResponseDto?.fuzzyProfilesMap[newProfileName];
+            if (!newProfile) {
+                console.error(`cannot find ${newProfileName}`);
+                return;
+            }
+            setSelectedProfileName(newProfileName)
+            setFuzzyProfileDto(null)
+            setTimeout(() => {
+                setFuzzyProfileDto(newProfile.deepClone());
+            })
         }
-        setSelectedProfileName(newProfileName)
-        setFuzzyProfileDto(null)
-        setTimeout(() => {
-            setFuzzyProfileDto(newProfile);
-        })
     }
 
     return (
@@ -56,7 +72,6 @@ export default function FuzzySettingsPage() {
             <Box style={{ width: '100%', height: '100%' }}>
                 <h1>Fuzzy Settings</h1>
 
-                <hr></hr>
                 {fetchFuzzyProfilesResponseDto && fuzzyProfileDto
                     ? (
                         <React.Fragment>
@@ -72,10 +87,12 @@ export default function FuzzySettingsPage() {
                                     {fetchFuzzyProfilesResponseDto.fuzzyProfilesNames.map(profileName => (
                                         <MenuItem key={profileName} value={profileName}>{profileName}</MenuItem>
                                     ))}
+                                    <MenuItem key={FUZZY_CONSTANTS.NEW} value={FUZZY_CONSTANTS.NEW}>{FUZZY_CONSTANTS.NEW}</MenuItem>
                                 </Select>
                             </FormControl>
 
-                            <FuzzyProfileComponent fuzzyProfileDto={fuzzyProfileDto}></FuzzyProfileComponent>
+
+                            <FuzzyProfileComponent fuzzyProfileDto={fuzzyProfileDto} readonly={fuzzyProfileDto.name === FUZZY_CONSTANTS.DEFAULT}></FuzzyProfileComponent>
                         </React.Fragment>
                     )
                     : (

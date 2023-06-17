@@ -4,7 +4,9 @@ import aics.domain.fuzzy.FuzzyProfileRepository;
 import aics.domain.fuzzy.FuzzyProfileService;
 import aics.domain.fuzzy.dtos.FuzzyProfileDto;
 import aics.domain.fuzzy.etities.FuzzyProfile;
+import aics.infrastructure.errors.TicketErrorStatus;
 import aics.infrastructure.errors.TicketException;
+import aics.server.api.admin.fuzzy_settings.dtos.CreateFuzzyProfileResponseDto;
 import aics.server.api.admin.fuzzy_settings.dtos.FetchFuzzyProfilesResponseDto;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -49,4 +51,17 @@ public class FuzzySettingsActions {
         return fetchProvidersListResponseDto;
     }
 
+
+    @Transactional(rollbackOn = Exception.class)
+    public CreateFuzzyProfileResponseDto doCreateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) throws TicketException {
+        Log.info("Start FuzzySettingsActions.doCreateFuzzyProfile");
+
+        String error = this.fuzzyProfileService.createFuzzyProfile(fuzzyProfileDto);
+        if (error != null) {
+            throw new TicketException(new Exception(error), error, TicketErrorStatus.UNPROCESSABLE_ENTITY_422);
+        }
+
+        Log.info("End FuzzySettingsActions.doCreateFuzzyProfile");
+        return new CreateFuzzyProfileResponseDto(fuzzyProfileDto.getName(), null);
+    }
 }

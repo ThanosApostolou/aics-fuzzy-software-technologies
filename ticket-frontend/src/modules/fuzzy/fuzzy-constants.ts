@@ -1,5 +1,6 @@
 export class FUZZY_CONSTANTS {
     static readonly DEFAULT = 'DEFAULT';
+    static readonly NEW = 'NEW';
 }
 
 export enum FuzzyVariableDistributionType {

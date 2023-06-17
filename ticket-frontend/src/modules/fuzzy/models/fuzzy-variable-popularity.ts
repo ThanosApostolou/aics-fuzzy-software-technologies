@@ -54,6 +54,15 @@ export class FuzzyVariablePopularity implements FuzzyVariableI {
         })
     }
 
+    deepClone(): FuzzyVariablePopularity {
+        return new FuzzyVariablePopularity({
+            varVeryPopular: this.varVeryPopular.deepClone(),
+            varPopular: this.varPopular.deepClone(),
+            varAverage: this.varAverage.deepClone(),
+            varUnpopular: this.varUnpopular.deepClone(),
+        })
+    }
+
     getFuzzyVariableMap(): Record<string, FuzzyVariableDistributionPart> {
         return {
             [FuzzyVariablePopularityFields.VERY_POPULAR]: this.varVeryPopular,

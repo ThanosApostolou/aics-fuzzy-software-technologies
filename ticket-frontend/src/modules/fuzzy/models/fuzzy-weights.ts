@@ -54,6 +54,15 @@ export class FuzzyWeights implements FuzzyVariableI {
         })
     }
 
+    deepClone(): FuzzyWeights {
+        return new FuzzyWeights({
+            varLowImportance: this.varLowImportance.deepClone(),
+            varAverageImportance: this.varAverageImportance.deepClone(),
+            varHighImportance: this.varHighImportance.deepClone(),
+            varVeryHighImportance: this.varVeryHighImportance.deepClone(),
+        })
+    }
+
     getFuzzyVariableMap(): Record<string, FuzzyVariableDistributionPart> {
         return {
             [FuzzyWeightsFields.LOW_IMPORTANCE]: this.varLowImportance,

@@ -54,6 +54,15 @@ export class FuzzyVariableRating implements FuzzyVariableI {
         })
     }
 
+    deepClone(): FuzzyVariableRating {
+        return new FuzzyVariableRating({
+            varBad: this.varBad.deepClone(),
+            varAverage: this.varAverage.deepClone(),
+            varGood: this.varGood.deepClone(),
+            varVeryGood: this.varVeryGood.deepClone(),
+        })
+    }
+
     getFuzzyVariableMap(): Record<string, FuzzyVariableDistributionPart> {
         return {
             [FuzzyVariableRatingFields.BAD]: this.varBad,

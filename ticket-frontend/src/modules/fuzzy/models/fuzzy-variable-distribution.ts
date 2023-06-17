@@ -84,6 +84,15 @@ export class FuzzyVariableDistributionPartTriangular {
             c: obj.c
         })
     }
+
+    deepClone(): FuzzyVariableDistributionPartTriangular {
+        return new FuzzyVariableDistributionPartTriangular({
+            partName: this.partName,
+            a: this.a,
+            b: this.b,
+            c: this.c
+        })
+    }
 }
 
 
@@ -135,6 +144,16 @@ export class FuzzyVariableDistributionPartTrapezoidal {
             b: obj.b,
             c: obj.c,
             d: obj.d
+        })
+    }
+
+    deepClone(): FuzzyVariableDistributionPartTrapezoidal {
+        return new FuzzyVariableDistributionPartTrapezoidal({
+            partName: this.partName,
+            a: this.a,
+            b: this.b,
+            c: this.c,
+            d: this.d
         })
     }
 }

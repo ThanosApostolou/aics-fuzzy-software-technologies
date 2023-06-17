@@ -1,14 +1,14 @@
 import { FuzzyProfileData } from "../models/fuzzy-profile-data";
 
 export class FuzzyProfileDto {
-    fuzzyProfileId: number;
+    fuzzyProfileId: number | null;
     name: string;
     fuzzyProfileData: FuzzyProfileData;
     enableDebug: boolean;
     active: boolean;
 
     constructor(obj: {
-        fuzzyProfileId: number,
+        fuzzyProfileId: number | null,
         name: string,
         fuzzyProfileData: FuzzyProfileData,
         enableDebug: boolean,
@@ -32,6 +32,15 @@ export class FuzzyProfileDto {
             enableDebug: obj.enableDebug,
             active: obj.active,
         });
+    }
 
+    deepClone(): FuzzyProfileDto {
+        return new FuzzyProfileDto({
+            fuzzyProfileId: this.fuzzyProfileId,
+            name: this.name,
+            fuzzyProfileData: this.fuzzyProfileData.deepClone(),
+            enableDebug: this.enableDebug,
+            active: this.active,
+        })
     }
 }

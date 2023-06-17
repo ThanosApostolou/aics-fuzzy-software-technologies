@@ -58,10 +58,10 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                 branches += String.raw`0 & \text{, } x \geq ${c} \\\\`
             }
             if (a != null) {
-                branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\\\`
+                branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\`
             }
             if (c != null) {
-                branches += String.raw`{${b} - x} \over {${c - b}} & \text{, } ${b} \leq x \leq ${c} \\\\`
+                branches += String.raw`\\ {${b} - x} \over {${c - b}} & \text{, } ${b} \leq x \leq ${c} \\`
             }
         } else if (type === FuzzyVariableDistributionType.TRAPEZOIDAL) {
             if (a != null && d != null) {
@@ -74,9 +74,9 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
             if (a != null) {
                 branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\\\`
             }
-            branches += String.raw`1 & \text{, } ${b} \leq x \leq ${c} \\\\`
+            branches += String.raw`1 & \text{, } ${b} \leq x \leq ${c} \\`
             if (c != null && d != null) {
-                branches += String.raw`{${c} - x} \over {${d - c}} & \text{, } ${c} \leq x \leq ${d} \\\\`
+                branches += String.raw`\\ {${c} - x} \over {${d - c}} & \text{, } ${c} \leq x \leq ${d} \\`
             }
         }
         return String.raw`μ_{${partName}}(x) =
@@ -95,7 +95,7 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
 
             <Grid container spacing={2} sx={{ padding: 1 }}>
 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={4}>
                     <FormControl disabled={readonly} size='small'>
                         <InputLabel id="label-select-type">Type</InputLabel>
                         <Select
@@ -128,7 +128,7 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                     )}
 
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={8}>
                     <MyKatexComponent latexStr={createLatexEquals()}></MyKatexComponent>
                 </Grid>
 

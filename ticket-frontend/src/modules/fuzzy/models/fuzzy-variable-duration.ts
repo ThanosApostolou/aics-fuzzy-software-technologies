@@ -54,6 +54,15 @@ export class FuzzyVariableDuration implements FuzzyVariableI {
         })
     }
 
+    deepClone(): FuzzyVariableDuration {
+        return new FuzzyVariableDuration({
+            varSmall: this.varSmall.deepClone(),
+            varAverage: this.varAverage.deepClone(),
+            varBig: this.varBig.deepClone(),
+            varHuge: this.varHuge.deepClone(),
+        })
+    }
+
     getFuzzyVariableMap(): Record<string, FuzzyVariableDistributionPart> {
         return {
             [FuzzyVariableDurationFields.SMALL]: this.varSmall,

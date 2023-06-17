@@ -7,5 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum FuzzyVariableDistributionType {
     TRIANGULAR,
-    TRAPEZOIDAL
+    TRAPEZOIDAL;
+
+    public static final String CONSTANT_NAME_TRIANGULAR = "TRIANGULAR";
+    public static final String CONSTANT_NAME_TRAPEZOIDAL = "TRAPEZOIDAL";
 }

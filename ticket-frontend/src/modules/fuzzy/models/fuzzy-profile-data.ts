@@ -37,4 +37,14 @@ export class FuzzyProfileData {
             fuzzyWeights: FuzzyWeights.fromObj(obj.fuzzyWeights),
         })
     }
+
+    deepClone(): FuzzyProfileData {
+        return new FuzzyProfileData({
+            fuzzyVariableYear: this.fuzzyVariableYear.deepClone(),
+            fuzzyVariableRating: this.fuzzyVariableRating.deepClone(),
+            fuzzyVariablePopularity: this.fuzzyVariablePopularity.deepClone(),
+            fuzzyVariableDuration: this.fuzzyVariableDuration.deepClone(),
+            fuzzyWeights: this.fuzzyWeights.deepClone(),
+        })
+    }
 }

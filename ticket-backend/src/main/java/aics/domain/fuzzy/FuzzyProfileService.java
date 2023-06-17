@@ -1,12 +1,18 @@
 package aics.domain.fuzzy;
 
 import aics.domain.fuzzy.constants.*;
+import aics.domain.fuzzy.dtos.FuzzyProfileDto;
 import aics.domain.fuzzy.etities.FuzzyProfile;
 import aics.domain.fuzzy.models.*;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class FuzzyProfileService {
+    @Inject
+    FuzzyProfileRepository fuzzyProfileRepository;
+    @Inject
+    FuzzyProfileValidator fuzzyProfileValidator;
 
     public FuzzyProfile createDefaultProfile(boolean isDefaultActive) {
         FuzzyVariableYear fuzzyVariableYear = new FuzzyVariableYear(
@@ -56,5 +62,28 @@ public class FuzzyProfileService {
                 .setEnableDebug(true)
                 .setActive(isDefaultActive)
                 .setFuzzyProfileData(fuzzyProfileData);
+    }
+
+    public String createFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) {
+        String error = this.fuzzyProfileValidator.validateForCreateFuzzyProfile(fuzzyProfileDto);
+        if (error != null) {
+            return error;
+        }
+
+        FuzzyProfile existingFuzzyProfile = this.fuzzyProfileRepository.findByName(fuzzyProfileDto.getName()).orElse(null);
+        if (existingFuzzyProfile != null) {
+            return "Profile with name %s already exists".formatted(fuzzyProfileDto.getName());
+        }
+
+        FuzzyProfile newFuzzyProfile = new FuzzyProfile()
+                .setName(fuzzyProfileDto.getName())
+                .setEnableDebug(fuzzyProfileDto.isEnableDebug())
+                .setActive(fuzzyProfileDto.isActive())
+                .setFuzzyProfileData(fuzzyProfileDto.getFuzzyProfileData());
+
+        this.fuzzyProfileRepository.persist(newFuzzyProfile);
+
+        return null;
+
     }
 }
