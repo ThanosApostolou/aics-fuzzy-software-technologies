@@ -6,6 +6,7 @@ import aics.domain.fuzzy.etities.FuzzyProfile;
 import aics.domain.fuzzy.models.*;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.StringUtils;
 
 @ApplicationScoped
 public class FuzzyProfileService {
@@ -74,6 +75,7 @@ public class FuzzyProfileService {
         if (existingFuzzyProfile != null) {
             return "Profile with name %s already exists".formatted(fuzzyProfileDto.getName());
         }
+        this.resetActiveIfNewActivePorfile(fuzzyProfileDto.isActive(), fuzzyProfileDto.getName());
 
         FuzzyProfile newFuzzyProfile = new FuzzyProfile()
                 .setName(fuzzyProfileDto.getName())
@@ -82,6 +84,61 @@ public class FuzzyProfileService {
                 .setFuzzyProfileData(fuzzyProfileDto.getFuzzyProfileData());
 
         this.fuzzyProfileRepository.persist(newFuzzyProfile);
+
+        return null;
+
+    }
+
+
+    public String updateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) {
+        String error = this.fuzzyProfileValidator.validateForUpdateFuzzyProfile(fuzzyProfileDto);
+        if (error != null) {
+            return error;
+        }
+
+        FuzzyProfile existingFuzzyProfile = this.fuzzyProfileRepository.findByName(fuzzyProfileDto.getName()).orElse(null);
+        if (existingFuzzyProfile == null) {
+            return "Could not find Profile with name %s".formatted(fuzzyProfileDto.getName());
+        }
+        if (!fuzzyProfileDto.getFuzzyProfileId().equals(existingFuzzyProfile.getFuzzyProfileId())) {
+            return "fuzzyProfileId is different";
+        }
+        this.resetActiveIfNewActivePorfile(fuzzyProfileDto.isActive(), fuzzyProfileDto.getName());
+        existingFuzzyProfile
+                .setEnableDebug(fuzzyProfileDto.isEnableDebug())
+                .setActive(fuzzyProfileDto.isActive())
+                .setFuzzyProfileData(fuzzyProfileDto.getFuzzyProfileData());
+
+        this.fuzzyProfileRepository.persist(existingFuzzyProfile);
+
+        return null;
+
+    }
+
+    private void resetActiveIfNewActivePorfile(boolean active, String name) {
+        if (active) {
+            FuzzyProfile existingActiveProfile = this.fuzzyProfileRepository.findActive().orElse(null);
+            if (existingActiveProfile != null && !StringUtils.equals(name, existingActiveProfile.getName())) {
+                existingActiveProfile.setActive(false);
+                this.fuzzyProfileRepository.persist(existingActiveProfile);
+            }
+        }
+    }
+
+    public String deleteFuzzyProfileByName(String name) {
+        if (StringUtils.isEmpty(name)) {
+            return "name cannot be empty";
+        }
+        if (StringUtils.equals(name, FuzzyConstants.DEFAULT) || StringUtils.equals(name, FuzzyConstants.NEW)) {
+            return "name cannot DEFAULT or NEW";
+        }
+
+        FuzzyProfile existingFuzzyProfile = this.fuzzyProfileRepository.findByName(name).orElse(null);
+        if (existingFuzzyProfile == null) {
+            return "Cannot find profile with name %s".formatted(name);
+        }
+
+        this.fuzzyProfileRepository.delete(existingFuzzyProfile);
 
         return null;
 

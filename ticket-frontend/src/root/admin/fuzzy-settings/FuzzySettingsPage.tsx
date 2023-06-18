@@ -12,26 +12,24 @@ export default function FuzzySettingsPage() {
     const [fetchFuzzyProfilesResponseDto, setFetchFuzzyProfilesResponseDto] = useState<FetchFuzzyProfilesResponseDto | null>(null)
     const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto | null>(null);
     const [selectedProfileName, setSelectedProfileName] = useState<string>(FUZZY_CONSTANTS.DEFAULT);
-    // const [fetchFuzzyProfileResponseDto, setFetchFuzzyProfileResponseDto] = useState<FetchFuzzyProfileResponseDto | null>(null)
-    // const [fuzzyVariableYearChartData, setFuzzyVariableYearChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(null);
-    // const [fuzzyVariableRatingChartData, setFuzzyVariableRatingChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(null);
-    // const [fuzzyVariablePopularityChartData, setFuzzyVariablePopularityChartData] = useState<ChartData<"line", { x: number, y: number }[], number> | null>(null);
 
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        loadData();
+        loadData(selectedProfileName);
     }, [])
 
-    async function loadData() {
+    async function loadData(selectedProfileName: string) {
         setFetchFuzzyProfilesResponseDto(null);
         try {
-            setFetchFuzzyProfilesResponseDto(null)
+            setFetchFuzzyProfilesResponseDto(null);
+            setFuzzyProfileDto(null);
             const fetchFuzzyProfilesResponseDto = await FuzzySettingsService.fetchFuzzyProfiles();
             console.log('fetchFuzzyProfilesResponseDto', fetchFuzzyProfilesResponseDto)
-            const fuzzyProfileDto: FuzzyProfileDto = fetchFuzzyProfilesResponseDto.fuzzyProfilesMap[FUZZY_CONSTANTS.DEFAULT];
+            console.log('selectedProfileName', selectedProfileName)
+            const newFuzzyProfileDto: FuzzyProfileDto = fetchFuzzyProfilesResponseDto.fuzzyProfilesMap[selectedProfileName];
             setFetchFuzzyProfilesResponseDto(fetchFuzzyProfilesResponseDto);
-            setFuzzyProfileDto(fuzzyProfileDto.deepClone());
+            setFuzzyProfileDto(newFuzzyProfileDto.deepClone());
         } catch (e) {
             console.error(e);
             enqueueSnackbar('Αποτυχημένη εύρεση των Fuzzy Profiles', { variant: 'error' })
@@ -67,6 +65,12 @@ export default function FuzzySettingsPage() {
         }
     }
 
+    async function handleProfileChanged(name: string) {
+        console.log('name', name)
+        await loadData(name);
+        setSelectedProfileName(name);
+    }
+
     return (
         <Fragment>
             <Box style={{ width: '100%', height: '100%' }}>
@@ -91,8 +95,10 @@ export default function FuzzySettingsPage() {
                                 </Select>
                             </FormControl>
 
-
-                            <FuzzyProfileComponent fuzzyProfileDto={fuzzyProfileDto} readonly={fuzzyProfileDto.name === FUZZY_CONSTANTS.DEFAULT}></FuzzyProfileComponent>
+                            {fuzzyProfileDto && (
+                                <FuzzyProfileComponent fuzzyProfileDto={fuzzyProfileDto} readonly={fuzzyProfileDto.name === FUZZY_CONSTANTS.DEFAULT}
+                                    onProfileChanged={handleProfileChanged}></FuzzyProfileComponent>
+                            )}
                         </React.Fragment>
                     )
                     : (

@@ -47,25 +47,25 @@ export default function FuzzyVarComponent({ fuzzyVariable, readonly, xStepSize }
     function fuzzyVarPart1Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
         setFuzzyVartPart1(fuzzyVariableDistributionPart);
         fuzzyVariable.set1stPart(fuzzyVariableDistributionPart);
-        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));
     }
 
     function fuzzyVarPart2Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
         setFuzzyVartPart2(fuzzyVariableDistributionPart);
         fuzzyVariable.set2ndPart(fuzzyVariableDistributionPart);
-        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));
     }
 
     function fuzzyVarPart3Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
         setFuzzyVartPart3(fuzzyVariableDistributionPart);
         fuzzyVariable.set3rdPart(fuzzyVariableDistributionPart);
-        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));
     }
 
     function fuzzyVarPart4Updated(fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) {
         setFuzzyVartPart4(fuzzyVariableDistributionPart);
         fuzzyVariable.set4thPart(fuzzyVariableDistributionPart);
-        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));        // });
+        setFuzzyVariableChartData(FuzzyService.convertFuzzyVariableToChartData(fuzzyVariable));
     }
 
 

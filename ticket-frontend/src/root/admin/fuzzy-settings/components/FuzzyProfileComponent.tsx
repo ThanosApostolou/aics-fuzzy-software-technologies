@@ -1,4 +1,4 @@
-import { Box, Button, FormControlLabel, FormGroup, Grid, Switch, TextField } from '@mui/material';
+import { Box, Button, DialogContentText, FormControlLabel, FormGroup, Grid, Switch, TextField } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { } from 'chart.js';
@@ -16,13 +16,15 @@ import { FuzzyWeights } from '../../../../modules/fuzzy/models/fuzzy-weights';
 import { Add, Edit, Delete } from '@mui/icons-material';
 import { FuzzyProfileData } from '../../../../modules/fuzzy/models/fuzzy-profile-data';
 import { FuzzySettingsService } from '../fuzzy-settings-service';
+import ConfirmationDialogComponent from '../../../../modules/ui/components/MovieDialogDeleteComponent';
 
 export interface FuzzyProfileComponentProps {
     fuzzyProfileDto: FuzzyProfileDto;
     readonly: boolean;
+    onProfileChanged?: (name: string) => void;
 }
 
-export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: FuzzyProfileComponentProps) {
+export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onProfileChanged }: FuzzyProfileComponentProps) {
     // const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto>(fuzzyProfileDto)
     const [fuzzyVariableYear, setFuzzyVariableYear] = useState<FuzzyVariableYear>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableYear);
     const [fuzzyVariableRating, setFuzzyVariableRating] = useState<FuzzyVariableRating>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableRating);
@@ -32,6 +34,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
     const [name, setName] = useState<string>(fuzzyProfileDto.name)
     const [enableDebug, setEnableDebug] = useState<boolean>(fuzzyProfileDto.enableDebug)
     const [active, setActive] = useState<boolean>(fuzzyProfileDto.active)
+    const [deleteProfileConfirmationDialogOpen, setDeleteProfileConfirmationDialogOpen] = useState(false);
 
 
     const { enqueueSnackbar } = useSnackbar();
@@ -64,6 +67,9 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
         try {
             const response = await FuzzySettingsService.createFuzzyProfile(newFuzzyProfileDto);
             enqueueSnackbar('Επιτυχημένη δημιουργία Fuzzy Profile', { variant: 'success' })
+            if (onProfileChanged) {
+                onProfileChanged(name);
+            }
             // props.afterAdd(e);
         } catch (e: any) {
             if (e?.response?.status === 422) {
@@ -78,12 +84,51 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
 
     }
 
-    function handleUpdateProfile() {
-        console.log('fuzzyVariableYear', fuzzyVariableYear)
+    async function handleUpdateProfile() {
+        const updatedFuzzyProfileDto = stateToFuzzyProfileDto();
+        updatedFuzzyProfileDto.fuzzyProfileId = fuzzyProfileDto.fuzzyProfileId;
+        console.log('newFuzzyProfileDto', updatedFuzzyProfileDto)
+        try {
+            const response = await FuzzySettingsService.updateFuzzyProfile(updatedFuzzyProfileDto);
+            enqueueSnackbar('Επιτυχημένη αποθήκευση Fuzzy Profile', { variant: 'success' })
+            if (onProfileChanged) {
+                onProfileChanged(name);
+            }
+            // props.afterAdd(e);
+        } catch (e: any) {
+            if (e?.response?.status === 422) {
+                console.error(e?.response?.data?.error);
+                enqueueSnackbar('Αποτυχημένη αποθήκευση Fuzzy Profile: ' + e?.response?.data?.error, { variant: 'error' })
+            } else {
+                console.error(e);
+                enqueueSnackbar('Αποτυχημένη αποθήκευση Fuzzy Profile', { variant: 'error' })
+            }
+            // if (e.response.statu)
+        }
     }
 
-    function handleDeleteProfile() {
-
+    async function onDeleteProfileOk() {
+        try {
+            const response = await FuzzySettingsService.deleteFuzzyProfile(name);
+            enqueueSnackbar('Επιτυχημένη διαγραφή Fuzzy Profile', { variant: 'success' })
+            if (onProfileChanged) {
+                onProfileChanged(FUZZY_CONSTANTS.DEFAULT);
+            }
+            // props.afterAdd(e);
+        } catch (e: any) {
+            if (e?.response?.status === 422) {
+                console.error(e?.response?.data?.error);
+                enqueueSnackbar('Αποτυχημένη διαγραφή Fuzzy Profile: ' + e?.response?.data?.error, { variant: 'error' })
+            } else {
+                console.error(e);
+                enqueueSnackbar('Αποτυχημένη διαγραφή Fuzzy Profile', { variant: 'error' })
+            }
+            // if (e.response.statu)
+        }
+        setDeleteProfileConfirmationDialogOpen(false);
+    }
+    async function handleDeleteProfile() {
+        setDeleteProfileConfirmationDialogOpen(true);
     }
 
     function handleEnableDebugChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -149,6 +194,11 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly }: Fuz
                 <h3>Weights </h3>
 
             </Box>
+            <ConfirmationDialogComponent open={deleteProfileConfirmationDialogOpen} onOk={onDeleteProfileOk} onCancel={() => setDeleteProfileConfirmationDialogOpen(false)}>
+                <DialogContentText>
+                    Είστε σίγουρος ότι θέλετε να διαγράψεται αυτό το Fuzzy Profile?
+                </DialogContentText>
+            </ConfirmationDialogComponent>
         </Fragment>
     );
 }

@@ -7,7 +7,9 @@ import aics.domain.fuzzy.etities.FuzzyProfile;
 import aics.infrastructure.errors.TicketErrorStatus;
 import aics.infrastructure.errors.TicketException;
 import aics.server.api.admin.fuzzy_settings.dtos.CreateFuzzyProfileResponseDto;
+import aics.server.api.admin.fuzzy_settings.dtos.DeleteFuzzyProfileResponseDto;
 import aics.server.api.admin.fuzzy_settings.dtos.FetchFuzzyProfilesResponseDto;
+import aics.server.api.admin.fuzzy_settings.dtos.UpdateFuzzyProfileResponseDto;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -63,5 +65,31 @@ public class FuzzySettingsActions {
 
         Log.info("End FuzzySettingsActions.doCreateFuzzyProfile");
         return new CreateFuzzyProfileResponseDto(fuzzyProfileDto.getName(), null);
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public UpdateFuzzyProfileResponseDto doUpdateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) throws TicketException {
+        Log.info("Start FuzzySettingsActions.doUpdateFuzzyProfile");
+
+        String error = this.fuzzyProfileService.updateFuzzyProfile(fuzzyProfileDto);
+        if (error != null) {
+            throw new TicketException(new Exception(error), error, TicketErrorStatus.UNPROCESSABLE_ENTITY_422);
+        }
+
+        Log.info("End FuzzySettingsActions.doUpdateFuzzyProfile");
+        return new UpdateFuzzyProfileResponseDto(fuzzyProfileDto.getName(), null);
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public DeleteFuzzyProfileResponseDto doDeleteFuzzyProfile(String name) throws TicketException {
+        Log.info("Start FuzzySettingsActions.doDeleteFuzzyProfile");
+
+        String error = this.fuzzyProfileService.deleteFuzzyProfileByName(name);
+        if (error != null) {
+            throw new TicketException(new Exception(error), error, TicketErrorStatus.UNPROCESSABLE_ENTITY_422);
+        }
+
+        Log.info("End FuzzySettingsActions.doDeleteFuzzyProfile");
+        return new DeleteFuzzyProfileResponseDto(null);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class FuzzyProfileRepository implements PanacheRepository<FuzzyProfile> {
     public Optional<FuzzyProfile> findActive() {
-        return find("activeProfile = true").singleResultOptional();
+        return find("active = true").singleResultOptional();
     }
 
     public Optional<FuzzyProfile> findByName(String name) {

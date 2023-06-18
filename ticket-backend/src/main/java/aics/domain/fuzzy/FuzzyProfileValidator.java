@@ -26,6 +26,18 @@ public class FuzzyProfileValidator {
         return null;
     }
 
+    public String validateForUpdateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) {
+        final String error = this.validateCommonCreateUpdate(fuzzyProfileDto);
+        if (StringUtils.isNotEmpty(error)) {
+            return error;
+        }
+        if (fuzzyProfileDto.getFuzzyProfileId() == null) {
+            return "fuzzyProfileDto.getFuzzyProfileId() should not be null";
+        }
+
+        return null;
+    }
+
     private String validateCommonCreateUpdate(FuzzyProfileDto fuzzyProfileDto) {
         if (fuzzyProfileDto == null) {
             return "fuzzyProfileDto was null";

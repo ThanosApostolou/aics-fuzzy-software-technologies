@@ -27,4 +27,26 @@ export class FuzzySettingsService {
         const createFuzzyProfileResponseDto: CreateFuzzyProfileResponseDto = CreateFuzzyProfileResponseDto.fromObj(response.data);
         return createFuzzyProfileResponseDto;
     }
+
+    static async updateFuzzyProfile(fuzzyProfileDto: FuzzyProfileDto): Promise<CreateFuzzyProfileResponseDto> {
+        const apiConsumer = GlobalState.instance.apiConsumer;
+        const updateFuzzyProfileUrl = '/admin/fuzzy_settings/update_fuzzy_profile'
+
+        const response = await apiConsumer.put(updateFuzzyProfileUrl, fuzzyProfileDto);
+        const createFuzzyProfileResponseDto: CreateFuzzyProfileResponseDto = CreateFuzzyProfileResponseDto.fromObj(response.data);
+        return createFuzzyProfileResponseDto;
+    }
+
+    static async deleteFuzzyProfile(name: string): Promise<CreateFuzzyProfileResponseDto> {
+        const apiConsumer = GlobalState.instance.apiConsumer;
+        const deleteFuzzyProfileUrl = '/admin/fuzzy_settings/delete_fuzzy_profile'
+
+        const response = await apiConsumer.delete(deleteFuzzyProfileUrl, {
+            params: {
+                name: name
+            }
+        });
+        const createFuzzyProfileResponseDto: CreateFuzzyProfileResponseDto = CreateFuzzyProfileResponseDto.fromObj(response.data);
+        return createFuzzyProfileResponseDto;
+    }
 }
