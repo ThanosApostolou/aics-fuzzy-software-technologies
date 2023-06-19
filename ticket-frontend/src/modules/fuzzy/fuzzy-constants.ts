@@ -13,3 +13,10 @@ export enum FuzzyVariablePartPosition {
     MIDDLE = 'MIDDLE',
     END = 'END'
 }
+
+export enum FuzzySearchChoices {
+    YEAR = 'YEAR',
+    RATING = 'RATING',
+    POPULARITY = 'POPULARITY',
+    DURATION = 'DURATION',
+}

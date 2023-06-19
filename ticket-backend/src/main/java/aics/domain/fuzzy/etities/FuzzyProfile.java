@@ -26,5 +26,7 @@ public class FuzzyProfile {
     private boolean enableDebug;
     @Column(name = "ACTIVE", nullable = false)
     private boolean active;
+    @Column(name = "USE_FUZZY_TOPSIS", nullable = false)
+    private boolean useFuzzyTopsis;
 
 }

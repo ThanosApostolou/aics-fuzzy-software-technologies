@@ -36,7 +36,8 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
     const [concreteWeights, setConcreteWeights] = useState<ConcreteWeights>(fuzzyProfileDto.fuzzyProfileData.concreteWeights);
     const [name, setName] = useState<string>(fuzzyProfileDto.name)
     const [enableDebug, setEnableDebug] = useState<boolean>(fuzzyProfileDto.enableDebug)
-    const [active, setActive] = useState<boolean>(fuzzyProfileDto.active)
+    const [active, setActive] = useState<boolean>(fuzzyProfileDto.active);
+    const [useFuzzyTopsis, setUseFuzzyTopsis] = useState<boolean>(fuzzyProfileDto.useFuzzyTopsis);
     const [deleteProfileConfirmationDialogOpen, setDeleteProfileConfirmationDialogOpen] = useState(false);
 
 
@@ -58,10 +59,11 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 fuzzyVariablePopularity,
                 fuzzyVariableDuration,
                 fuzzyWeights,
-                concreteWeights
+                concreteWeights,
             }),
             enableDebug,
-            active
+            active,
+            useFuzzyTopsis
         })
     }
 
@@ -141,6 +143,9 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
     function handleActiveChange(event: React.ChangeEvent<HTMLInputElement>) {
         setActive(event.target.checked);
     }
+    function handleUseFuzzyTopsisChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setUseFuzzyTopsis(event.target.checked);
+    }
 
     return (
         <Fragment>
@@ -175,6 +180,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 <FormGroup>
                     <FormControlLabel disabled={readonly} control={<Switch onChange={handleEnableDebugChange} />} label="EnableDebug" checked={enableDebug} />
                     <FormControlLabel disabled={readonly} control={<Switch onChange={handleActiveChange} />} label="Active" checked={active} />
+                    <FormControlLabel disabled={readonly} control={<Switch onChange={handleUseFuzzyTopsisChange} />} label="UseFuzzyTopsis" checked={useFuzzyTopsis} />
                 </FormGroup>
                 <hr></hr>
 

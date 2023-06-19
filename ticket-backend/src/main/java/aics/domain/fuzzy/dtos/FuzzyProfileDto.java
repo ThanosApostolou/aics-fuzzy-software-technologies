@@ -17,6 +17,7 @@ public class FuzzyProfileDto implements Serializable {
     private FuzzyProfileData fuzzyProfileData;
     private boolean enableDebug;
     private boolean active;
+    private boolean useFuzzyTopsis;
 
     public static FuzzyProfileDto fromFuzzyProfile(FuzzyProfile fuzzyProfile) {
         if (fuzzyProfile == null) {
@@ -27,6 +28,7 @@ public class FuzzyProfileDto implements Serializable {
                 .setName(fuzzyProfile.getName())
                 .setFuzzyProfileData(fuzzyProfile.getFuzzyProfileData())
                 .setEnableDebug(fuzzyProfile.isEnableDebug())
-                .setActive(fuzzyProfile.isActive());
+                .setActive(fuzzyProfile.isActive())
+                .setUseFuzzyTopsis(fuzzyProfile.isUseFuzzyTopsis());
     }
 }
