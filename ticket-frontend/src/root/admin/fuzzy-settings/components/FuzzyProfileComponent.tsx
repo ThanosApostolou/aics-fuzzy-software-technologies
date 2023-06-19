@@ -17,6 +17,8 @@ import { Add, Edit, Delete } from '@mui/icons-material';
 import { FuzzyProfileData } from '../../../../modules/fuzzy/models/fuzzy-profile-data';
 import { FuzzySettingsService } from '../fuzzy-settings-service';
 import ConfirmationDialogComponent from '../../../../modules/ui/components/MovieDialogDeleteComponent';
+import { ConcreteWeights } from '../../../../modules/fuzzy/models/concrete-weights';
+import ConcreteWeightsComponent from './ConcreteWeightsComponent';
 
 export interface FuzzyProfileComponentProps {
     fuzzyProfileDto: FuzzyProfileDto;
@@ -31,6 +33,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
     const [fuzzyVariablePopularity, setFuzzyVariablePopularity] = useState<FuzzyVariablePopularity>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariablePopularity);
     const [fuzzyVariableDuration, setFuzzyVariableDuration] = useState<FuzzyVariableDuration>(fuzzyProfileDto.fuzzyProfileData.fuzzyVariableDuration);
     const [fuzzyWeights, setFuzzyWeights] = useState<FuzzyWeights>(fuzzyProfileDto.fuzzyProfileData.fuzzyWeights);
+    const [concreteWeights, setConcreteWeights] = useState<ConcreteWeights>(fuzzyProfileDto.fuzzyProfileData.concreteWeights);
     const [name, setName] = useState<string>(fuzzyProfileDto.name)
     const [enableDebug, setEnableDebug] = useState<boolean>(fuzzyProfileDto.enableDebug)
     const [active, setActive] = useState<boolean>(fuzzyProfileDto.active)
@@ -54,7 +57,8 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 fuzzyVariableRating,
                 fuzzyVariablePopularity,
                 fuzzyVariableDuration,
-                fuzzyWeights
+                fuzzyWeights,
+                concreteWeights
             }),
             enableDebug,
             active
@@ -191,7 +195,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 <br></br>
 
                 <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={readonly} xStepSize={1}></FuzzyVarComponent>
-                <h3>Weights </h3>
+                <ConcreteWeightsComponent concreteWeights={concreteWeights} readonly={readonly}></ConcreteWeightsComponent>
 
             </Box>
             <ConfirmationDialogComponent open={deleteProfileConfirmationDialogOpen} onOk={onDeleteProfileOk} onCancel={() => setDeleteProfileConfirmationDialogOpen(false)}>

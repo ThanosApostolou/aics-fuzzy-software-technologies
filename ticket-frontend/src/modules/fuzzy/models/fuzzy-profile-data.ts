@@ -1,3 +1,4 @@
+import { ConcreteWeights } from './concrete-weights';
 import { FuzzyVariableDuration } from "./fuzzy-variable-duration";
 import { FuzzyVariablePopularity } from "./fuzzy-variable-popularity";
 import { FuzzyVariableRating } from "./fuzzy-variable-rating";
@@ -10,6 +11,7 @@ export class FuzzyProfileData {
     fuzzyVariablePopularity: FuzzyVariablePopularity;
     fuzzyVariableDuration: FuzzyVariableDuration;
     fuzzyWeights: FuzzyWeights;
+    concreteWeights: ConcreteWeights;
 
     constructor(obj: {
         fuzzyVariableYear: FuzzyVariableYear,
@@ -17,12 +19,14 @@ export class FuzzyProfileData {
         fuzzyVariablePopularity: FuzzyVariablePopularity,
         fuzzyVariableDuration: FuzzyVariableDuration,
         fuzzyWeights: FuzzyWeights,
+        concreteWeights: ConcreteWeights,
     }) {
         this.fuzzyVariableYear = obj.fuzzyVariableYear;
         this.fuzzyVariableRating = obj.fuzzyVariableRating;
         this.fuzzyVariablePopularity = obj.fuzzyVariablePopularity;
         this.fuzzyVariableDuration = obj.fuzzyVariableDuration;
         this.fuzzyWeights = obj.fuzzyWeights;
+        this.concreteWeights = obj.concreteWeights;
     }
 
     static fromObj(obj: any): FuzzyProfileData {
@@ -35,6 +39,7 @@ export class FuzzyProfileData {
             fuzzyVariablePopularity: FuzzyVariablePopularity.fromObj(obj.fuzzyVariablePopularity),
             fuzzyVariableDuration: FuzzyVariableDuration.fromObj(obj.fuzzyVariableDuration),
             fuzzyWeights: FuzzyWeights.fromObj(obj.fuzzyWeights),
+            concreteWeights: ConcreteWeights.fromObj(obj.concreteWeights),
         })
     }
 
@@ -45,6 +50,7 @@ export class FuzzyProfileData {
             fuzzyVariablePopularity: this.fuzzyVariablePopularity.deepClone(),
             fuzzyVariableDuration: this.fuzzyVariableDuration.deepClone(),
             fuzzyWeights: this.fuzzyWeights.deepClone(),
+            concreteWeights: this.concreteWeights.deepClone(),
         })
     }
 }

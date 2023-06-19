@@ -78,6 +78,10 @@ public class FuzzyProfileValidator {
         if (error != null) {
             return "FuzzyWeights Error: " + error;
         }
+        error = this.validateConcreteWeights(fuzzyProfileData.getConcreteWeights());
+        if (error != null) {
+            return "ConcreteWeights Error: " + error;
+        }
         return null;
     }
 
@@ -322,4 +326,50 @@ public class FuzzyProfileValidator {
         return null;
     }
 
+    private String validateConcreteWeights(ConcreteWeights concreteWeights) {
+        if (concreteWeights == null) {
+            return "concreteWeights was null";
+        }
+        String error = this.validateConcreteWeight(concreteWeights.getChoice1());
+        if (error != null) {
+            return "choice1: " + error;
+        }
+        error = this.validateConcreteWeight(concreteWeights.getChoice2());
+        if (error != null) {
+            return "choice2: " + error;
+        }
+        error = this.validateConcreteWeight(concreteWeights.getChoice3());
+        if (error != null) {
+            return "choice3: " + error;
+        }
+        error = this.validateConcreteWeight(concreteWeights.getChoice4());
+        if (error != null) {
+            return "choice4: " + error;
+        }
+        if (concreteWeights.getChoice1() <= concreteWeights.getChoice2()) {
+            return "choice1 must be greater than choice2";
+        }
+        if (concreteWeights.getChoice2() <= concreteWeights.getChoice3()) {
+            return "choice2 must be greater than choice3";
+        }
+        if (concreteWeights.getChoice3() <= concreteWeights.getChoice4()) {
+            return "choice3 must be greater than choice4";
+        }
+        double sum = concreteWeights.getChoice1() + concreteWeights.getChoice2() + concreteWeights.getChoice3() + concreteWeights.getChoice4();
+        sum = (double) Math.round(sum * 100) / 100;
+        if (sum != 1.0) {
+            return "sum %s must be equal to 1.0".formatted(sum);
+        }
+        return null;
+    }
+
+    private String validateConcreteWeight(double concreteWeight) {
+        if (concreteWeight <= 0) {
+            return "concreteWeight should be greater than 0";
+        }
+        if (concreteWeight >= 1) {
+            return "concreteWeight should be less than 1";
+        }
+        return null;
+    }
 }

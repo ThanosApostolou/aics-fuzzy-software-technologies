@@ -51,12 +51,15 @@ public class FuzzyProfileService {
                 new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.VERY_HIGH_IMPORTANCE.name(), 7, 9, null)
         );
 
+        ConcreteWeights concreteWeights = new ConcreteWeights(0.4, 0.3, 0.2, 0.1);
+
         FuzzyProfileData fuzzyProfileData = new FuzzyProfileData()
                 .setFuzzyVariableYear(fuzzyVariableYear)
                 .setFuzzyVariableRating(fuzzyVariableRating)
                 .setFuzzyVariablePopularity(fuzzyVariablePopularity)
                 .setFuzzyVariableDuration(fuzzyVariableDuration)
-                .setFuzzyWeights(fuzzyWeights);
+                .setFuzzyWeights(fuzzyWeights)
+                .setConcreteWeights(concreteWeights);
 
         return new FuzzyProfile()
                 .setName(FuzzyConstants.DEFAULT)

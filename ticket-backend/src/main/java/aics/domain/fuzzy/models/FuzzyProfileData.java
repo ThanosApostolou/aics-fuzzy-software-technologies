@@ -15,4 +15,5 @@ public class FuzzyProfileData implements Serializable {
     private FuzzyVariablePopularity fuzzyVariablePopularity;
     private FuzzyVariableDuration fuzzyVariableDuration;
     private FuzzyWeights fuzzyWeights;
+    private ConcreteWeights concreteWeights;
 }
