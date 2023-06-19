@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mymysql:3306
--- Generation Time: Jun 15, 2023 at 06:11 PM
+-- Generation Time: Jun 19, 2023 at 06:42 PM
 -- Server version: 8.0.32
 -- PHP Version: 8.1.20
 
@@ -71,8 +71,16 @@ CREATE TABLE `FUZZY_PROFILE` (
   `ACTIVE` bit(1) NOT NULL,
   `ENABLE_DEBUG` bit(1) NOT NULL,
   `FUZZY_PROFILE_DATA` json NOT NULL,
-  `NAME` varchar(255) NOT NULL
+  `NAME` varchar(255) NOT NULL,
+  `USE_FUZZY_TOPSIS` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `FUZZY_PROFILE`
+--
+
+INSERT INTO `FUZZY_PROFILE` (`FUZZY_PROFILE_ID`, `ACTIVE`, `ENABLE_DEBUG`, `FUZZY_PROFILE_DATA`, `NAME`, `USE_FUZZY_TOPSIS`) VALUES
+(18, b'0', b'1', '{\"fuzzyWeights\": {\"fuzzyVariableMap\": {\"LOW_IMPORTANCE\": {\"a\": null, \"b\": 1, \"c\": 3, \"type\": \"TRIANGULAR\", \"partName\": \"LOW_IMPORTANCE\"}, \"HIGH_IMPORTANCE\": {\"a\": 6, \"b\": 7, \"c\": 8, \"type\": \"TRIANGULAR\", \"partName\": \"HIGH_IMPORTANCE\"}, \"AVERAGE_IMPORTANCE\": {\"a\": 2, \"b\": 5, \"c\": 7, \"type\": \"TRIANGULAR\", \"partName\": \"AVERAGE_IMPORTANCE\"}, \"VERY_HIGH_IMPORTANCE\": {\"a\": 7, \"b\": 9, \"c\": null, \"type\": \"TRIANGULAR\", \"partName\": \"VERY_HIGH_IMPORTANCE\"}}, \"varLowImportance\": {\"a\": null, \"b\": 1, \"c\": 3, \"type\": \"TRIANGULAR\", \"partName\": \"LOW_IMPORTANCE\"}, \"varHighImportance\": {\"a\": 6, \"b\": 7, \"c\": 8, \"type\": \"TRIANGULAR\", \"partName\": \"HIGH_IMPORTANCE\"}, \"varAverageImportance\": {\"a\": 2, \"b\": 5, \"c\": 7, \"type\": \"TRIANGULAR\", \"partName\": \"AVERAGE_IMPORTANCE\"}, \"varVeryHighImportance\": {\"a\": 7, \"b\": 9, \"c\": null, \"type\": \"TRIANGULAR\", \"partName\": \"VERY_HIGH_IMPORTANCE\"}}, \"concreteWeights\": {\"choice1\": 0.5, \"choice2\": 0.25, \"choice3\": 0.15, \"choice4\": 0.1}, \"fuzzyVariableYear\": {\"varNew\": {\"a\": 2010, \"b\": 2015, \"c\": 2022, \"type\": \"TRIANGULAR\", \"partName\": \"NEW\"}, \"varOld\": {\"a\": null, \"b\": 1950, \"c\": 2005, \"type\": \"TRIANGULAR\", \"partName\": \"OLD\"}, \"varRecent\": {\"a\": 2000, \"b\": 2010, \"c\": 2015, \"type\": \"TRIANGULAR\", \"partName\": \"RECENT\"}, \"varVeryNew\": {\"a\": 2020, \"b\": 2030, \"c\": null, \"type\": \"TRIANGULAR\", \"partName\": \"VERY_NEW\"}, \"fuzzyVariableMap\": {\"NEW\": {\"a\": 2010, \"b\": 2015, \"c\": 2022, \"type\": \"TRIANGULAR\", \"partName\": \"NEW\"}, \"OLD\": {\"a\": null, \"b\": 1950, \"c\": 2005, \"type\": \"TRIANGULAR\", \"partName\": \"OLD\"}, \"RECENT\": {\"a\": 2000, \"b\": 2010, \"c\": 2015, \"type\": \"TRIANGULAR\", \"partName\": \"RECENT\"}, \"VERY_NEW\": {\"a\": 2020, \"b\": 2030, \"c\": null, \"type\": \"TRIANGULAR\", \"partName\": \"VERY_NEW\"}}}, \"fuzzyVariableRating\": {\"varBad\": {\"a\": null, \"b\": 1, \"c\": 3, \"d\": 5, \"type\": \"TRAPEZOIDAL\", \"partName\": \"BAD\"}, \"varGood\": {\"a\": 6, \"b\": 7, \"c\": 8, \"d\": 9, \"type\": \"TRAPEZOIDAL\", \"partName\": \"GOOD\"}, \"varAverage\": {\"a\": 4, \"b\": 5, \"c\": 6, \"d\": 7, \"type\": \"TRAPEZOIDAL\", \"partName\": \"AVERAGE\"}, \"varVeryGood\": {\"a\": 8, \"b\": 9, \"c\": 10, \"d\": null, \"type\": \"TRAPEZOIDAL\", \"partName\": \"VERY_GOOD\"}, \"fuzzyVariableMap\": {\"BAD\": {\"a\": null, \"b\": 1, \"c\": 3, \"d\": 5, \"type\": \"TRAPEZOIDAL\", \"partName\": \"BAD\"}, \"GOOD\": {\"a\": 6, \"b\": 7, \"c\": 8, \"d\": 9, \"type\": \"TRAPEZOIDAL\", \"partName\": \"GOOD\"}, \"AVERAGE\": {\"a\": 4, \"b\": 5, \"c\": 6, \"d\": 7, \"type\": \"TRAPEZOIDAL\", \"partName\": \"AVERAGE\"}, \"VERY_GOOD\": {\"a\": 8, \"b\": 9, \"c\": 10, \"d\": null, \"type\": \"TRAPEZOIDAL\", \"partName\": \"VERY_GOOD\"}}}, \"fuzzyVariableDuration\": {\"varBig\": {\"a\": 80, \"b\": 120, \"c\": 160, \"type\": \"TRIANGULAR\", \"partName\": \"BIG\"}, \"varHuge\": {\"a\": 140, \"b\": 160, \"c\": 300, \"d\": null, \"type\": \"TRAPEZOIDAL\", \"partName\": \"HUGE\"}, \"varSmall\": {\"a\": null, \"b\": 1, \"c\": 20, \"d\": 40, \"type\": \"TRAPEZOIDAL\", \"partName\": \"SMALL\"}, \"varAverage\": {\"a\": 30, \"b\": 60, \"c\": 90, \"type\": \"TRIANGULAR\", \"partName\": \"AVERAGE\"}, \"fuzzyVariableMap\": {\"BIG\": {\"a\": 80, \"b\": 120, \"c\": 160, \"type\": \"TRIANGULAR\", \"partName\": \"BIG\"}, \"HUGE\": {\"a\": 140, \"b\": 160, \"c\": 300, \"d\": null, \"type\": \"TRAPEZOIDAL\", \"partName\": \"HUGE\"}, \"SMALL\": {\"a\": null, \"b\": 1, \"c\": 20, \"d\": 40, \"type\": \"TRAPEZOIDAL\", \"partName\": \"SMALL\"}, \"AVERAGE\": {\"a\": 30, \"b\": 60, \"c\": 90, \"type\": \"TRIANGULAR\", \"partName\": \"AVERAGE\"}}}, \"fuzzyVariablePopularity\": {\"varAverage\": {\"a\": 100, \"b\": 150, \"c\": 200, \"d\": 250, \"type\": \"TRAPEZOIDAL\", \"partName\": \"AVERAGE\"}, \"varPopular\": {\"a\": 30, \"b\": 60, \"c\": 90, \"d\": 120, \"type\": \"TRAPEZOIDAL\", \"partName\": \"POPULAR\"}, \"varUnpopular\": {\"a\": 200, \"b\": 400, \"c\": 600, \"d\": null, \"type\": \"TRAPEZOIDAL\", \"partName\": \"UNPOPULAR\"}, \"varVeryPopular\": {\"a\": null, \"b\": 1, \"c\": 20, \"d\": 40, \"type\": \"TRAPEZOIDAL\", \"partName\": \"VERY_POPULAR\"}, \"fuzzyVariableMap\": {\"AVERAGE\": {\"a\": 100, \"b\": 150, \"c\": 200, \"d\": 250, \"type\": \"TRAPEZOIDAL\", \"partName\": \"AVERAGE\"}, \"POPULAR\": {\"a\": 30, \"b\": 60, \"c\": 90, \"d\": 120, \"type\": \"TRAPEZOIDAL\", \"partName\": \"POPULAR\"}, \"UNPOPULAR\": {\"a\": 200, \"b\": 400, \"c\": 600, \"d\": null, \"type\": \"TRAPEZOIDAL\", \"partName\": \"UNPOPULAR\"}, \"VERY_POPULAR\": {\"a\": null, \"b\": 1, \"c\": 20, \"d\": 40, \"type\": \"TRAPEZOIDAL\", \"partName\": \"VERY_POPULAR\"}}}}', 'test', b'0');
 
 -- --------------------------------------------------------
 
@@ -4207,7 +4215,7 @@ ALTER TABLE `EVENTS`
 -- AUTO_INCREMENT for table `FUZZY_PROFILE`
 --
 ALTER TABLE `FUZZY_PROFILE`
-  MODIFY `FUZZY_PROFILE_ID` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `FUZZY_PROFILE_ID` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `HALLS`
