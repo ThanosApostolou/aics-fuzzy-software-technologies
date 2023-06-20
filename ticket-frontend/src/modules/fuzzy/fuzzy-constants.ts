@@ -15,8 +15,8 @@ export enum FuzzyVariablePartPosition {
 }
 
 export enum FuzzySearchChoices {
-    YEAR = 'YEAR',
     RATING = 'RATING',
     POPULARITY = 'POPULARITY',
+    YEAR = 'YEAR',
     DURATION = 'DURATION',
 }

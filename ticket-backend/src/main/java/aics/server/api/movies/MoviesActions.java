@@ -1,9 +1,14 @@
 package aics.server.api.movies;
 
+import aics.domain.fuzzy.FuzzySearchService;
+import aics.domain.fuzzy.FuzzySearchValidator;
+import aics.domain.fuzzy.dtos.FuzzySearchFiltersDto;
+import aics.domain.fuzzy.models.FuzzySearchResult;
 import aics.domain.movie.MovieService;
 import aics.domain.movie.dtos.MovieDto;
 import aics.domain.movie.dtos.MovieListItemDto;
 import aics.domain.movie.entities.Movie;
+import aics.infrastructure.errors.TicketErrorStatus;
 import aics.infrastructure.errors.TicketException;
 import aics.server.api.movies.dtos.FetchMovieDetailsResponseDto;
 import aics.server.api.movies.dtos.FetchMoviesPlayingNowResponseDto;
@@ -20,19 +25,46 @@ import java.util.List;
 public class MoviesActions {
     @Inject
     MovieService movieService;
+    @Inject
+    FuzzySearchValidator fuzzySearchValidator;
+    @Inject
+    FuzzySearchService fuzzySearchService;
 
     @Transactional(rollbackOn = Exception.class)
-    public FetchMoviesPlayingNowResponseDto doFetchMoviesPlayingNow() throws TicketException {
+    public FetchMoviesPlayingNowResponseDto doFetchMoviesPlayingNow(FuzzySearchFiltersDto fuzzySearchFiltersDto) throws TicketException {
         Log.info("Start MoviesActions.doFetchMoviesPlayingNow");
-        FetchMoviesPlayingNowResponseDto fetchMoviesPlayingNowResponseDto = new FetchMoviesPlayingNowResponseDto();
         List<Movie> moviesPlayingNow = this.movieService.fetchMoviesPlayingNow();
-        List<MovieListItemDto> movieDtos = CollectionUtils.isNotEmpty(moviesPlayingNow)
-            ? moviesPlayingNow.stream().map(MovieListItemDto::fromMovie).toList()
-            : new ArrayList<>();
 
-        fetchMoviesPlayingNowResponseDto.setMovies(movieDtos);
-        Log.info("End MoviesActions.doFetchMoviesPlayingNow");
-        return fetchMoviesPlayingNowResponseDto;
+        boolean hasFuzzySearch = fuzzySearchFiltersDto.getChoice1() != null || fuzzySearchFiltersDto.getChoice2() != null || fuzzySearchFiltersDto.getChoice3() != null || fuzzySearchFiltersDto.getChoice4() != null;
+
+        if (hasFuzzySearch) {
+            String error = this.fuzzySearchValidator.validateFuzzySearchFilters(fuzzySearchFiltersDto);
+            if (error != null) {
+                throw new TicketException(new Exception(error), error, TicketErrorStatus.UNPROCESSABLE_ENTITY_422);
+            }
+            FuzzySearchResult fuzzySearchResult = this.fuzzySearchService.fuzzySearch(moviesPlayingNow, fuzzySearchFiltersDto);
+
+            FetchMoviesPlayingNowResponseDto fetchMoviesPlayingNowResponseDto = new FetchMoviesPlayingNowResponseDto(
+                    fuzzySearchResult.getMovieDtos(),
+                    fuzzySearchResult.getFuzzySearchDebugInfoDto(),
+                    true,
+                    null
+            );
+            Log.info("End MoviesActions.doFetchMoviesPlayingNow");
+            return fetchMoviesPlayingNowResponseDto;
+        } else {
+            List<MovieListItemDto> movieDtos = CollectionUtils.isNotEmpty(moviesPlayingNow)
+                    ? moviesPlayingNow.stream().map(MovieListItemDto::fromMovie).toList()
+                    : new ArrayList<>();
+            FetchMoviesPlayingNowResponseDto fetchMoviesPlayingNowResponseDto = new FetchMoviesPlayingNowResponseDto(
+                    movieDtos,
+                    null,
+                    false,
+                    null
+            );
+            Log.info("End MoviesActions.doFetchMoviesPlayingNow");
+            return fetchMoviesPlayingNowResponseDto;
+        }
     }
 
     @Transactional(rollbackOn = Exception.class)

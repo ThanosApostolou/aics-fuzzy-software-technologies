@@ -79,7 +79,7 @@ const HomePage = () => {
                         </div>
 
                         <Divider variant="middle" style={{ marginBottom: 10 }} />
-                        <MoviesGridLayoutComponent movies={movies} />
+                        <MoviesGridLayoutComponent movies={movies} fuzzySearch={false} />
                     </React.Fragment>
                 )}
 

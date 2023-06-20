@@ -4,7 +4,8 @@ import MovieCardComponent from './MovieCardComponent'
 import { MovieListItemDto } from '../dtos/movie-list-item-dto'
 
 export interface MoviesGridLayoutComponentProps {
-    movies: MovieListItemDto[]
+    movies: MovieListItemDto[];
+    fuzzySearch: boolean;
 }
 
 const MoviesGridLayoutComponent = (props: MoviesGridLayoutComponentProps) => {
@@ -24,7 +25,7 @@ const MoviesGridLayoutComponent = (props: MoviesGridLayoutComponentProps) => {
             {props.movies.map((movie, index) => (
 
                 <Grid item xs={2} sm={4} md={4} key={index} display='flex' style={{ marginTop: 15, display: 'flex-start', justifyContent: 'center', alignItems: 'center' }}>
-                    <MovieCardComponent movie={movie} />
+                    <MovieCardComponent movie={movie} fuzzySearch={props.fuzzySearch} index={index} />
                 </Grid>
             ))}
         </Grid>

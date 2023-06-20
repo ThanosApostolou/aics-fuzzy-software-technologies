@@ -1,4 +1,4 @@
-package aics.server.api.movies.dtos;
+package aics.domain.fuzzy.models;
 
 import aics.domain.fuzzy.dtos.FuzzySearchDebugInfoDto;
 import aics.domain.movie.dtos.MovieListItemDto;
@@ -14,9 +14,7 @@ import java.util.List;
 @Accessors(chain = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FetchMoviesPlayingNowResponseDto implements Serializable {
-    private List<MovieListItemDto> movies;
+public class FuzzySearchResult implements Serializable {
+    private List<MovieListItemDto> movieDtos;
     private FuzzySearchDebugInfoDto fuzzySearchDebugInfoDto;
-    private boolean fuzzySearch;
-    private Serializable error;
 }

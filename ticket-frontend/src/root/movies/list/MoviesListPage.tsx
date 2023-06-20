@@ -6,32 +6,45 @@ import MovieIcon from '@mui/icons-material/Movie';
 import { MovieListItemDto } from '../../../modules/movie/dtos/movie-list-item-dto';
 import { useSnackbar } from 'notistack';
 import { MoviesListService } from './movies-list-service';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import FuzzySearchAccordionComponent from './components/FuzzySearchAccordionComponent';
+import { FuzzySearchFiltersDto } from '../../../modules/fuzzy/dtos/fuzzy-search-filters-dto';
 
 export default function MoviesListPage() {
     const [isWaitingFetch, setIsWaitingFetch] = useState<boolean>(false);
     const [movies, setMovies] = useState<MovieListItemDto[]>([]);
+    const [fuzzySearch, setFuzzySearch] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
 
 
     useEffect(() => {
-        async function loadData() {
-            setIsWaitingFetch(true);
-            setMovies([]);
-            try {
-                const fetchMoviesListResponseDto = await MoviesListService.fetchMoviesPlayingNow();
-                console.log('fetchMoviesListResponseDto', fetchMoviesListResponseDto)
-                setMovies(fetchMoviesListResponseDto.movies);
-                setIsWaitingFetch(false);
-            } catch (e) {
+        loadData(null);
+    }, [])
+
+    async function loadData(fuzzySearchFiltersDto: FuzzySearchFiltersDto | null) {
+        setIsWaitingFetch(true);
+        setMovies([]);
+        try {
+            const fetchMoviesListResponseDto = await MoviesListService.fetchMoviesPlayingNow(fuzzySearchFiltersDto);
+            console.log('fetchMoviesListResponseDto', fetchMoviesListResponseDto)
+            setMovies(fetchMoviesListResponseDto.movies);
+            setFuzzySearch(fetchMoviesListResponseDto.fuzzySearch);
+            setIsWaitingFetch(false);
+        } catch (e: any) {
+            if (e?.response?.status === 422) {
+                console.error(e?.response?.data?.error);
+                enqueueSnackbar('Αποτυχημένη εύρεση λίστας ταινιών: ' + e?.response?.data?.error, { variant: 'error' })
+            } else {
                 console.error(e);
                 enqueueSnackbar('Αποτυχημένη εύρεση λίστας ταινιών', { variant: 'error' });
-                setIsWaitingFetch(false);
             }
+            setIsWaitingFetch(false);
         }
 
-        loadData();
-    }, [])
+    }
+
+    function handleFuzzySearch(fuzzySearchFiltersDto: FuzzySearchFiltersDto | null) {
+        loadData(fuzzySearchFiltersDto);
+    }
 
     return (
         <React.Fragment>
@@ -51,25 +64,10 @@ export default function MoviesListPage() {
                             <Typography sx={{ fontSize: 'xx-large', marginLeft: 3, fontWeight: 'bolder' }}>ΠΑΙΖΟΝΤΑΙ ΤΩΡΑ</Typography>
                         </div>
                         <Divider variant="middle" style={{ marginBottom: 10 }} />
-                        <Accordion>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                            >
-                                <h3>Fuzzy Search</h3>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                                    malesuada lacus ex, sit amet blandit leo lobortis eget.
-                                </Typography>
-                            </AccordionDetails>
-                            <AccordionActions>
-                                <Button> asd</Button>
-                            </AccordionActions>
-                        </Accordion>
-                        <MoviesGridLayoutComponent movies={movies} />
+
+                        <FuzzySearchAccordionComponent onSearch={handleFuzzySearch}></FuzzySearchAccordionComponent>
+
+                        <MoviesGridLayoutComponent movies={movies} fuzzySearch={fuzzySearch} />
                     </React.Fragment>
                 )}
         </React.Fragment>

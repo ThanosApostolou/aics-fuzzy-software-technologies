@@ -4,6 +4,7 @@ import aics.domain.fuzzy.constants.*;
 import aics.domain.fuzzy.dtos.FuzzyProfileDto;
 import aics.domain.fuzzy.etities.FuzzyProfile;
 import aics.domain.fuzzy.models.*;
+import io.smallrye.common.constraint.NotNull;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
@@ -148,5 +149,9 @@ public class FuzzyProfileService {
 
         return null;
 
+    }
+
+    public @NotNull FuzzyProfile findActiveProfileOrDefault() {
+        return this.fuzzyProfileRepository.findActive().orElseGet(() -> this.createDefaultProfile(true));
     }
 }

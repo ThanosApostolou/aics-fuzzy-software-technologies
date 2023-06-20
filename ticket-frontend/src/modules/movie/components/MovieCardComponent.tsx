@@ -11,27 +11,22 @@ import StarIcon from '@mui/icons-material/Star';
 import InsightsIcon from '@mui/icons-material/Insights';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { green, red } from '@mui/material/colors';
+import { green, grey, red } from '@mui/material/colors';
 
 export interface MovieCardComponentProps {
     movie: MovieListItemDto
-    choice?: number;
+    fuzzySearch: boolean;
+    index?: number;
 }
 
 //Probably have to use arrays in order to load them dynamically
-const MovieCardComponent = (props: MovieCardComponentProps) => {
-
-
-    //Create a custom onClick function for our ticket buttons
-    const onClick = (id: string) => {
-        console.log({ id })
-    }
+const MovieCardComponent = ({ movie, fuzzySearch, index }: MovieCardComponentProps) => {
     return (
         <Card sx={{ ":hover": { transform: 'scale(1.05)', boxShadow: 3 }, transition: 'ease', borderRadius: 5, maxWidth: 500 }}>
-            {props.choice != null && (
+            {fuzzySearch && index != null && (
                 <CardHeader avatar={
-                    <Avatar sx={{ bgcolor: green[500] }} aria-label="recipe">
-                        {props.choice}
+                    <Avatar sx={{ bgcolor: index < 3 ? green[500] : grey[500] }} aria-label="recipe">
+                        {index + 1}
                     </Avatar>
                 } />
             )}
@@ -39,14 +34,14 @@ const MovieCardComponent = (props: MovieCardComponentProps) => {
             <CardMedia
                 component="img"
                 height="200"
-                src={props.movie.imageMimePrefix + ',' + props.movie.image}
+                src={movie.imageMimePrefix + ',' + movie.image}
             />
             <CardContent>
                 <Typography fontWeight={'bold'} gutterBottom variant="h5" component="div">
-                    {props.movie.name}
+                    {movie.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {props.movie.description}
+                    {movie.description}
                 </Typography>
             </CardContent>
             <CardActions>
@@ -54,27 +49,27 @@ const MovieCardComponent = (props: MovieCardComponentProps) => {
                     justifyContent="space-between"
                     alignItems="center">
                     <Grid item>
-                        <Button component={Link} to={'/events/list?movieId=' + props.movie.movieId} variant='contained' sx={{ ":hover": { backgroundColor: 'secondary' }, borderRadius: 20, backgroundColor: 'primary' }} size="small">ΠΡΟΒΟΛΕΣ</Button>
-                        <Button component={Link} to={'/movies/details?movieId=' + props.movie.movieId} variant='outlined' sx={{ ":hover": { borderColor: '#920b17', color: '#920b17' }, color: '#E63946', backgroundColor: 'white', borderColor: '#E63946', borderRadius: 20, marginLeft: 1 }} size="small">ΠΛΗΡΟΦΟΡΙΕΣ</Button>
+                        <Button component={Link} to={'/events/list?movieId=' + movie.movieId} variant='contained' sx={{ ":hover": { backgroundColor: 'secondary' }, borderRadius: 20, backgroundColor: 'primary' }} size="small">ΠΡΟΒΟΛΕΣ</Button>
+                        <Button component={Link} to={'/movies/details?movieId=' + movie.movieId} variant='outlined' sx={{ ":hover": { borderColor: '#920b17', color: '#920b17' }, color: '#E63946', backgroundColor: 'white', borderColor: '#E63946', borderRadius: 20, marginLeft: 1 }} size="small">ΠΛΗΡΟΦΟΡΙΕΣ</Button>
                     </Grid>
                     <Grid item>
                         <Tooltip title="Rating">
-                            <Badge badgeContent={props.movie.rating} color="primary" sx={{ marginRight: 0.5 }}>
+                            <Badge badgeContent={movie.rating} color="primary" sx={{ marginRight: 0.5 }}>
                                 <StarIcon color="action" />
                             </Badge>
                         </Tooltip>
                         <Tooltip title="Duration">
-                            <Badge badgeContent={props.movie.duration} color="primary" max={1000} sx={{ marginRight: 0.5 }}>
+                            <Badge badgeContent={movie.duration} color="primary" max={1000} sx={{ marginRight: 0.5 }}>
                                 <MoreTimeIcon color="action" />
                             </Badge>
                         </Tooltip>
                         <Tooltip title="Popularity Index">
-                            <Badge badgeContent={props.movie.popularity} color="primary" max={1000} sx={{ marginRight: 1 }}>
+                            <Badge badgeContent={movie.popularity} color="primary" max={1000} sx={{ marginRight: 1 }}>
                                 <InsightsIcon color="action" />
                             </Badge>
                         </Tooltip>
                         <Tooltip title="Year">
-                            <Badge badgeContent={props.movie.year} color="primary" max={2100}>
+                            <Badge badgeContent={movie.year} color="primary" max={2100}>
                                 <CalendarMonthIcon color="action" />
                             </Badge>
                         </Tooltip>
