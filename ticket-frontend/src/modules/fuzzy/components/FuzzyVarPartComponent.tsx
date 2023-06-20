@@ -2,12 +2,12 @@ import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectCha
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { ChartData } from 'chart.js';
-import { FuzzyService } from '../../../../modules/fuzzy/fuzzy-service';
+import { FuzzyService } from '../fuzzy-service';
 import GraphFuzzyDistributionComponent from './GraphFuzzyDistributionComponent';
-import { FuzzyProfileDto } from '../../../../modules/fuzzy/dtos/fuzzy-profile-dto';
-import { FUZZY_CONSTANTS, FuzzyVariableDistributionType, FuzzyVariablePartPosition } from '../../../../modules/fuzzy/fuzzy-constants';
-import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartTrapezoidal, FuzzyVariableDistributionPartTriangular, FuzzyVariableI } from '../../../../modules/fuzzy/models/fuzzy-variable-distribution';
-import MyKatexComponent from '../../../../modules/mykatex/MyKatexComponent';
+import { FuzzyProfileDto } from '../dtos/fuzzy-profile-dto';
+import { FUZZY_CONSTANTS, FuzzyVariableDistributionType, FuzzyVariablePartPosition } from '../fuzzy-constants';
+import { FuzzyVariableDistributionPart, FuzzyVariableDistributionPartTrapezoidal, FuzzyVariableDistributionPartTriangular, FuzzyVariableI } from '../models/fuzzy-variable-distribution';
+import MyKatexComponent from '../../mykatex/MyKatexComponent';
 
 export interface FuzzyVarPartComponentProps {
     fuzzyVariableDistributionPart: FuzzyVariableDistributionPart;

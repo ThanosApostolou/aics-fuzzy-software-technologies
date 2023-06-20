@@ -1,25 +1,30 @@
 
 import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField, Typography } from '@mui/material';
 import { FuzzySearchFiltersDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-filters-dto';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { FuzzySearchChoices } from '../../../../modules/fuzzy/fuzzy-constants';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { FuzzySearchDebugInfoDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-debug-info-dto';
+import AdbIcon from '@mui/icons-material/Adb';
+import DebugInfoDialogComponent from './DebugInfoDialogComponent';
 
 export interface FuzzySearchAccordionComponentProps {
+    fuzzySearchDebugInfoDto: FuzzySearchDebugInfoDto | null;
     onSearch?: (fuzzySearchFiltersDto: FuzzySearchFiltersDto | null) => void;
 }
 
 
 
-export default function FuzzySearchAccordionComponent({ onSearch }: FuzzySearchAccordionComponentProps) {
+export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto, onSearch }: FuzzySearchAccordionComponentProps) {
     const [choice1, setChoice1] = useState<FuzzySearchChoices>(FuzzySearchChoices.RATING);
     const [choice2, setChoice2] = useState<FuzzySearchChoices>(FuzzySearchChoices.POPULARITY);
     const [choice3, setChoice3] = useState<FuzzySearchChoices>(FuzzySearchChoices.YEAR);
     const [choice4, setChoice4] = useState<FuzzySearchChoices>(FuzzySearchChoices.DURATION);
     const [yearCostCriteria, setYearCostCriteria] = useState<boolean>(false);
     const [durationCostCriteria, setDurationCostCriteria] = useState<boolean>(false);
+    const [debugInfoDialogOpen, setDebugInfoDialogOpen] = useState<boolean>(false);
 
     function choice1Updated(e: SelectChangeEvent<FuzzySearchChoices>) {
         const newChoice1 = e.target.value as FuzzySearchChoices;
@@ -62,6 +67,10 @@ export default function FuzzySearchAccordionComponent({ onSearch }: FuzzySearchA
         if (onSearch) {
             onSearch(fuzzySearchFiltersDto);
         }
+    }
+
+    function handleDebugInfo() {
+        setDebugInfoDialogOpen(true);
     }
 
     return (
@@ -152,6 +161,12 @@ export default function FuzzySearchAccordionComponent({ onSearch }: FuzzySearchA
                     </Grid>
                 </AccordionDetails>
                 <AccordionActions>
+                    {fuzzySearchDebugInfoDto != null && (
+                        <Fragment>
+                            <Button startIcon={<AdbIcon />} color='info' onClick={handleDebugInfo}>DebugInfo</Button>
+                            <DebugInfoDialogComponent open={debugInfoDialogOpen} fuzzySearchDebugInfoDto={fuzzySearchDebugInfoDto} onClose={() => setDebugInfoDialogOpen(false)}></DebugInfoDialogComponent>
+                        </Fragment>
+                    )}
                     <Button startIcon={<RestartAltIcon />} color='warning' onClick={handleClear}>Επαναφορά</Button>
                     <Button startIcon={<SearchIcon />} onClick={handleSearch}>Αναζήτηση</Button>
                 </AccordionActions>

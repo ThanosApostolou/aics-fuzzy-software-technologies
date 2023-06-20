@@ -8,10 +8,12 @@ import { useSnackbar } from 'notistack';
 import { MoviesListService } from './movies-list-service';
 import FuzzySearchAccordionComponent from './components/FuzzySearchAccordionComponent';
 import { FuzzySearchFiltersDto } from '../../../modules/fuzzy/dtos/fuzzy-search-filters-dto';
+import { FuzzySearchDebugInfoDto } from '../../../modules/fuzzy/dtos/fuzzy-search-debug-info-dto';
 
 export default function MoviesListPage() {
     const [isWaitingFetch, setIsWaitingFetch] = useState<boolean>(false);
     const [movies, setMovies] = useState<MovieListItemDto[]>([]);
+    const [fuzzySearchDebugInfoDto, setFuzzySearchDebugInfoDto] = useState<FuzzySearchDebugInfoDto | null>(null);
     const [fuzzySearch, setFuzzySearch] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -23,11 +25,13 @@ export default function MoviesListPage() {
     async function loadData(fuzzySearchFiltersDto: FuzzySearchFiltersDto | null) {
         setIsWaitingFetch(true);
         setMovies([]);
+        setFuzzySearchDebugInfoDto(null);
         try {
             const fetchMoviesListResponseDto = await MoviesListService.fetchMoviesPlayingNow(fuzzySearchFiltersDto);
             console.log('fetchMoviesListResponseDto', fetchMoviesListResponseDto)
             setMovies(fetchMoviesListResponseDto.movies);
             setFuzzySearch(fetchMoviesListResponseDto.fuzzySearch);
+            setFuzzySearchDebugInfoDto(fetchMoviesListResponseDto.fuzzySearchDebugInfoDto);
             setIsWaitingFetch(false);
         } catch (e: any) {
             if (e?.response?.status === 422) {
@@ -65,7 +69,7 @@ export default function MoviesListPage() {
                         </div>
                         <Divider variant="middle" style={{ marginBottom: 10 }} />
 
-                        <FuzzySearchAccordionComponent onSearch={handleFuzzySearch}></FuzzySearchAccordionComponent>
+                        <FuzzySearchAccordionComponent onSearch={handleFuzzySearch} fuzzySearchDebugInfoDto={fuzzySearchDebugInfoDto}></FuzzySearchAccordionComponent>
 
                         <MoviesGridLayoutComponent movies={movies} fuzzySearch={fuzzySearch} />
                     </React.Fragment>

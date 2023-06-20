@@ -43,10 +43,10 @@ public class MoviesActions {
                 throw new TicketException(new Exception(error), error, TicketErrorStatus.UNPROCESSABLE_ENTITY_422);
             }
             FuzzySearchResult fuzzySearchResult = this.fuzzySearchService.fuzzySearch(moviesPlayingNow, fuzzySearchFiltersDto);
-
+            boolean setDebugInfo = fuzzySearchResult.getFuzzySearchDebugInfoDto().getFuzzyProfileDto().isEnableDebug();
             FetchMoviesPlayingNowResponseDto fetchMoviesPlayingNowResponseDto = new FetchMoviesPlayingNowResponseDto(
                     fuzzySearchResult.getMovieDtos(),
-                    fuzzySearchResult.getFuzzySearchDebugInfoDto(),
+                    setDebugInfo ? fuzzySearchResult.getFuzzySearchDebugInfoDto() : null,
                     true,
                     null
             );

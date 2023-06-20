@@ -2,11 +2,11 @@ import { Box, Button, Grid } from '@mui/material';
 import { Fragment, useEffect, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { ChartData } from 'chart.js';
-import { FuzzyService } from '../../../../modules/fuzzy/fuzzy-service';
+import { FuzzyService } from '../fuzzy-service';
 import GraphFuzzyDistributionComponent from './GraphFuzzyDistributionComponent';
-import { FuzzyProfileDto } from '../../../../modules/fuzzy/dtos/fuzzy-profile-dto';
-import { FUZZY_CONSTANTS, FuzzyVariablePartPosition } from '../../../../modules/fuzzy/fuzzy-constants';
-import { FuzzyVariableDistributionPart, FuzzyVariableI } from '../../../../modules/fuzzy/models/fuzzy-variable-distribution';
+import { FuzzyProfileDto } from '../dtos/fuzzy-profile-dto';
+import { FUZZY_CONSTANTS, FuzzyVariablePartPosition } from '../fuzzy-constants';
+import { FuzzyVariableDistributionPart, FuzzyVariableI } from '../models/fuzzy-variable-distribution';
 import FuzzyVarPartComponent from './FuzzyVarPartComponent';
 
 export interface FuzzyVarComponentProps {
