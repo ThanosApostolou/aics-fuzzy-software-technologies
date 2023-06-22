@@ -20,16 +20,16 @@ export default function TabRegularTopsisComponent({ fuzzyProfileDto, fuzzySearch
                 <TopsisTable dataTable={regularTopsisInfoDto.table1InitialData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
                 <h4>Step 2. Normalized Data</h4>
-                <TopsisTable dataTable={regularTopsisInfoDto.table1InitialData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
+                <TopsisTable dataTable={regularTopsisInfoDto.table2NormalizedData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
                 <h4>Step 3. Weighted Normalized Data</h4>
-                <TopsisTable dataTable={regularTopsisInfoDto.table1InitialData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
+                {/* <TopsisTable dataTable={regularTopsisInfoDto.table1InitialData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable> */}
 
                 <p>minValue</p>
                 <p>maxValue</p>
 
                 <h4>Step 4. Final Data ordered by TOPSIS distance</h4>
-                <TopsisTable dataTable={regularTopsisInfoDto.table1InitialData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
+                {/* <TopsisTable dataTable={regularTopsisInfoDto.table1InitialData} showDminus={false} showDplus={false} showS={false} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable> */}
             </Box>
         </Fragment>
     );
