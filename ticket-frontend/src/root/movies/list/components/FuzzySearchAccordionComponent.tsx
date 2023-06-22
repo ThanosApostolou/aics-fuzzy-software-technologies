@@ -1,5 +1,5 @@
 
-import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField, Typography } from '@mui/material';
+import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Box, Button, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, Switch, TextField, Typography } from '@mui/material';
 import { FuzzySearchFiltersDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-filters-dto';
 import { Fragment, useState } from 'react';
 import { FuzzySearchChoices } from '../../../../modules/fuzzy/fuzzy-constants';
@@ -87,21 +87,21 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
                     <p>
                         Επιλέξτε όλα τα κριτήρια με την σειρά από το πιο σημαντικό για εσάς ως το λιγότερο σημαντικό για να σας προτείνουμε ταινίες!
                     </p>
-                    <Grid container spacing={2} sx={{ padding: 1 }}>
-                        <Grid item container xs={4} lg={2}>
+                    <Stack direction='row' spacing={2} sx={{ padding: 1 }}>
+                        <div>
                             <FormControlLabel disabled={false} control={<Switch onChange={(e) => setYearCostCriteria(e.target.checked)} />} label="Προτίμηση παλιότερων ταινιών?" checked={yearCostCriteria} />
-                        </Grid>
-                        <Grid item container xs={4} lg={2}>
+                        </div>
+                        <div>
                             <FormControlLabel disabled={false} control={<Switch onChange={(e) => setDurationCostCriteria(e.target.checked)} />} label="Προτίμηση μικρότερων ταινιών?" checked={durationCostCriteria} />
-                        </Grid>
-                        <Grid item container xs={4} lg={2}>
+                        </div>
+                        <div>
                             <FormControl size='small'>
                                 <InputLabel id="label-select-choice1">1st Choice</InputLabel>
                                 <Select
                                     labelId="label-select-choice1"
                                     id="select-choice1"
                                     value={choice1}
-                                    label="Profile"
+                                    label="1st Choice"
                                     onChange={choice1Updated}
                                 >
                                     {Object.values(FuzzySearchChoices).map(choice => (
@@ -109,15 +109,15 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
                                     ))}
                                 </Select>
                             </FormControl>
-                        </Grid>
-                        <Grid item container xs={4} lg={2}>
+                        </div>
+                        <div>
                             <FormControl size='small'>
                                 <InputLabel id="label-select-choice2">2nd Choice</InputLabel>
                                 <Select
                                     labelId="label-select-choice2"
                                     id="select-choice2"
                                     value={choice2}
-                                    label="Profile"
+                                    label="2nd Choice"
                                     onChange={choice2Updated}
                                 >
                                     {Object.values(FuzzySearchChoices).map(choice => (
@@ -125,15 +125,15 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
                                     ))}
                                 </Select>
                             </FormControl>
-                        </Grid>
-                        <Grid item container xs={4} lg={2}>
+                        </div>
+                        <div>
                             <FormControl size='small'>
                                 <InputLabel id="label-select-choice3">3rd Choice</InputLabel>
                                 <Select
                                     labelId="label-select-choice3"
                                     id="select-choice3"
                                     value={choice3}
-                                    label="Profile"
+                                    label="3rd Choice"
                                     onChange={choice3Updated}
                                 >
                                     {Object.values(FuzzySearchChoices).map(choice => (
@@ -141,15 +141,15 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
                                     ))}
                                 </Select>
                             </FormControl>
-                        </Grid>
-                        <Grid item container xs={4} lg={2}>
+                        </div>
+                        <div>
                             <FormControl size='small'>
                                 <InputLabel id="label-select-choice4">4th Choice</InputLabel>
                                 <Select
                                     labelId="label-select-choice4"
                                     id="select-choice4"
                                     value={choice4}
-                                    label="Profile"
+                                    label="4th Choice"
                                     onChange={choice4Updated}
                                 >
                                     {Object.values(FuzzySearchChoices).map(choice => (
@@ -157,8 +157,8 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
                                     ))}
                                 </Select>
                             </FormControl>
-                        </Grid>
-                    </Grid>
+                        </div>
+                    </Stack>
                 </AccordionDetails>
                 <AccordionActions>
                     {fuzzySearchDebugInfoDto != null && (

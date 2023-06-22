@@ -6,13 +6,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FuzzySearchDebugInfoDto implements Serializable {
-    private FuzzyProfileDto fuzzyProfileDto;
-    private FuzzySearchFiltersDto fuzzySearchFiltersDto;
-    private RegularTopsisInfoDto regularTopsisInfoDto;
+public class TopsisDataTableDto implements Serializable {
+    private List<TopsisDataRowDto> rows;
+    private boolean showDminus;
+    private boolean showDplus;
+    private boolean showS;
 }

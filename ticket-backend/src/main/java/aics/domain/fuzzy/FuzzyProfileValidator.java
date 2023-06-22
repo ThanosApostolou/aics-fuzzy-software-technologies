@@ -356,7 +356,7 @@ public class FuzzyProfileValidator {
             return "choice3 must be greater than choice4";
         }
         double sum = concreteWeights.getChoice1() + concreteWeights.getChoice2() + concreteWeights.getChoice3() + concreteWeights.getChoice4();
-        sum = (double) Math.round(sum * 100) / 100;
+        sum = (double) Math.round(sum * 100) / 100.0;
         if (sum != 1.0) {
             return "sum %s must be equal to 1.0".formatted(sum);
         }
