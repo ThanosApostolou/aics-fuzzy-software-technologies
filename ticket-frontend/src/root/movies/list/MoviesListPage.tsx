@@ -8,12 +8,12 @@ import { useSnackbar } from 'notistack';
 import { MoviesListService } from './movies-list-service';
 import FuzzySearchAccordionComponent from './components/FuzzySearchAccordionComponent';
 import { FuzzySearchFiltersDto } from '../../../modules/fuzzy/dtos/fuzzy-search-filters-dto';
-import { FuzzySearchDebugInfoDto } from '../../../modules/fuzzy/dtos/fuzzy-search-debug-info-dto';
+import { FuzzySearchTopsisAnalysisDto } from '../../../modules/fuzzy/dtos/fuzzy-search-topsis-analysis-dto';
 
 export default function MoviesListPage() {
     const [isWaitingFetch, setIsWaitingFetch] = useState<boolean>(false);
     const [movies, setMovies] = useState<MovieListItemDto[]>([]);
-    const [fuzzySearchDebugInfoDto, setFuzzySearchDebugInfoDto] = useState<FuzzySearchDebugInfoDto | null>(null);
+    const [fuzzySearchDebugInfoDto, setFuzzySearchDebugInfoDto] = useState<FuzzySearchTopsisAnalysisDto | null>(null);
     const [fuzzySearch, setFuzzySearch] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
 
@@ -31,7 +31,7 @@ export default function MoviesListPage() {
             console.log('fetchMoviesListResponseDto', fetchMoviesListResponseDto)
             setMovies(fetchMoviesListResponseDto.movies);
             setFuzzySearch(fetchMoviesListResponseDto.fuzzySearch);
-            setFuzzySearchDebugInfoDto(fetchMoviesListResponseDto.fuzzySearchDebugInfoDto);
+            setFuzzySearchDebugInfoDto(fetchMoviesListResponseDto.fuzzySearchTopsisAnalysisDto);
             setIsWaitingFetch(false);
         } catch (e: any) {
             if (e?.response?.status === 422) {
@@ -69,7 +69,7 @@ export default function MoviesListPage() {
                         </div>
                         <Divider variant="middle" style={{ marginBottom: 10 }} />
 
-                        <FuzzySearchAccordionComponent onSearch={handleFuzzySearch} fuzzySearchDebugInfoDto={fuzzySearchDebugInfoDto}></FuzzySearchAccordionComponent>
+                        <FuzzySearchAccordionComponent onSearch={handleFuzzySearch} fuzzySearchTopsisAnalysisDto={fuzzySearchDebugInfoDto}></FuzzySearchAccordionComponent>
 
                         <MoviesGridLayoutComponent movies={movies} fuzzySearch={fuzzySearch} />
                     </React.Fragment>

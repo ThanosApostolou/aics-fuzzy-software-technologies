@@ -35,7 +35,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
     const [fuzzyWeights, setFuzzyWeights] = useState<FuzzyWeights>(fuzzyProfileDto.fuzzyProfileData.fuzzyWeights);
     const [concreteWeights, setConcreteWeights] = useState<ConcreteWeights>(fuzzyProfileDto.fuzzyProfileData.concreteWeights);
     const [name, setName] = useState<string>(fuzzyProfileDto.name)
-    const [enableDebug, setEnableDebug] = useState<boolean>(fuzzyProfileDto.enableDebug)
+    const [showTopsisAnalysis, setShowTopsisAnalysis] = useState<boolean>(fuzzyProfileDto.showTopsisAnalysis)
     const [active, setActive] = useState<boolean>(fuzzyProfileDto.active);
     const [useFuzzyTopsis, setUseFuzzyTopsis] = useState<boolean>(fuzzyProfileDto.useFuzzyTopsis);
     const [deleteProfileConfirmationDialogOpen, setDeleteProfileConfirmationDialogOpen] = useState(false);
@@ -61,7 +61,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 fuzzyWeights,
                 concreteWeights,
             }),
-            enableDebug,
+            showTopsisAnalysis: showTopsisAnalysis,
             active,
             useFuzzyTopsis
         })
@@ -137,8 +137,8 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
         setDeleteProfileConfirmationDialogOpen(true);
     }
 
-    function handleEnableDebugChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setEnableDebug(event.target.checked);
+    function handleShowTopsisAnalysisChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setShowTopsisAnalysis(event.target.checked);
     }
     function handleActiveChange(event: React.ChangeEvent<HTMLInputElement>) {
         setActive(event.target.checked);
@@ -178,7 +178,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                     </Grid>
                 </Grid>
                 <FormGroup>
-                    <FormControlLabel disabled={readonly} control={<Switch onChange={handleEnableDebugChange} />} label="EnableDebug" checked={enableDebug} />
+                    <FormControlLabel disabled={readonly} control={<Switch onChange={handleShowTopsisAnalysisChange} />} label="ShowTopsisAnalysis" checked={showTopsisAnalysis} />
                     <FormControlLabel disabled={readonly} control={<Switch onChange={handleActiveChange} />} label="Active" checked={active} />
                     <FormControlLabel disabled={readonly} control={<Switch onChange={handleUseFuzzyTopsisChange} />} label="UseFuzzyTopsis" checked={useFuzzyTopsis} />
                 </FormGroup>

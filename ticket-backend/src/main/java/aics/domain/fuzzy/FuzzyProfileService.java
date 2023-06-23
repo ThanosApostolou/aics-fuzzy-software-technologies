@@ -64,7 +64,7 @@ public class FuzzyProfileService {
 
         return new FuzzyProfile()
                 .setName(FuzzyConstants.DEFAULT)
-                .setEnableDebug(true)
+                .setShowTopsisAnalysis(true)
                 .setActive(isDefaultActive)
                 .setUseFuzzyTopsis(false)
                 .setFuzzyProfileData(fuzzyProfileData);
@@ -84,7 +84,7 @@ public class FuzzyProfileService {
 
         FuzzyProfile newFuzzyProfile = new FuzzyProfile()
                 .setName(fuzzyProfileDto.getName())
-                .setEnableDebug(fuzzyProfileDto.isEnableDebug())
+                .setShowTopsisAnalysis(fuzzyProfileDto.isShowTopsisAnalysis())
                 .setActive(fuzzyProfileDto.isActive())
                 .setUseFuzzyTopsis(fuzzyProfileDto.isUseFuzzyTopsis())
                 .setFuzzyProfileData(fuzzyProfileDto.getFuzzyProfileData());
@@ -111,7 +111,7 @@ public class FuzzyProfileService {
         }
         this.resetActiveIfNewActivePorfile(fuzzyProfileDto.isActive(), fuzzyProfileDto.getName());
         existingFuzzyProfile
-                .setEnableDebug(fuzzyProfileDto.isEnableDebug())
+                .setShowTopsisAnalysis(fuzzyProfileDto.isShowTopsisAnalysis())
                 .setActive(fuzzyProfileDto.isActive())
                 .setUseFuzzyTopsis(fuzzyProfileDto.isUseFuzzyTopsis())
                 .setFuzzyProfileData(fuzzyProfileDto.getFuzzyProfileData());

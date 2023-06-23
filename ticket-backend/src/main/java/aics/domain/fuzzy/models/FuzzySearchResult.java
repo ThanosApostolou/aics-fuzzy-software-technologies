@@ -1,6 +1,6 @@
 package aics.domain.fuzzy.models;
 
-import aics.domain.fuzzy.dtos.FuzzySearchDebugInfoDto;
+import aics.domain.fuzzy.dtos.FuzzySearchTopsisAnalysisDto;
 import aics.domain.movie.dtos.MovieListItemDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,5 +16,5 @@ import java.util.List;
 @AllArgsConstructor
 public class FuzzySearchResult implements Serializable {
     private List<MovieListItemDto> movieDtos;
-    private FuzzySearchDebugInfoDto fuzzySearchDebugInfoDto;
+    private FuzzySearchTopsisAnalysisDto fuzzySearchTopsisAnalysisDto;
 }

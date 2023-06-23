@@ -22,8 +22,8 @@ public class FuzzyProfile {
     @Column(name = "FUZZY_PROFILE_DATA", columnDefinition = "json", nullable = false)
     @JdbcTypeCode(SqlTypes.JSON)
     private FuzzyProfileData fuzzyProfileData;
-    @Column(name = "ENABLE_DEBUG", nullable = false)
-    private boolean enableDebug;
+    @Column(name = "SHOW_TOPSIS_ANALYSIS", nullable = false)
+    private boolean showTopsisAnalysis;
     @Column(name = "ACTIVE", nullable = false)
     private boolean active;
     @Column(name = "USE_FUZZY_TOPSIS", nullable = false)

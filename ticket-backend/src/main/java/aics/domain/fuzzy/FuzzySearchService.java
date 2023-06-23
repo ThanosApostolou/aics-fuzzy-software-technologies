@@ -34,7 +34,7 @@ public class FuzzySearchService {
         // step4
         List<TopsisDataRow> table4TopsisScore = this.calculateTable4TopsisScore(table3WeightedNormalizedData, fuzzySearchFiltersDto.isYearCostCriteria(), fuzzySearchFiltersDto.isDurationCostCriteria());
 
-        FuzzySearchDebugInfoDto createFuzzySearchDebugInfoDto = this.createFuzzySearchDebugInfoDto(activeProfile, fuzzySearchFiltersDto, choiceToWeightMap, table1InitialData, table2NormalizedData, table3WeightedNormalizedData, table4TopsisScore);
+        FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDto(activeProfile, fuzzySearchFiltersDto, choiceToWeightMap, table1InitialData, table2NormalizedData, table3WeightedNormalizedData, table4TopsisScore);
 
         Map<Long, Movie> idToMovieMap = new HashMap<>();
         for (Movie movie : movies) {
@@ -55,7 +55,7 @@ public class FuzzySearchService {
 
         return new FuzzySearchResult(
                 movieDtos,
-                createFuzzySearchDebugInfoDto
+                createFuzzySearchTopsisAnalysisDto
         );
     }
 
@@ -182,11 +182,11 @@ public class FuzzySearchService {
         return table4TopsisScore;
     }
 
-    private FuzzySearchDebugInfoDto createFuzzySearchDebugInfoDto(FuzzyProfile activeProfile,
-                                                                  FuzzySearchFiltersDto fuzzySearchFiltersDto,
-                                                                  EnumMap<FuzzySearchChoices, Double> choiceToWeightMap,
-                                                                  List<TopsisDataRow> table1InitialData,
-                                                                  List<TopsisDataRow> table2NormalizedData, List<TopsisDataRow> table3WeightedNormalizedData, List<TopsisDataRow> table4TopsisScore) {
+    private FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto(FuzzyProfile activeProfile,
+                                                                            FuzzySearchFiltersDto fuzzySearchFiltersDto,
+                                                                            EnumMap<FuzzySearchChoices, Double> choiceToWeightMap,
+                                                                            List<TopsisDataRow> table1InitialData,
+                                                                            List<TopsisDataRow> table2NormalizedData, List<TopsisDataRow> table3WeightedNormalizedData, List<TopsisDataRow> table4TopsisScore) {
         final double roundFactor = 1000.0;
         String weightRating = String.valueOf(Math.round(choiceToWeightMap.get(FuzzySearchChoices.RATING) * roundFactor) / roundFactor);
         String weightPopularity = String.valueOf(Math.round(choiceToWeightMap.get(FuzzySearchChoices.POPULARITY) * roundFactor) / roundFactor);
@@ -212,7 +212,7 @@ public class FuzzySearchService {
 
         RegularTopsisInfoDto regularTopsisInfoDto = new RegularTopsisInfoDto(table1InitialDataDto, table2NormalizedDataDto, table3WeightedNormalizedDataDto, table4TopsisScoreDataDto);
 
-        return new FuzzySearchDebugInfoDto(FuzzyProfileDto.fromFuzzyProfile(activeProfile),
+        return new FuzzySearchTopsisAnalysisDto(FuzzyProfileDto.fromFuzzyProfile(activeProfile),
                 fuzzySearchFiltersDto,
                 regularTopsisInfoDto);
     }

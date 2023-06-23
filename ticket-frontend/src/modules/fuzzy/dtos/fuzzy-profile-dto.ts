@@ -4,7 +4,7 @@ export class FuzzyProfileDto {
     fuzzyProfileId: number | null;
     name: string;
     fuzzyProfileData: FuzzyProfileData;
-    enableDebug: boolean;
+    showTopsisAnalysis: boolean;
     active: boolean;
     useFuzzyTopsis: boolean;
 
@@ -12,14 +12,14 @@ export class FuzzyProfileDto {
         fuzzyProfileId: number | null,
         name: string,
         fuzzyProfileData: FuzzyProfileData,
-        enableDebug: boolean,
+        showTopsisAnalysis: boolean,
         active: boolean,
         useFuzzyTopsis: boolean,
     }) {
         this.fuzzyProfileId = obj.fuzzyProfileId;
         this.name = obj.name;
         this.fuzzyProfileData = obj.fuzzyProfileData;
-        this.enableDebug = obj.enableDebug;
+        this.showTopsisAnalysis = obj.showTopsisAnalysis;
         this.active = obj.active;
         this.useFuzzyTopsis = obj.useFuzzyTopsis;
     }
@@ -32,7 +32,7 @@ export class FuzzyProfileDto {
             fuzzyProfileId: obj.fuzzyProfileId,
             name: obj.name,
             fuzzyProfileData: FuzzyProfileData.fromObj(obj.fuzzyProfileData),
-            enableDebug: obj.enableDebug,
+            showTopsisAnalysis: obj.showTopsisAnalysis,
             active: obj.active,
             useFuzzyTopsis: obj.useFuzzyTopsis,
         });
@@ -43,7 +43,7 @@ export class FuzzyProfileDto {
             fuzzyProfileId: this.fuzzyProfileId,
             name: this.name,
             fuzzyProfileData: this.fuzzyProfileData.deepClone(),
-            enableDebug: this.enableDebug,
+            showTopsisAnalysis: this.showTopsisAnalysis,
             active: this.active,
             useFuzzyTopsis: this.useFuzzyTopsis,
         })

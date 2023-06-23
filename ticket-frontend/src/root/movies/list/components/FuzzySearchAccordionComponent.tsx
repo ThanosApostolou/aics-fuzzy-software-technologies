@@ -6,25 +6,25 @@ import { FuzzySearchChoices } from '../../../../modules/fuzzy/fuzzy-constants';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import { FuzzySearchDebugInfoDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-debug-info-dto';
+import { FuzzySearchTopsisAnalysisDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-topsis-analysis-dto';
 import AdbIcon from '@mui/icons-material/Adb';
-import DebugInfoDialogComponent from './DebugInfoDialogComponent';
+import TopsisAnalysisDialogComponent from './TopsisAnalysisDialogComponent';
 
 export interface FuzzySearchAccordionComponentProps {
-    fuzzySearchDebugInfoDto: FuzzySearchDebugInfoDto | null;
+    fuzzySearchTopsisAnalysisDto: FuzzySearchTopsisAnalysisDto | null;
     onSearch?: (fuzzySearchFiltersDto: FuzzySearchFiltersDto | null) => void;
 }
 
 
 
-export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto, onSearch }: FuzzySearchAccordionComponentProps) {
+export default function FuzzySearchAccordionComponent({ fuzzySearchTopsisAnalysisDto, onSearch }: FuzzySearchAccordionComponentProps) {
     const [choice1, setChoice1] = useState<FuzzySearchChoices>(FuzzySearchChoices.RATING);
     const [choice2, setChoice2] = useState<FuzzySearchChoices>(FuzzySearchChoices.POPULARITY);
     const [choice3, setChoice3] = useState<FuzzySearchChoices>(FuzzySearchChoices.YEAR);
     const [choice4, setChoice4] = useState<FuzzySearchChoices>(FuzzySearchChoices.DURATION);
     const [yearCostCriteria, setYearCostCriteria] = useState<boolean>(false);
     const [durationCostCriteria, setDurationCostCriteria] = useState<boolean>(false);
-    const [debugInfoDialogOpen, setDebugInfoDialogOpen] = useState<boolean>(false);
+    const [topsisAnalysisDialogOpen, setTopsisAnalysisDialogOpen] = useState<boolean>(false);
 
     function choice1Updated(e: SelectChangeEvent<FuzzySearchChoices>) {
         const newChoice1 = e.target.value as FuzzySearchChoices;
@@ -69,8 +69,8 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
         }
     }
 
-    function handleDebugInfo() {
-        setDebugInfoDialogOpen(true);
+    function handleTopsisAnalysis() {
+        setTopsisAnalysisDialogOpen(true);
     }
 
     return (
@@ -161,10 +161,10 @@ export default function FuzzySearchAccordionComponent({ fuzzySearchDebugInfoDto,
                     </Stack>
                 </AccordionDetails>
                 <AccordionActions>
-                    {fuzzySearchDebugInfoDto != null && (
+                    {fuzzySearchTopsisAnalysisDto != null && (
                         <Fragment>
-                            <Button startIcon={<AdbIcon />} color='info' onClick={handleDebugInfo}>DebugInfo</Button>
-                            <DebugInfoDialogComponent open={debugInfoDialogOpen} fuzzySearchDebugInfoDto={fuzzySearchDebugInfoDto} onClose={() => setDebugInfoDialogOpen(false)}></DebugInfoDialogComponent>
+                            <Button startIcon={<AdbIcon />} color='info' onClick={handleTopsisAnalysis}>TOPSIS Analysis</Button>
+                            <TopsisAnalysisDialogComponent open={topsisAnalysisDialogOpen} fuzzySearchTopsisAnalysisDto={fuzzySearchTopsisAnalysisDto} onClose={() => setTopsisAnalysisDialogOpen(false)}></TopsisAnalysisDialogComponent>
                         </Fragment>
                     )}
                     <Button startIcon={<RestartAltIcon />} color='warning' onClick={handleClear}>Επαναφορά</Button>

@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class FuzzySearchDebugInfoDto implements Serializable {
+public class FuzzySearchTopsisAnalysisDto implements Serializable {
     private FuzzyProfileDto fuzzyProfileDto;
     private FuzzySearchFiltersDto fuzzySearchFiltersDto;
     private RegularTopsisInfoDto regularTopsisInfoDto;

@@ -1,6 +1,6 @@
 package aics.server.api.movies.dtos;
 
-import aics.domain.fuzzy.dtos.FuzzySearchDebugInfoDto;
+import aics.domain.fuzzy.dtos.FuzzySearchTopsisAnalysisDto;
 import aics.domain.movie.dtos.MovieListItemDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class FetchMoviesPlayingNowResponseDto implements Serializable {
     private List<MovieListItemDto> movies;
-    private FuzzySearchDebugInfoDto fuzzySearchDebugInfoDto;
+    private FuzzySearchTopsisAnalysisDto fuzzySearchTopsisAnalysisDto;
     private boolean fuzzySearch;
     private Serializable error;
 }

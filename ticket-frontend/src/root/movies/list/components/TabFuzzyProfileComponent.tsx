@@ -24,7 +24,7 @@ export default function TabFuzzyProfileComponent({ fuzzyProfileDto }: TabFuzzyPr
     const [fuzzyWeights, setFuzzyWeights] = useState<FuzzyWeights>(fuzzyProfileDto.fuzzyProfileData.fuzzyWeights);
     const [concreteWeights, setConcreteWeights] = useState<ConcreteWeights>(fuzzyProfileDto.fuzzyProfileData.concreteWeights);
     const [name, setName] = useState<string>(fuzzyProfileDto.name)
-    const [enableDebug, setEnableDebug] = useState<boolean>(fuzzyProfileDto.enableDebug)
+    const [showTopsisAnalysis, setShowTopsisAnalysis] = useState<boolean>(fuzzyProfileDto.showTopsisAnalysis)
     const [active, setActive] = useState<boolean>(fuzzyProfileDto.active);
     const [useFuzzyTopsis, setUseFuzzyTopsis] = useState<boolean>(fuzzyProfileDto.useFuzzyTopsis);
     const [deleteProfileConfirmationDialogOpen, setDeleteProfileConfirmationDialogOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function TabFuzzyProfileComponent({ fuzzyProfileDto }: TabFuzzyPr
 
                 </Grid>
                 <FormGroup>
-                    <FormControlLabel disabled={true} control={<Switch />} label="EnableDebug" checked={enableDebug} />
+                    <FormControlLabel disabled={true} control={<Switch />} label="ShowTopsisAnalysis" checked={showTopsisAnalysis} />
                     <FormControlLabel disabled={true} control={<Switch />} label="Active" checked={active} />
                     <FormControlLabel disabled={true} control={<Switch />} label="UseFuzzyTopsis" checked={useFuzzyTopsis} />
                 </FormGroup>

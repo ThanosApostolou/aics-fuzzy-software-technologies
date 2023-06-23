@@ -3,25 +3,25 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormCon
 import { FuzzySearchFiltersDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-filters-dto';
 import { useState } from 'react';
 import { FuzzySearchChoices } from '../../../../modules/fuzzy/fuzzy-constants';
-import { FuzzySearchDebugInfoDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-debug-info-dto';
+import { FuzzySearchTopsisAnalysisDto } from '../../../../modules/fuzzy/dtos/fuzzy-search-topsis-analysis-dto';
 import { FuzzyProfileDto } from '../../../../modules/fuzzy/dtos/fuzzy-profile-dto';
 import TabPanel from '../../../../modules/ui/components/TabPanelComponent';
 import TabFuzzyProfileComponent from './TabFuzzyProfileComponent';
 import TabRegularTopsisComponent from './TabRegularTopsisComponent';
 import { RegularTopsisInfoDto } from '../../../../modules/fuzzy/dtos/regular-topsis-info-dto';
 
-export interface DebugInfoDialogComponentProps {
-    fuzzySearchDebugInfoDto: FuzzySearchDebugInfoDto;
+export interface TopsisAnalysisDialogComponentProps {
+    fuzzySearchTopsisAnalysisDto: FuzzySearchTopsisAnalysisDto;
     open: boolean;
     onClose?: () => void;
 }
 
 
 
-export default function DebugInfoDialogComponent({ fuzzySearchDebugInfoDto, open, onClose }: DebugInfoDialogComponentProps) {
-    const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto>(fuzzySearchDebugInfoDto.fuzzyProfileDto);
-    const [fuzzySearchFiltersDto, setFuzzySearchFiltersDto] = useState<FuzzySearchFiltersDto>(fuzzySearchDebugInfoDto.fuzzySearchFiltersDto);
-    const [regularTopsisInfoDto, setRegularTopsisInfoDto] = useState<RegularTopsisInfoDto>(fuzzySearchDebugInfoDto.regularTopsisInfoDto);
+export default function TopsisAnalysisDialogComponent({ fuzzySearchTopsisAnalysisDto, open, onClose }: TopsisAnalysisDialogComponentProps) {
+    const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto>(fuzzySearchTopsisAnalysisDto.fuzzyProfileDto);
+    const [fuzzySearchFiltersDto, setFuzzySearchFiltersDto] = useState<FuzzySearchFiltersDto>(fuzzySearchTopsisAnalysisDto.fuzzySearchFiltersDto);
+    const [regularTopsisInfoDto, setRegularTopsisInfoDto] = useState<RegularTopsisInfoDto>(fuzzySearchTopsisAnalysisDto.regularTopsisInfoDto);
     const [tabValue, setTabValue] = useState(0);
 
     function a11yProps(index: number) {

@@ -2,7 +2,7 @@ import { FuzzyProfileDto } from './fuzzy-profile-dto';
 import { FuzzySearchFiltersDto } from './fuzzy-search-filters-dto';
 import { RegularTopsisInfoDto } from './regular-topsis-info-dto';
 
-export class FuzzySearchDebugInfoDto {
+export class FuzzySearchTopsisAnalysisDto {
     fuzzyProfileDto: FuzzyProfileDto;
     fuzzySearchFiltersDto: FuzzySearchFiltersDto;
     regularTopsisInfoDto: RegularTopsisInfoDto;
@@ -17,18 +17,18 @@ export class FuzzySearchDebugInfoDto {
         this.regularTopsisInfoDto = obj.regularTopsisInfoDto;
     }
 
-    static fromObj(obj: any): FuzzySearchDebugInfoDto {
+    static fromObj(obj: any): FuzzySearchTopsisAnalysisDto {
         if (obj == null) {
             throw new Error('obj cannot be null')
         }
-        return new FuzzySearchDebugInfoDto({
+        return new FuzzySearchTopsisAnalysisDto({
             fuzzyProfileDto: FuzzyProfileDto.fromObj(obj.fuzzyProfileDto),
             fuzzySearchFiltersDto: FuzzySearchFiltersDto.fromObj(obj.fuzzySearchFiltersDto),
             regularTopsisInfoDto: RegularTopsisInfoDto.fromObj(obj.regularTopsisInfoDto)
         });
     }
 
-    static fromObjNullable(obj: any): FuzzySearchDebugInfoDto | null {
+    static fromObjNullable(obj: any): FuzzySearchTopsisAnalysisDto | null {
         if (obj == null) {
             return null;
         }
