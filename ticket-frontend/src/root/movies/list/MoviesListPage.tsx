@@ -52,24 +52,25 @@ export default function MoviesListPage() {
 
     return (
         <React.Fragment>
+            <ScrollToTopOnMount />
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap', marginTop: 10
+            }}>
+                <MovieIcon sx={{ marginLeft: 4 }} fontSize='large' />
+                <Typography sx={{ fontSize: 'xx-large', marginLeft: 3, fontWeight: 'bolder' }}>ΠΑΙΖΟΝΤΑΙ ΤΩΡΑ</Typography>
+            </div>
+            <Divider variant="middle" style={{ marginBottom: 10 }} />
+
+            <FuzzySearchAccordionComponent onSearch={handleFuzzySearch} fuzzySearchTopsisAnalysisDto={fuzzySearchDebugInfoDto}></FuzzySearchAccordionComponent>
+
             {isWaitingFetch
                 ? (
                     <CircularProgress />
                 )
                 : (
                     <React.Fragment>
-                        <ScrollToTopOnMount />
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexWrap: 'wrap', marginTop: 10
-                        }}>
-                            <MovieIcon sx={{ marginLeft: 4 }} fontSize='large' />
-                            <Typography sx={{ fontSize: 'xx-large', marginLeft: 3, fontWeight: 'bolder' }}>ΠΑΙΖΟΝΤΑΙ ΤΩΡΑ</Typography>
-                        </div>
-                        <Divider variant="middle" style={{ marginBottom: 10 }} />
-
-                        <FuzzySearchAccordionComponent onSearch={handleFuzzySearch} fuzzySearchTopsisAnalysisDto={fuzzySearchDebugInfoDto}></FuzzySearchAccordionComponent>
 
                         <MoviesGridLayoutComponent movies={movies} fuzzySearch={fuzzySearch} />
                     </React.Fragment>
