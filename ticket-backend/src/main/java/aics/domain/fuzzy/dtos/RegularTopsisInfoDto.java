@@ -14,4 +14,6 @@ import java.io.Serializable;
 public class RegularTopsisInfoDto implements Serializable {
     private TopsisDataTableDto table1InitialData;
     private TopsisDataTableDto table2NormalizedData;
+    private TopsisDataTableDto table3WeightedNormalizedData;
+    private TopsisDataTableDto table4TopsisScoreData;
 }

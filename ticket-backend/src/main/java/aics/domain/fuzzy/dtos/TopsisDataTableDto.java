@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TopsisDataTableDto implements Serializable {
     private List<TopsisDataRowDto> rows;
-    private boolean showDminus;
-    private boolean showDplus;
-    private boolean showS;
+    private boolean showDpos;
+    private boolean showDneg;
+    private boolean showScore;
 }

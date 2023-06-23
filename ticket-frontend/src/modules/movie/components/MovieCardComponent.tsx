@@ -28,7 +28,9 @@ const MovieCardComponent = ({ movie, fuzzySearch, index }: MovieCardComponentPro
                     <Avatar sx={{ bgcolor: index < 3 ? green[500] : grey[500] }} aria-label="recipe">
                         {index + 1}
                     </Avatar>
-                } />
+                }
+                    title={`Recommendation Score: ${movie.topsisScore ? movie.topsisScore.toFixed(2) : ''}`}
+                />
             )}
 
             <CardMedia

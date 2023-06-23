@@ -5,9 +5,9 @@ export class TopsisDataRowDto {
     popularity: number | string;
     year: number | string;
     duration: number | string;
-    dminus: number | string;
-    dplus: number | string;
-    s: number | string;
+    dpos: number | string;
+    dneg: number | string;
+    score: number | string;
 
     constructor(obj: {
         movieId: number,
@@ -16,9 +16,9 @@ export class TopsisDataRowDto {
         popularity: number | string,
         year: number | string,
         duration: number | string,
-        dminus: number | string,
-        dplus: number | string,
-        s: number | string,
+        dpos: number | string,
+        dneg: number | string,
+        score: number | string,
     }) {
         this.movieId = obj.movieId;
         this.name = obj.name;
@@ -26,9 +26,9 @@ export class TopsisDataRowDto {
         this.popularity = obj.popularity;
         this.year = obj.year;
         this.duration = obj.duration;
-        this.dminus = obj.dminus;
-        this.dplus = obj.dplus;
-        this.s = obj.s;
+        this.dpos = obj.dpos;
+        this.dneg = obj.dneg;
+        this.score = obj.score;
     }
 
     static fromObj(obj: any): TopsisDataRowDto {
@@ -39,9 +39,9 @@ export class TopsisDataRowDto {
             popularity: obj.popularity,
             year: obj.year,
             duration: obj.duration,
-            dminus: obj.dminus,
-            dplus: obj.dplus,
-            s: obj.s,
+            dpos: obj.dpos,
+            dneg: obj.dneg,
+            score: obj.score,
         })
     }
 

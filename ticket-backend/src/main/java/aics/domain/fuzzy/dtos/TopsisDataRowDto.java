@@ -19,11 +19,11 @@ public class TopsisDataRowDto implements Serializable {
     private String popularity;
     private String year;
     private String duration;
-    private String dminus;
-    private String dplus;
-    private String s;
+    private String dpos;
+    private String dneg;
+    private String score;
 
-    public static TopsisDataRowDto fromTopsisDataRow(TopsisDataRow topsisDataRow, boolean showDminus, boolean showDplus, boolean showS) {
+    public static TopsisDataRowDto fromTopsisDataRow(TopsisDataRow topsisDataRow, boolean showDpos, boolean showDneg, boolean showScore) {
         if (topsisDataRow == null) {
             return null;
         }
@@ -34,9 +34,9 @@ public class TopsisDataRowDto implements Serializable {
                 String.valueOf(Math.round(topsisDataRow.getPopularity() * roundFactor) / roundFactor),
                 String.valueOf(Math.round(topsisDataRow.getYear() * roundFactor) / roundFactor),
                 String.valueOf(Math.round(topsisDataRow.getDuration() * roundFactor) / roundFactor),
-                showDminus ? String.valueOf(Math.round(topsisDataRow.getDminus() * roundFactor) / roundFactor) : "",
-                showDplus ? String.valueOf(Math.round(topsisDataRow.getDplus() * roundFactor) / roundFactor) : "",
-                showS ? String.valueOf(Math.round(topsisDataRow.getS() * roundFactor) / roundFactor) : ""
+                showDpos ? String.valueOf(Math.round(topsisDataRow.getDpos() * roundFactor) / roundFactor) : "",
+                showDneg ? String.valueOf(Math.round(topsisDataRow.getDneg() * roundFactor) / roundFactor) : "",
+                showScore ? String.valueOf(Math.round(topsisDataRow.getScore() * roundFactor) / roundFactor) : ""
         );
     }
 }

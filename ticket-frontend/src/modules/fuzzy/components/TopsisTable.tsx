@@ -7,19 +7,16 @@ import { TopsisDataTableDto } from '../dtos/topsis-data-table-dto';
 
 export interface TopsisTableProps {
     dataTable: TopsisDataTableDto;
-    showDminus: boolean;
-    showDplus: boolean;
-    showS: boolean;
     yearCostCriteria: boolean;
     durationCostCriteria: boolean;
 }
 
-export default function TopsisTable({ dataTable, showDminus, showDplus, showS, yearCostCriteria, durationCostCriteria }: TopsisTableProps) {
+export default function TopsisTable({ dataTable, yearCostCriteria, durationCostCriteria }: TopsisTableProps) {
     const columns = useMemo(() => {
-        return createColumns(showDminus, showDplus, showS)
-    }, [showDminus, showDplus, showS]);
+        return createColumns(dataTable.showDpos, dataTable.showDneg, dataTable.showScore)
+    }, [dataTable]);
 
-    function createColumns(showDminus: boolean, showDplus: boolean, showS: boolean): GridColDef[] {
+    function createColumns(showDpos: boolean, showDneg: boolean, showScore: boolean): GridColDef[] {
         const columns: GridColDef[] = [
             {
                 field: 'name',
@@ -59,19 +56,9 @@ export default function TopsisTable({ dataTable, showDminus, showDplus, showS, y
                 sortable: false
             }
         ];
-        if (showDminus) {
+        if (showDpos) {
             columns.push({
-                field: 'dminus',
-                headerName: 'D-',
-                width: 50,
-                flex: 1,
-                editable: false,
-                sortable: false
-            })
-        }
-        if (showDplus) {
-            columns.push({
-                field: 'dplus',
+                field: 'dpos',
                 headerName: 'D+',
                 width: 50,
                 flex: 1,
@@ -79,10 +66,20 @@ export default function TopsisTable({ dataTable, showDminus, showDplus, showS, y
                 sortable: false
             })
         }
-        if (showS) {
+        if (showDneg) {
             columns.push({
-                field: 's',
-                headerName: 'S',
+                field: 'dneg',
+                headerName: 'D-',
+                width: 50,
+                flex: 1,
+                editable: false,
+                sortable: false
+            })
+        }
+        if (showScore) {
+            columns.push({
+                field: 'score',
+                headerName: 'Score',
                 width: 50,
                 flex: 1,
                 editable: false,

@@ -10,11 +10,8 @@ import aics.domain.movie.dtos.MovieListItemDto;
 import aics.domain.movie.entities.Movie;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.apache.commons.collections4.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -26,16 +23,36 @@ public class FuzzySearchService {
 
     public FuzzySearchResult fuzzySearch(List<Movie> movies, FuzzySearchFiltersDto fuzzySearchFiltersDto) {
         FuzzyProfile activeProfile = this.fuzzyProfileService.findActiveProfileOrDefault();
-
+        // step1
         List<TopsisDataRow> table1InitialData = this.calculateTable1InitialDate(movies);
-
+        // step2
         List<TopsisDataRow> table2NormalizedData = this.calculateTable2NormalizedData(table1InitialData);
+        // step3
+        ConcreteWeights concreteWeights = activeProfile.getFuzzyProfileData().getConcreteWeights();
+        EnumMap<FuzzySearchChoices, Double> choiceToWeightMap = this.getChoiceToWeightMap(fuzzySearchFiltersDto, concreteWeights);
+        List<TopsisDataRow> table3WeightedNormalizedData = this.calculateTable3WeightedNormalizedData(table2NormalizedData, choiceToWeightMap);
+        // step4
+        List<TopsisDataRow> table4TopsisScore = this.calculateTable4TopsisScore(table3WeightedNormalizedData, fuzzySearchFiltersDto.isYearCostCriteria(), fuzzySearchFiltersDto.isDurationCostCriteria());
 
-        List<MovieListItemDto> movieDtos = CollectionUtils.isNotEmpty(movies)
-                ? movies.stream().map(MovieListItemDto::fromMovie).toList()
-                : new ArrayList<>();
+        FuzzySearchDebugInfoDto createFuzzySearchDebugInfoDto = this.createFuzzySearchDebugInfoDto(activeProfile, fuzzySearchFiltersDto, choiceToWeightMap, table1InitialData, table2NormalizedData, table3WeightedNormalizedData, table4TopsisScore);
 
-        FuzzySearchDebugInfoDto createFuzzySearchDebugInfoDto = this.createFuzzySearchDebugInfoDto(activeProfile, fuzzySearchFiltersDto, table1InitialData, table2NormalizedData);
+        Map<Long, Movie> idToMovieMap = new HashMap<>();
+        for (Movie movie : movies) {
+            idToMovieMap.put(movie.getMovieId(), movie);
+        }
+
+        List<MovieListItemDto> movieDtos = new ArrayList<>();
+        if (activeProfile.isUseFuzzyTopsis()) {
+            // FUZZY TOPSIS
+            // TODO
+        } else {
+            // REGULAR TOPSIS
+            for (TopsisDataRow topsisDataRow : table4TopsisScore) {
+                Movie movie = idToMovieMap.get(topsisDataRow.getMovieId());
+                movieDtos.add(MovieListItemDto.fromMovieAndTopsisScore(movie, topsisDataRow.getScore()));
+            }
+        }
+
         return new FuzzySearchResult(
                 movieDtos,
                 createFuzzySearchDebugInfoDto
@@ -57,20 +74,20 @@ public class FuzzySearchService {
     private List<TopsisDataRow> calculateTable2NormalizedData(final List<TopsisDataRow> table1InitialData) {
         List<TopsisDataRow> table2NormalizedData = new ArrayList<>();
 
+        double allRatingSquaredSum = 0;
+        double allPopularitySquaredSum = 0;
+        double allYearSquaredSum = 0;
+        double allDurationSquaredSum = 0;
+        for (int i = 0; i < table1InitialData.size(); i++) {
+            allRatingSquaredSum += Math.pow(table1InitialData.get(i).getRating(), 2);
+            allPopularitySquaredSum += Math.pow(table1InitialData.get(i).getPopularity(), 2);
+            allYearSquaredSum += Math.pow(table1InitialData.get(i).getYear(), 2);
+            allDurationSquaredSum += Math.pow(table1InitialData.get(i).getDuration(), 2);
+        }
+
         for (int i = 0; i < table1InitialData.size(); i++) {
             final TopsisDataRow currentDataRow = table1InitialData.get(i);
-            double otherRatingSquaredSum = 0;
-            double otherPopularitySquaredSum = 0;
-            double otherYearSquaredSum = 0;
-            double otherDurationSquaredSum = 0;
-            for (int j = 0; j < table1InitialData.size(); j++) {
-                if (i != j) {
-                    otherRatingSquaredSum += Math.pow(table1InitialData.get(j).getRating(), 2);
-                    otherPopularitySquaredSum += Math.pow(table1InitialData.get(j).getPopularity(), 2);
-                    otherYearSquaredSum += Math.pow(table1InitialData.get(j).getYear(), 2);
-                    otherDurationSquaredSum += Math.pow(table1InitialData.get(j).getDuration(), 2);
-                }
-            }
+
             final double rating = currentDataRow.getRating();
             final double popularity = currentDataRow.getPopularity();
             final double year = currentDataRow.getYear();
@@ -78,25 +95,98 @@ public class FuzzySearchService {
             TopsisDataRow normalizedDataRow = new TopsisDataRow(
                     currentDataRow.getMovieId(),
                     currentDataRow.getName(),
-                    rating / Math.sqrt(otherRatingSquaredSum),
-                    popularity / Math.sqrt(otherPopularitySquaredSum),
-                    year / Math.sqrt(otherYearSquaredSum),
-                    duration / Math.sqrt(otherDurationSquaredSum),
+                    rating / Math.sqrt(allRatingSquaredSum),
+                    popularity / Math.sqrt(allPopularitySquaredSum),
+                    year / Math.sqrt(allYearSquaredSum),
+                    duration / Math.sqrt(allDurationSquaredSum),
                     0, 0, 0
             );
             table2NormalizedData.add(normalizedDataRow);
         }
-
         return table2NormalizedData;
     }
 
+    private List<TopsisDataRow> calculateTable3WeightedNormalizedData(final List<TopsisDataRow> table2NormalizedData,
+                                                                      final EnumMap<FuzzySearchChoices, Double> choiceToWeightMap) {
+        List<TopsisDataRow> table3WeightedNormalizedData = new ArrayList<>();
+
+        for (int i = 0; i < table2NormalizedData.size(); i++) {
+            final TopsisDataRow currentDataRow = table2NormalizedData.get(i);
+            final double newRating = currentDataRow.getRating() * choiceToWeightMap.get(FuzzySearchChoices.RATING);
+            final double newPopularity = currentDataRow.getPopularity() * choiceToWeightMap.get(FuzzySearchChoices.POPULARITY);
+            final double newYear = currentDataRow.getYear() * choiceToWeightMap.get(FuzzySearchChoices.YEAR);
+            final double newDuration = currentDataRow.getDuration() * choiceToWeightMap.get(FuzzySearchChoices.DURATION);
+            TopsisDataRow weightedNormalizedDataRow = new TopsisDataRow(
+                    currentDataRow.getMovieId(),
+                    currentDataRow.getName(),
+                    newRating,
+                    newPopularity,
+                    newYear,
+                    newDuration,
+                    0, 0, 0
+            );
+            table3WeightedNormalizedData.add(weightedNormalizedDataRow);
+        }
+
+        return table3WeightedNormalizedData;
+    }
+
+
+    private List<TopsisDataRow> calculateTable4TopsisScore(final List<TopsisDataRow> table3WeightedNormalizedData, boolean yearCostCriteria, boolean durationCostCriteria) {
+        List<TopsisDataRow> table4TopsisScore = new ArrayList<>();
+
+        double ratingBest = table3WeightedNormalizedData.stream().map(TopsisDataRow::getRating).max(Double::compare).get();
+        double ratingWorst = table3WeightedNormalizedData.stream().map(TopsisDataRow::getRating).min(Double::compare).get();
+        double popularityBest = table3WeightedNormalizedData.stream().map(TopsisDataRow::getPopularity).min(Double::compare).get();
+        double popularityWorst = table3WeightedNormalizedData.stream().map(TopsisDataRow::getPopularity).max(Double::compare).get();
+        double yearBest = yearCostCriteria
+                ? table3WeightedNormalizedData.stream().map(TopsisDataRow::getYear).min(Double::compare).get()
+                : table3WeightedNormalizedData.stream().map(TopsisDataRow::getYear).max(Double::compare).get();
+        double yearWorst = yearCostCriteria
+                ? table3WeightedNormalizedData.stream().map(TopsisDataRow::getYear).max(Double::compare).get()
+                : table3WeightedNormalizedData.stream().map(TopsisDataRow::getYear).min(Double::compare).get();
+        double durationBest = durationCostCriteria
+                ? table3WeightedNormalizedData.stream().map(TopsisDataRow::getDuration).min(Double::compare).get()
+                : table3WeightedNormalizedData.stream().map(TopsisDataRow::getDuration).max(Double::compare).get();
+        double durationWorst = durationCostCriteria
+                ? table3WeightedNormalizedData.stream().map(TopsisDataRow::getDuration).max(Double::compare).get()
+                : table3WeightedNormalizedData.stream().map(TopsisDataRow::getDuration).min(Double::compare).get();
+
+        for (int i = 0; i < table3WeightedNormalizedData.size(); i++) {
+            final TopsisDataRow currentDataRow = table3WeightedNormalizedData.get(i);
+            final double dpos = Math.sqrt(
+                    Math.pow(currentDataRow.getRating() - ratingBest, 2)
+                            + Math.pow(currentDataRow.getPopularity() - popularityBest, 2)
+                            + Math.pow(currentDataRow.getYear() - yearBest, 2)
+                            + Math.pow(currentDataRow.getDuration() - durationBest, 2)
+            );
+            final double dneg = Math.sqrt(
+                    Math.pow(currentDataRow.getRating() - ratingWorst, 2)
+                            + Math.pow(currentDataRow.getPopularity() - popularityWorst, 2)
+                            + Math.pow(currentDataRow.getYear() - yearWorst, 2)
+                            + Math.pow(currentDataRow.getDuration() - durationWorst, 2)
+            );
+            final double score = dneg / (dpos + dneg);
+            TopsisDataRow normalizedDataRow = new TopsisDataRow(
+                    currentDataRow.getMovieId(),
+                    currentDataRow.getName(),
+                    currentDataRow.getRating(),
+                    currentDataRow.getPopularity(),
+                    currentDataRow.getYear(),
+                    currentDataRow.getDuration(),
+                    dpos, dneg, score
+            );
+            table4TopsisScore.add(normalizedDataRow);
+        }
+        table4TopsisScore.sort(Comparator.comparing(TopsisDataRow::getScore).reversed());
+        return table4TopsisScore;
+    }
 
     private FuzzySearchDebugInfoDto createFuzzySearchDebugInfoDto(FuzzyProfile activeProfile,
                                                                   FuzzySearchFiltersDto fuzzySearchFiltersDto,
+                                                                  EnumMap<FuzzySearchChoices, Double> choiceToWeightMap,
                                                                   List<TopsisDataRow> table1InitialData,
-                                                                  List<TopsisDataRow> table2NormalizedData) {
-        ConcreteWeights concreteWeights = activeProfile.getFuzzyProfileData().getConcreteWeights();
-        EnumMap<FuzzySearchChoices, Double> choiceToWeightMap = this.getChoiceToWeightMap(fuzzySearchFiltersDto, concreteWeights);
+                                                                  List<TopsisDataRow> table2NormalizedData, List<TopsisDataRow> table3WeightedNormalizedData, List<TopsisDataRow> table4TopsisScore) {
         final double roundFactor = 1000.0;
         String weightRating = String.valueOf(Math.round(choiceToWeightMap.get(FuzzySearchChoices.RATING) * roundFactor) / roundFactor);
         String weightPopularity = String.valueOf(Math.round(choiceToWeightMap.get(FuzzySearchChoices.POPULARITY) * roundFactor) / roundFactor);
@@ -113,8 +203,14 @@ public class FuzzySearchService {
         List<TopsisDataRowDto> table2NormalizedDataDtos = table2NormalizedData.stream().map(topsisDataRow -> TopsisDataRowDto.fromTopsisDataRow(topsisDataRow, false, false, false)).collect(Collectors.toList());
         table2NormalizedDataDtos.add(weightsRow);
         TopsisDataTableDto table2NormalizedDataDto = new TopsisDataTableDto(table2NormalizedDataDtos, false, false, false);
+        // table3
+        List<TopsisDataRowDto> table3WeightedNormalizedDataDtos = table3WeightedNormalizedData.stream().map(topsisDataRow -> TopsisDataRowDto.fromTopsisDataRow(topsisDataRow, false, false, false)).collect(Collectors.toList());
+        TopsisDataTableDto table3WeightedNormalizedDataDto = new TopsisDataTableDto(table3WeightedNormalizedDataDtos, false, false, false);
+        // table4
+        List<TopsisDataRowDto> table4TopsisScoreDtos = table4TopsisScore.stream().map(topsisDataRow -> TopsisDataRowDto.fromTopsisDataRow(topsisDataRow, true, true, true)).collect(Collectors.toList());
+        TopsisDataTableDto table4TopsisScoreDataDto = new TopsisDataTableDto(table4TopsisScoreDtos, true, true, true);
 
-        RegularTopsisInfoDto regularTopsisInfoDto = new RegularTopsisInfoDto(table1InitialDataDto, table2NormalizedDataDto);
+        RegularTopsisInfoDto regularTopsisInfoDto = new RegularTopsisInfoDto(table1InitialDataDto, table2NormalizedDataDto, table3WeightedNormalizedDataDto, table4TopsisScoreDataDto);
 
         return new FuzzySearchDebugInfoDto(FuzzyProfileDto.fromFuzzyProfile(activeProfile),
                 fuzzySearchFiltersDto,

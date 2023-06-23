@@ -11,6 +11,7 @@ export class MovieListItemDto {
     rating: number = 0;
     popularity: number = 0;
     duration: number = 0;
+    topsisScore: number = 0;
 
     static fromObj(obj: any): MovieListItemDto | null {
         if (!obj) {
@@ -27,6 +28,7 @@ export class MovieListItemDto {
         movieModel.rating = obj.rating;
         movieModel.popularity = obj.popularity;
         movieModel.duration = obj.duration;
+        movieModel.topsisScore = obj.topsisScore;
         return movieModel;
     }
 

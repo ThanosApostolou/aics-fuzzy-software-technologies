@@ -18,7 +18,7 @@ public class TopsisDataRow implements Serializable {
     private double popularity;
     private double year;
     private double duration;
-    private double dminus;
-    private double dplus;
-    private double s;
+    private double dpos;
+    private double dneg;
+    private double score;
 }
