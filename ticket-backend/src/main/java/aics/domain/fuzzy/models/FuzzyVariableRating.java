@@ -28,4 +28,24 @@ public class FuzzyVariableRating implements Serializable, FuzzyVariableI {
         fuzzyVariableMap.put(FuzzyVariableRatingFields.VERY_GOOD.name(), this.varVeryGood);
         return fuzzyVariableMap;
     }
+
+    @Override
+    public FuzzyVariableDistributionPart find1stPart() {
+        return this.varBad;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find2ndPart() {
+        return this.varAverage;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find3rdPart() {
+        return this.varGood;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find4thPart() {
+        return this.varVeryGood;
+    }
 }

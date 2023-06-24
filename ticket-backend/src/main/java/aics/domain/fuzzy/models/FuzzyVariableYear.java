@@ -28,4 +28,24 @@ public class FuzzyVariableYear implements Serializable, FuzzyVariableI {
         fuzzyVariableMap.put(FuzzyVariableYearFields.VERY_NEW.name(), this.varVeryNew);
         return fuzzyVariableMap;
     }
+
+    @Override
+    public FuzzyVariableDistributionPart find1stPart() {
+        return this.varOld;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find2ndPart() {
+        return this.varRecent;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find3rdPart() {
+        return this.varNew;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find4thPart() {
+        return this.varVeryNew;
+    }
 }

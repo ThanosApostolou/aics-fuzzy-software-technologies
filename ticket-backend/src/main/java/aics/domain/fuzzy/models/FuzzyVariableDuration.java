@@ -28,4 +28,24 @@ public class FuzzyVariableDuration implements Serializable, FuzzyVariableI {
         fuzzyVariableMap.put(FuzzyVariableDurationFields.HUGE.name(), this.varHuge);
         return fuzzyVariableMap;
     }
+
+    @Override
+    public FuzzyVariableDistributionPart find1stPart() {
+        return this.varSmall;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find2ndPart() {
+        return this.varAverage;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find3rdPart() {
+        return this.varBig;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find4thPart() {
+        return this.varHuge;
+    }
 }

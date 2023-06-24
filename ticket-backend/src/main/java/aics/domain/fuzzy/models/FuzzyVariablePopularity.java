@@ -28,4 +28,24 @@ public class FuzzyVariablePopularity implements Serializable, FuzzyVariableI {
         fuzzyVariableMap.put(FuzzyVariablePopularityFields.UNPOPULAR.name(), this.varUnpopular);
         return fuzzyVariableMap;
     }
+
+    @Override
+    public FuzzyVariableDistributionPart find1stPart() {
+        return this.varVeryPopular;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find2ndPart() {
+        return this.varPopular;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find3rdPart() {
+        return this.varAverage;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find4thPart() {
+        return this.varUnpopular;
+    }
 }

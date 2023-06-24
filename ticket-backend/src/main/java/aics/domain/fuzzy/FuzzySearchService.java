@@ -23,6 +23,7 @@ public class FuzzySearchService {
 
     public FuzzySearchResult fuzzySearch(List<Movie> movies, FuzzySearchFiltersDto fuzzySearchFiltersDto) {
         FuzzyProfile activeProfile = this.fuzzyProfileService.findActiveProfileOrDefault();
+        // Regular TOPSIS
         // step1
         List<TopsisDataRow> table1InitialData = this.calculateTable1InitialDate(movies);
         // step2
@@ -33,6 +34,9 @@ public class FuzzySearchService {
         List<TopsisDataRow> table3WeightedNormalizedData = this.calculateTable3WeightedNormalizedData(table2NormalizedData, choiceToWeightMap);
         // step4
         List<TopsisDataRow> table4TopsisScore = this.calculateTable4TopsisScore(table3WeightedNormalizedData, fuzzySearchFiltersDto.isYearCostCriteria(), fuzzySearchFiltersDto.isDurationCostCriteria());
+
+        // FUZZY TOPSIS
+
 
         FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDto(activeProfile, fuzzySearchFiltersDto, choiceToWeightMap, table1InitialData, table2NormalizedData, table3WeightedNormalizedData, table4TopsisScore);
 

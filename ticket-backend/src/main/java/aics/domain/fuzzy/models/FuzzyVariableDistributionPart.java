@@ -21,4 +21,6 @@ public abstract class FuzzyVariableDistributionPart implements Serializable {
     abstract public int findFirstValue();
 
     abstract public int findLastValue();
+
+    abstract public double calculateFuzzyValuePart(double x);
 }

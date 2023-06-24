@@ -95,7 +95,7 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                 branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\`
             }
             if (c != null) {
-                branches += String.raw`\\ {${b} - x} \over {${c - b}} & \text{, } ${b} \leq x \leq ${c} \\`
+                branches += String.raw`\\ {${c} - x} \over {${c - b}} & \text{, } ${b} \leq x \leq ${c} \\`
             }
         } else if (type === FuzzyVariableDistributionType.TRAPEZOIDAL) {
             if (a != null && d != null) {
@@ -110,7 +110,7 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
             }
             branches += String.raw`1 & \text{, } ${b} \leq x \leq ${c} \\`
             if (c != null && d != null) {
-                branches += String.raw`\\ {${c} - x} \over {${d - c}} & \text{, } ${c} \leq x \leq ${d} \\`
+                branches += String.raw`\\ {${d} - x} \over {${d - c}} & \text{, } ${c} \leq x \leq ${d} \\`
             }
         }
         return String.raw`μ_{${partName}}(x) =

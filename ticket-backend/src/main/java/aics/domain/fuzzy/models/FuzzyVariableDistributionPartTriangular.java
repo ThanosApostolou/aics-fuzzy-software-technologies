@@ -38,4 +38,25 @@ public class FuzzyVariableDistributionPartTriangular extends FuzzyVariableDistri
     public int findLastValue() {
         return Objects.requireNonNullElse(this.c, this.b);
     }
+
+    @Override
+    public double calculateFuzzyValuePart(double x) {
+        double firstValue = this.findFirstValue();
+        double lastValue = this.findFirstValue();
+        if (x < firstValue || x > lastValue) {
+            return 0;
+        } else if (x == firstValue) {
+            return this.a != null ? 0 : 1;
+        } else if (x == lastValue) {
+            return this.c != null ? 0 : 1;
+        }
+
+        if (x < this.b) {
+            return (x - firstValue) / (this.b - firstValue);
+        } else {
+            return (lastValue - x) / (lastValue - this.c);
+        }
+    }
+
+
 }

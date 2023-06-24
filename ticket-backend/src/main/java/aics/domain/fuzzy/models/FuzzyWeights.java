@@ -28,4 +28,24 @@ public class FuzzyWeights implements Serializable, FuzzyVariableI {
         fuzzyVariableMap.put(FuzzyWeightsFields.VERY_HIGH_IMPORTANCE.name(), this.varVeryHighImportance);
         return fuzzyVariableMap;
     }
+
+    @Override
+    public FuzzyVariableDistributionPart find1stPart() {
+        return this.varLowImportance;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find2ndPart() {
+        return this.varAverageImportance;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find3rdPart() {
+        return this.varHighImportance;
+    }
+
+    @Override
+    public FuzzyVariableDistributionPart find4thPart() {
+        return this.varVeryHighImportance;
+    }
 }
