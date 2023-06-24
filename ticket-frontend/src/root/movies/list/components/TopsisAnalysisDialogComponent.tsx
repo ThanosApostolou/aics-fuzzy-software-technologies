@@ -9,6 +9,8 @@ import TabPanel from '../../../../modules/ui/components/TabPanelComponent';
 import TabFuzzyProfileComponent from './TabFuzzyProfileComponent';
 import TabRegularTopsisComponent from './TabRegularTopsisComponent';
 import { RegularTopsisInfoDto } from '../../../../modules/fuzzy/dtos/regular-topsis-info-dto';
+import { FuzzyTopsisInfoDto } from '../../../../modules/fuzzy/dtos/fuzzy-topsis-info-dto';
+import TabFuzzyTopsisComponent from './TabFuzzyTopsisComponent';
 
 export interface TopsisAnalysisDialogComponentProps {
     fuzzySearchTopsisAnalysisDto: FuzzySearchTopsisAnalysisDto;
@@ -21,8 +23,10 @@ export interface TopsisAnalysisDialogComponentProps {
 export default function TopsisAnalysisDialogComponent({ fuzzySearchTopsisAnalysisDto, open, onClose }: TopsisAnalysisDialogComponentProps) {
     const [fuzzyProfileDto, setFuzzyProfileDto] = useState<FuzzyProfileDto>(fuzzySearchTopsisAnalysisDto.fuzzyProfileDto);
     const [fuzzySearchFiltersDto, setFuzzySearchFiltersDto] = useState<FuzzySearchFiltersDto>(fuzzySearchTopsisAnalysisDto.fuzzySearchFiltersDto);
-    const [regularTopsisInfoDto, setRegularTopsisInfoDto] = useState<RegularTopsisInfoDto>(fuzzySearchTopsisAnalysisDto.regularTopsisInfoDto);
+    const [regularTopsisInfoDto, setRegularTopsisInfoDto] = useState<RegularTopsisInfoDto | null>(fuzzySearchTopsisAnalysisDto.regularTopsisInfoDto);
+    const [fuzzyTopsisInfoDto, setFuzzyTopsisInfoDto] = useState<FuzzyTopsisInfoDto | null>(fuzzySearchTopsisAnalysisDto.fuzzyTopsisInfoDto);
     const [tabValue, setTabValue] = useState(0);
+
 
     function a11yProps(index: number) {
         return {
@@ -117,18 +121,19 @@ export default function TopsisAnalysisDialogComponent({ fuzzySearchTopsisAnalysi
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Tabs value={tabValue} onChange={handleChange} aria-label="basic tabs example">
                             <Tab label="Fuzzy Profile Used" {...a11yProps(0)} />
-                            <Tab label="TOPSIS" {...a11yProps(1)} />
-                            <Tab label="FUZZY TOPSIS" {...a11yProps(2)} />
+                            <Tab label={`${fuzzyTopsisInfoDto != null ? 'FUZZY TOPSIS' : 'TOPSIS'}`} {...a11yProps(1)} />
                         </Tabs>
                     </Box>
                     <TabPanel value={tabValue} index={0}>
                         <TabFuzzyProfileComponent fuzzyProfileDto={fuzzyProfileDto} />
                     </TabPanel>
                     <TabPanel value={tabValue} index={1}>
-                        <TabRegularTopsisComponent fuzzyProfileDto={fuzzyProfileDto} fuzzySearchFiltersDto={fuzzySearchFiltersDto} regularTopsisInfoDto={regularTopsisInfoDto} />
-                    </TabPanel>
-                    <TabPanel value={tabValue} index={2}>
-                        Item Three
+                        {regularTopsisInfoDto != null && (
+                            <TabRegularTopsisComponent fuzzyProfileDto={fuzzyProfileDto} fuzzySearchFiltersDto={fuzzySearchFiltersDto} regularTopsisInfoDto={regularTopsisInfoDto} />
+                        )}
+                        {fuzzyTopsisInfoDto != null && (
+                            <TabFuzzyTopsisComponent fuzzyProfileDto={fuzzyProfileDto} fuzzySearchFiltersDto={fuzzySearchFiltersDto} fuzzyTopsisInfoDto={fuzzyTopsisInfoDto} />
+                        )}
                     </TabPanel>
                 </Box>
 

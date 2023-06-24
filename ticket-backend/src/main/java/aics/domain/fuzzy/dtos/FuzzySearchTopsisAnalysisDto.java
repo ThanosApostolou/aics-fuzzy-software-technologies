@@ -15,4 +15,5 @@ public class FuzzySearchTopsisAnalysisDto implements Serializable {
     private FuzzyProfileDto fuzzyProfileDto;
     private FuzzySearchFiltersDto fuzzySearchFiltersDto;
     private RegularTopsisInfoDto regularTopsisInfoDto;
+    private FuzzyTopsisInfoDto fuzzyTopsisInfoDto;
 }
