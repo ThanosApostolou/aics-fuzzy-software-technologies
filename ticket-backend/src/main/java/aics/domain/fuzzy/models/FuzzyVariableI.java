@@ -53,10 +53,10 @@ public interface FuzzyVariableI {
             finalD += weightedMx * fuzzyValue.d();
         }
         return new FuzzyValue(
-                finalA / mxs.size(),
-                finalB / mxs.size(),
-                finalC / mxs.size(),
-                finalD / mxs.size()
+                finalA,
+                finalB,
+                finalC,
+                finalD
         );
     }
 
