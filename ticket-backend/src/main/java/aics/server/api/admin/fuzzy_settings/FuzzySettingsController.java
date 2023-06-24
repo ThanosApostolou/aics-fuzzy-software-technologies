@@ -44,8 +44,6 @@ public class FuzzySettingsController {
     @Produces(MediaType.APPLICATION_JSON)
     public RestResponse<CreateFuzzyProfileResponseDto> handleCreateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) {
         Log.info("Start ProvidersController.handleCreateFuzzyProfile");
-        System.out.println("THANOS_CONTROLLER");
-        System.out.println(fuzzyProfileDto);
         try {
             CreateFuzzyProfileResponseDto createFuzzyProfileResponseDto = this.fuzzySettingsActions.doCreateFuzzyProfile(fuzzyProfileDto);
             Log.info("End ProvidersController.handleCreateFuzzyProfile");
@@ -64,8 +62,6 @@ public class FuzzySettingsController {
     @Produces(MediaType.APPLICATION_JSON)
     public RestResponse<UpdateFuzzyProfileResponseDto> handleUpdateFuzzyProfile(FuzzyProfileDto fuzzyProfileDto) {
         Log.info("Start ProvidersController.handleUpdateFuzzyProfile");
-        System.out.println("THANOS_CONTROLLER");
-        System.out.println(fuzzyProfileDto);
         try {
             UpdateFuzzyProfileResponseDto updateFuzzyProfileResponseDto = this.fuzzySettingsActions.doUpdateFuzzyProfile(fuzzyProfileDto);
             Log.info("End ProvidersController.handleUpdateFuzzyProfile");

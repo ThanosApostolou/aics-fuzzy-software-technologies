@@ -130,8 +130,6 @@ public class FuzzyProfileValidator {
         }
         error = this.validateFuzzyVariableDistributionPart(fuzzyVariableDuration.getVarHuge(), FuzzyVariableDurationFields.HUGE.name(), FuzzyVariablePartPosition.END, min, max);
         if (error != null) {
-            System.out.println("THANOS1");
-            System.out.println(fuzzyVariableDuration);
             return error;
         }
         return this.validateFuzzyVariableDistributionPartsBoundaries(List.of(fuzzyVariableDuration.getVarSmall(), fuzzyVariableDuration.getVarAverage(), fuzzyVariableDuration.getVarBig(), fuzzyVariableDuration.getVarHuge()));
@@ -263,8 +261,6 @@ public class FuzzyProfileValidator {
                 }
             } else if (FuzzyVariablePartPosition.END == fuzzyVariablePartPosition) {
                 if (fuzzyVariableDistributionPartTriangular.getC() != null) {
-                    System.out.println("THANOS2");
-                    System.out.println(fuzzyVariableDistributionPartTriangular);
                     return "PART %S: fuzzyVariableDistributionPartTriangular.getC() should be null".formatted(fuzzyVariableDistributionPartTriangular.getPartName());
                 }
             }

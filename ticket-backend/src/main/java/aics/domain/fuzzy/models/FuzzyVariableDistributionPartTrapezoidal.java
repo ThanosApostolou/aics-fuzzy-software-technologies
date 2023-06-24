@@ -45,7 +45,7 @@ public class FuzzyVariableDistributionPartTrapezoidal extends FuzzyVariableDistr
     @Override
     public double calculateFuzzyValuePart(double x) {
         double firstValue = this.findFirstValue();
-        double lastValue = this.findFirstValue();
+        double lastValue = this.findLastValue();
         if (x < firstValue || x > lastValue) {
             return 0;
         } else if (x == firstValue) {

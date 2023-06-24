@@ -19,13 +19,4 @@ public class AppLifecycleBean {
         LOGGER.info("The application is stopping...");
     }
 
-//    public void init(@Observes io.vertx.mutiny.ext.web.Router router) {
-//        router.routeWithRegex("\\/.+")
-//            .handler(rc -> rc.reroute("/"));
-//        router.errorHandler(404, rc -> {
-//            System.out.println("THANOS!!");
-//            rc.reroute("/");
-////            rc.response().setStatusCode(302).putHeader("Location", "/index.html").end();
-//        });
-//    }
 }

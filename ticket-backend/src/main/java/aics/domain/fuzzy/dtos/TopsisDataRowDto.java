@@ -1,5 +1,6 @@
 package aics.domain.fuzzy.dtos;
 
+import aics.domain.fuzzy.models.TopsisDataFuzzyRow;
 import aics.domain.fuzzy.models.TopsisDataRow;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,4 +40,22 @@ public class TopsisDataRowDto implements Serializable {
                 showScore ? String.valueOf(Math.round(topsisDataRow.getScore() * roundFactor) / roundFactor) : ""
         );
     }
+
+    public static TopsisDataRowDto fromTopsisDataFuzzyRow(TopsisDataFuzzyRow topsisDataFuzzyRow, boolean showDpos, boolean showDneg, boolean showScore) {
+        if (topsisDataFuzzyRow == null) {
+            return null;
+        }
+        final double roundFactor = 1000.0;
+        return new TopsisDataRowDto(topsisDataFuzzyRow.getMovieId(),
+                topsisDataFuzzyRow.getName(),
+                topsisDataFuzzyRow.getRating().toFormattedString(),
+                topsisDataFuzzyRow.getPopularity().toFormattedString(),
+                topsisDataFuzzyRow.getYear().toFormattedString(),
+                topsisDataFuzzyRow.getDuration().toFormattedString(),
+                showDpos ? String.valueOf(Math.round(topsisDataFuzzyRow.getDpos() * roundFactor) / roundFactor) : "",
+                showDneg ? String.valueOf(Math.round(topsisDataFuzzyRow.getDneg() * roundFactor) / roundFactor) : "",
+                showScore ? String.valueOf(Math.round(topsisDataFuzzyRow.getScore() * roundFactor) / roundFactor) : ""
+        );
+    }
+
 }

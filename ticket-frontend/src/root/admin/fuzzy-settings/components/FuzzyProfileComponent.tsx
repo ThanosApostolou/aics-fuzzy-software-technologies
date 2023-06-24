@@ -192,7 +192,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 <hr></hr>
                 <br></br>
 
-                <FuzzyVarComponent fuzzyVariable={fuzzyVariablePopularity} readonly={readonly} xStepSize={10}></FuzzyVarComponent>
+                <FuzzyVarComponent fuzzyVariable={fuzzyVariablePopularity} readonly={readonly} xStepSize={25}></FuzzyVarComponent>
                 <hr></hr>
                 <br></br>
 
