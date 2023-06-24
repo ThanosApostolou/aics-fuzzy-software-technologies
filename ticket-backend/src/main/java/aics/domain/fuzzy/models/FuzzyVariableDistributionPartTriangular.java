@@ -40,7 +40,7 @@ public class FuzzyVariableDistributionPartTriangular extends FuzzyVariableDistri
     }
 
     @Override
-    public double calculateFuzzyValuePart(double x) {
+    public double calculateFuzzyPartMx(double x) {
         double firstValue = this.findFirstValue();
         double lastValue = this.findLastValue();
         if (x < firstValue || x > lastValue) {
@@ -58,5 +58,14 @@ public class FuzzyVariableDistributionPartTriangular extends FuzzyVariableDistri
         }
     }
 
+    @Override
+    public FuzzyValue calculateFuzzyPartValue() {
+        return new FuzzyValue(
+                this.findFirstValue(),
+                this.b,
+                this.b,
+                this.findLastValue()
+        );
+    }
 
 }

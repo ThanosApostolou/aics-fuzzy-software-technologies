@@ -22,11 +22,11 @@ export default function TabFuzzyTopsisComponent({ fuzzyProfileDto, fuzzySearchFi
                 <h4>Step 2. Fuzzification of Data</h4>
                 <TopsisTable dataTable={fuzzyTopsisInfoDto.table2FuzzifiedData} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
-                <h4>Step 3. Weighted Fuzzified Data</h4>
-                <TopsisTable dataTable={fuzzyTopsisInfoDto.table3WeightedFuzzifiedData} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
+                <h4>Step 3. Fuzzified Data according to Fuzzy Variables Distributions</h4>
+                <TopsisTable dataTable={fuzzyTopsisInfoDto.table3FuzzifiedDistributionDataDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
-                <h4>Step 4. Final Data ordered by TOPSIS distance</h4>
-                {/* <TopsisTable dataTable={fuzzyTopsisInfoDto.table4TopsisScoreData} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable> */}
+                <h4>Step 5. Weighted</h4>
+                <TopsisTable dataTable={fuzzyTopsisInfoDto.table5WeightedDistributionDataDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
             </Box>
         </Fragment>
     );
