@@ -38,10 +38,12 @@ public class FuzzySearchService {
             EnumMap<FuzzySearchChoices, FuzzyValue> choiceToFuzzyWeightMap = this.getChoiceToFuzzyWeightMap(fuzzySearchFiltersDto, concreteWeights);
             // step2
             List<TopsisDataFuzzyRow> table2FuzzifiedData = this.calculateTable2FuzzifiedData(table1InitialData, activeProfile.getFuzzyProfileData());
+            // step3
+            List<TopsisDataFuzzyRow> table3WeightedFuzzifiedData = this.calculateTable3WeightedFuzzifiedData(table2FuzzifiedData, choiceToFuzzyWeightMap);
 
 
             // generate FUZZY TOPSIS analysis
-            FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDtoForFuzzyTopsis(activeProfile, fuzzySearchFiltersDto, choiceToFuzzyWeightMap, table1InitialData, table2FuzzifiedData);
+            FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDtoForFuzzyTopsis(activeProfile, fuzzySearchFiltersDto, choiceToFuzzyWeightMap, table1InitialData, table2FuzzifiedData, table3WeightedFuzzifiedData);
 
 //            final TopsisDataFuzzyRow weightsDataRow = new TopsisDataFuzzyRow(0,
 //                    "FUZZY WEIGHTS",
@@ -248,7 +250,7 @@ public class FuzzySearchService {
                                                                                           FuzzySearchFiltersDto fuzzySearchFiltersDto,
                                                                                           EnumMap<FuzzySearchChoices, FuzzyValue> choiceToFuzzyWeightMap,
                                                                                           List<TopsisDataRow> table1InitialData,
-                                                                                          List<TopsisDataFuzzyRow> table2FuzzifiedData) {
+                                                                                          List<TopsisDataFuzzyRow> table2FuzzifiedData, List<TopsisDataFuzzyRow> table3WeightedFuzzifiedData) {
         final double roundFactor = 1000.0;
         String weightRating = choiceToFuzzyWeightMap.get(FuzzySearchChoices.RATING).toFormattedString();
         String weightPopularity = choiceToFuzzyWeightMap.get(FuzzySearchChoices.POPULARITY).toFormattedString();
@@ -266,13 +268,12 @@ public class FuzzySearchService {
         table2FuzzifiedDataDtos.add(weightsRow);
         TopsisDataTableDto table2FuzzifiedDataDto = new TopsisDataTableDto(table2FuzzifiedDataDtos, false, false, false);
 //        // table3
-//        List<TopsisDataRowDto> table3WeightedNormalizedDataDtos = table3WeightedNormalizedData.stream().map(topsisDataRow -> TopsisDataRowDto.fromTopsisDataRow(topsisDataRow, false, false, false)).collect(Collectors.toList());
-//        TopsisDataTableDto table3WeightedNormalizedDataDto = new TopsisDataTableDto(table3WeightedNormalizedDataDtos, false, false, false);
-//        // table4
+        List<TopsisDataRowDto> table3WeightedFuzzifiedDataDtos = table3WeightedFuzzifiedData.stream().map(topsisDataFuzzyRow -> TopsisDataRowDto.fromTopsisDataFuzzyRow(topsisDataFuzzyRow, false, false, false)).collect(Collectors.toList());
+        TopsisDataTableDto table3WeightedFuzzifiedDataDto = new TopsisDataTableDto(table3WeightedFuzzifiedDataDtos, false, false, false);//        // table4
 //        List<TopsisDataRowDto> table4TopsisScoreDtos = table4TopsisScore.stream().map(topsisDataRow -> TopsisDataRowDto.fromTopsisDataRow(topsisDataRow, true, true, true)).collect(Collectors.toList());
 //        TopsisDataTableDto table4TopsisScoreDataDto = new TopsisDataTableDto(table4TopsisScoreDtos, true, true, true);
 
-        FuzzyTopsisInfoDto fuzzyTopsisInfoDto = new FuzzyTopsisInfoDto(table1InitialDataDto, table2FuzzifiedDataDto);
+        FuzzyTopsisInfoDto fuzzyTopsisInfoDto = new FuzzyTopsisInfoDto(table1InitialDataDto, table2FuzzifiedDataDto, table3WeightedFuzzifiedDataDto);
 
         return new FuzzySearchTopsisAnalysisDto(FuzzyProfileDto.fromFuzzyProfile(activeProfile),
                 fuzzySearchFiltersDto,
@@ -301,6 +302,29 @@ public class FuzzySearchService {
             table2FuzzifiedData.add(topsisDataFuzzyRow);
         }
         return table2FuzzifiedData;
+    }
+
+
+    private List<TopsisDataFuzzyRow> calculateTable3WeightedFuzzifiedData(List<TopsisDataFuzzyRow> table2FuzzifiedData,
+                                                                          EnumMap<FuzzySearchChoices, FuzzyValue> choiceToFuzzyWeightMap
+    ) {
+        FuzzyValue ratingWeight = choiceToFuzzyWeightMap.get(FuzzySearchChoices.RATING);
+        FuzzyValue popularityWeight = choiceToFuzzyWeightMap.get(FuzzySearchChoices.POPULARITY);
+        FuzzyValue yearWeight = choiceToFuzzyWeightMap.get(FuzzySearchChoices.YEAR);
+        FuzzyValue durationWeight = choiceToFuzzyWeightMap.get(FuzzySearchChoices.DURATION);
+        List<TopsisDataFuzzyRow> table3WeightedFuzzifiedData = new ArrayList<>();
+        for (TopsisDataFuzzyRow topsisDataFuzzyRow1 : table2FuzzifiedData) {
+            TopsisDataFuzzyRow topsisDataFuzzyRow = new TopsisDataFuzzyRow(
+                    topsisDataFuzzyRow1.getMovieId(),
+                    topsisDataFuzzyRow1.getName(),
+                    FuzzyValue.multiply(topsisDataFuzzyRow1.getRating(), ratingWeight),
+                    FuzzyValue.multiply(topsisDataFuzzyRow1.getPopularity(), popularityWeight),
+                    FuzzyValue.multiply(topsisDataFuzzyRow1.getYear(), yearWeight),
+                    FuzzyValue.multiply(topsisDataFuzzyRow1.getDuration(), durationWeight),
+                    0, 0, 0);
+            table3WeightedFuzzifiedData.add(topsisDataFuzzyRow);
+        }
+        return table3WeightedFuzzifiedData;
     }
 
     private EnumMap<FuzzySearchChoices, Double> getChoiceToWeightMap(FuzzySearchFiltersDto fuzzySearchFiltersDto, ConcreteWeights concreteWeights) {

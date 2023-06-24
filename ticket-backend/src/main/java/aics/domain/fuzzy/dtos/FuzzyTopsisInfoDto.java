@@ -14,6 +14,6 @@ import java.io.Serializable;
 public class FuzzyTopsisInfoDto implements Serializable {
     private TopsisDataTableDto table1InitialData;
     private TopsisDataTableDto table2FuzzifiedData;
-//    private TopsisDataTableDto table3WeightedNormalizedData;
+    private TopsisDataTableDto table3WeightedFuzzifiedData;
 //    private TopsisDataTableDto table4TopsisScoreData;
 }
