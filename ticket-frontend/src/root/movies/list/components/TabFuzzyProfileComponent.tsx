@@ -66,7 +66,7 @@ export default function TabFuzzyProfileComponent({ fuzzyProfileDto }: TabFuzzyPr
                 <hr></hr>
                 <br></br>
 
-                <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={true} xStepSize={1}></FuzzyVarComponent>
+                <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={true} xStepSize={1} numberStep={0.1}></FuzzyVarComponent>
                 <ConcreteWeightsComponent concreteWeights={concreteWeights} readonly={true}></ConcreteWeightsComponent>
 
             </Box>

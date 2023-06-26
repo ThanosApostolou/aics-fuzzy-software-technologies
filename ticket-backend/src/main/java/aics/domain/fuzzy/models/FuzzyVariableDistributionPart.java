@@ -18,9 +18,9 @@ import java.io.Serializable;
 public abstract class FuzzyVariableDistributionPart implements Serializable {
     FuzzyVariableDistributionType type;
 
-    abstract public int findFirstValue();
+    abstract public double findFirstValue();
 
-    abstract public int findLastValue();
+    abstract public double findLastValue();
 
     abstract public double calculateFuzzyPartMx(double x);
 

@@ -200,7 +200,7 @@ export default function FuzzyProfileComponent({ fuzzyProfileDto, readonly, onPro
                 <hr></hr>
                 <br></br>
 
-                <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={readonly} xStepSize={1}></FuzzyVarComponent>
+                <FuzzyVarComponent fuzzyVariable={fuzzyWeights} readonly={readonly} xStepSize={0.1} numberStep={0.1}></FuzzyVarComponent>
                 <ConcreteWeightsComponent concreteWeights={concreteWeights} readonly={readonly}></ConcreteWeightsComponent>
 
             </Box>

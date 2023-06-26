@@ -13,10 +13,11 @@ export interface FuzzyVarPartComponentProps {
     fuzzyVariableDistributionPart: FuzzyVariableDistributionPart;
     readonly: boolean;
     fuzzyVariablePartPosition: FuzzyVariablePartPosition;
+    numberStep?: number;
     fuzzyVarPartUpdated?: (fuzzyVariableDistributionPart: FuzzyVariableDistributionPart) => void
 }
 
-export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, readonly, fuzzyVariablePartPosition, fuzzyVarPartUpdated }: FuzzyVarPartComponentProps) {
+export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, readonly, fuzzyVariablePartPosition, numberStep, fuzzyVarPartUpdated }: FuzzyVarPartComponentProps) {
     const [type, setType] = useState<FuzzyVariableDistributionType>(fuzzyVariableDistributionPart.type);
     const [a, setA] = useState<number | null>(fuzzyVariableDistributionPart.a);
     const [b, setB] = useState<number>(fuzzyVariableDistributionPart.b);
@@ -67,14 +68,12 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                 setD(c);
             }
         } else {
-            if (FuzzyVariablePartPosition.END !== fuzzyVariablePartPosition) {
-                if (FuzzyVariableDistributionType.TRIANGULAR === type) {
-                    setC(null);
-                    setD(null);
-                } else if (FuzzyVariableDistributionType.TRAPEZOIDAL === type) {
-                    setC(b);
-                    setD(null);
-                }
+            if (FuzzyVariableDistributionType.TRIANGULAR === type) {
+                setC(null);
+                setD(null);
+            } else if (FuzzyVariableDistributionType.TRAPEZOIDAL === type) {
+                setC(b);
+                setD(null);
             }
         }
     }
@@ -92,10 +91,10 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                 branches += String.raw`0 & \text{, } x \geq ${c} \\\\`
             }
             if (a != null) {
-                branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\`
+                branches += String.raw`{x - ${a}} \over {${(b - a).toFixed(2)}} & \text{, } ${a} \leq x \leq ${b} \\`
             }
             if (c != null) {
-                branches += String.raw`\\ {${c} - x} \over {${c - b}} & \text{, } ${b} \leq x \leq ${c} \\`
+                branches += String.raw`\\ {${c} - x} \over {${(c - b).toFixed(2)}} & \text{, } ${b} \leq x \leq ${c} \\`
             }
         } else if (type === FuzzyVariableDistributionType.TRAPEZOIDAL) {
             if (a != null && d != null) {
@@ -106,11 +105,11 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
                 branches += String.raw`0 & \text{, } x \geq ${d} \\\\`
             }
             if (a != null) {
-                branches += String.raw`{x - ${a}} \over {${b - a}} & \text{, } ${a} \leq x \leq ${b} \\\\`
+                branches += String.raw`{x - ${a}} \over {${(b - a).toFixed(2)}} & \text{, } ${a} \leq x \leq ${b} \\\\`
             }
             branches += String.raw`1 & \text{, } ${b} \leq x \leq ${c} \\`
             if (c != null && d != null) {
-                branches += String.raw`\\ {${d} - x} \over {${d - c}} & \text{, } ${c} \leq x \leq ${d} \\`
+                branches += String.raw`\\ {${d} - x} \over {${(d - c).toFixed(2)}} & \text{, } ${c} \leq x \leq ${d} \\`
             }
         }
         return String.raw`μ_{${partName}}(x) =
@@ -147,18 +146,18 @@ export default function FuzzyVarPartComponent({ fuzzyVariableDistributionPart, r
 
                     {fuzzyVariablePartPosition !== FuzzyVariablePartPosition.START && (
                         <TextField size='small' sx={{ width: '6rem' }}
-                            disabled={readonly} type="number" label="a" value={a != null ? a : ''} onChange={(e) => setA(e.target.value ? parseInt(e.target.value) : null)} />
+                            disabled={readonly} type="number" inputProps={{ step: numberStep != null ? numberStep : 1 }} label="a" value={a != null ? a : ''} onChange={(e) => setA(e.target.value ? parseFloat(e.target.value) : null)} />
                     )}
                     <TextField size='small' sx={{ width: '6rem' }}
-                        disabled={readonly} type="number" label="b" value={b} onChange={(e) => setB(e.target.value ? parseInt(e.target.value) : 0)} />
+                        disabled={readonly} type="number" inputProps={{ step: numberStep != null ? numberStep : 1 }} label="b" value={b} onChange={(e) => setB(e.target.value ? parseFloat(e.target.value) : 0)} />
                     {!(type === FuzzyVariableDistributionType.TRIANGULAR && fuzzyVariablePartPosition === FuzzyVariablePartPosition.END) && (
                         <TextField size='small' sx={{ width: '6rem' }}
-                            disabled={readonly} type="number" label="c" value={c != null ? c : ''} onChange={(e) => setC(e.target.value ? parseInt(e.target.value) : null)} />
+                            disabled={readonly} type="number" inputProps={{ step: numberStep != null ? numberStep : 1 }} label="c" value={c != null ? c : ''} onChange={(e) => setC(e.target.value ? parseFloat(e.target.value) : null)} />
 
                     )}
                     {type === FuzzyVariableDistributionType.TRAPEZOIDAL && fuzzyVariablePartPosition !== FuzzyVariablePartPosition.END && (
                         <TextField size='small' sx={{ width: '6rem' }}
-                            disabled={readonly} type="number" label="d" value={d != null ? d : ''} onChange={(e) => setD(e.target.value ? parseInt(e.target.value) : null)} />
+                            disabled={readonly} type="number" inputProps={{ step: numberStep != null ? numberStep : 1 }} label="d" value={d != null ? d : ''} onChange={(e) => setD(e.target.value ? parseFloat(e.target.value) : null)} />
                     )}
 
                 </Grid>

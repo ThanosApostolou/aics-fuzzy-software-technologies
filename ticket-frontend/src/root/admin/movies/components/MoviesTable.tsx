@@ -26,6 +26,38 @@ export default function MoviesTable(props: MoviesTableProps) {
             sortable: true
         },
         {
+            field: 'rating',
+            headerName: 'Rating',
+            minWidth: 100,
+            editable: false,
+            flex: 1,
+            sortable: true
+        },
+        {
+            field: 'popularity',
+            headerName: 'Popularity',
+            minWidth: 100,
+            editable: false,
+            flex: 1,
+            sortable: true
+        },
+        {
+            field: 'year',
+            headerName: 'Year',
+            minWidth: 100,
+            editable: false,
+            flex: 1,
+            sortable: true
+        },
+        {
+            field: 'duration',
+            headerName: 'Duration',
+            minWidth: 100,
+            editable: false,
+            flex: 1,
+            sortable: true
+        },
+        {
             field: 'description',
             headerName: 'Περίληψη',
             minWidth: 100,

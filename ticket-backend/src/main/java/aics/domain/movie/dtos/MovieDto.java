@@ -23,7 +23,7 @@ public class MovieDto implements Serializable {
     private int duration;
     private String trailerSrcUrl;
     private int year;
-    private int rating;
+    private double rating;
     private int popularity;
 
     public static MovieDto fromMovie(Movie movie) {

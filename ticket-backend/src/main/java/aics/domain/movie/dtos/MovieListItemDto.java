@@ -17,7 +17,7 @@ public class MovieListItemDto implements Serializable {
     private String imageName;
     private String imageMimePrefix;
     private int year;
-    private int rating;
+    private double rating;
     private int popularity;
     private int duration;
     private double topsisScore;

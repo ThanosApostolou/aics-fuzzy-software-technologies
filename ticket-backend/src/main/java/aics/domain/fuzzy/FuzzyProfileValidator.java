@@ -89,8 +89,8 @@ public class FuzzyProfileValidator {
         if (fuzzyVariableYear == null) {
             return "fuzzyVariableYear was null";
         }
-        final int minYear = 1900;
-        final int maxYear = 2100;
+        final double minYear = 1900;
+        final double maxYear = 2100;
         String error = this.validateFuzzyVariableDistributionPart(fuzzyVariableYear.getVarOld(), FuzzyVariableYearFields.OLD.name(), FuzzyVariablePartPosition.START, minYear, maxYear);
         if (error != null) {
             return error;
@@ -114,8 +114,8 @@ public class FuzzyProfileValidator {
         if (fuzzyVariableDuration == null) {
             return "fuzzyVariableDuration was null";
         }
-        final int min = 1;
-        final int max = 400;
+        final double min = 1;
+        final double max = 400;
         String error = this.validateFuzzyVariableDistributionPart(fuzzyVariableDuration.getVarSmall(), FuzzyVariableDurationFields.SMALL.name(), FuzzyVariablePartPosition.START, min, max);
         if (error != null) {
             return error;
@@ -140,8 +140,8 @@ public class FuzzyProfileValidator {
         if (fuzzyVariableRating == null) {
             return "fuzzyVariableRating was null";
         }
-        final int min = 1;
-        final int max = 10;
+        final double min = 1;
+        final double max = 10;
         String error = this.validateFuzzyVariableDistributionPart(fuzzyVariableRating.getVarBad(), FuzzyVariableRatingFields.BAD.name(), FuzzyVariablePartPosition.START, min, max);
         if (error != null) {
             return error;
@@ -166,8 +166,8 @@ public class FuzzyProfileValidator {
         if (fuzzyVariablePopularity == null) {
             return "fuzzyVariablePopularity was null";
         }
-        final int min = 1;
-        final int max = 1000;
+        final double min = 1;
+        final double max = 1000;
         String error = this.validateFuzzyVariableDistributionPart(fuzzyVariablePopularity.getVarVeryPopular(), FuzzyVariablePopularityFields.VERY_POPULAR.name(), FuzzyVariablePartPosition.START, min, max);
         if (error != null) {
             return error;
@@ -191,8 +191,8 @@ public class FuzzyProfileValidator {
         if (fuzzyWeights == null) {
             return "fuzzyWeights was null";
         }
-        final int min = 1;
-        final int max = 1000;
+        final double min = 0.1;
+        final double max = 1.0;
         String error = this.validateFuzzyVariableDistributionPart(fuzzyWeights.getVarLowImportance(), FuzzyWeightsFields.LOW_IMPORTANCE.name(), FuzzyVariablePartPosition.START, min, max);
         if (error != null) {
             return error;
@@ -212,7 +212,7 @@ public class FuzzyProfileValidator {
         return this.validateFuzzyVariableDistributionPartsBoundaries(List.of(fuzzyWeights.getVarLowImportance(), fuzzyWeights.getVarAverageImportance(), fuzzyWeights.getVarHighImportance(), fuzzyWeights.getVarVeryHighImportance()));
     }
 
-    private String validateFuzzyVariableDistributionPart(FuzzyVariableDistributionPart fuzzyVariableDistributionPart, String expectedPartName, FuzzyVariablePartPosition fuzzyVariablePartPosition, int minValue, int maxValue) {
+    private String validateFuzzyVariableDistributionPart(FuzzyVariableDistributionPart fuzzyVariableDistributionPart, String expectedPartName, FuzzyVariablePartPosition fuzzyVariablePartPosition, double minValue, double maxValue) {
         if (fuzzyVariableDistributionPart == null) {
             return "fuzzyVariableDistributionPart was null";
         }
@@ -281,8 +281,8 @@ public class FuzzyProfileValidator {
         return null;
     }
 
-    private String validateFuzzyVariableDistributionPartNumberLimits(int value, Integer previousValue, int minValue, int maxValue) {
-        int previousValueOrMin = previousValue != null ? previousValue : minValue - 1;
+    private String validateFuzzyVariableDistributionPartNumberLimits(double value, Double previousValue, double minValue, double maxValue) {
+        double previousValueOrMin = previousValue != null ? previousValue : minValue - 1;
         if (value <= previousValueOrMin) {
             return "value %s must be higher than previous value %s".formatted(value, previousValueOrMin);
         }
@@ -360,8 +360,8 @@ public class FuzzyProfileValidator {
     }
 
     private String validateConcreteWeight(double concreteWeight) {
-        if (concreteWeight <= 0) {
-            return "concreteWeight should be greater than 0";
+        if (concreteWeight < 0.1) {
+            return "concreteWeight should be greater or equal than 0.1";
         }
         if (concreteWeight >= 1) {
             return "concreteWeight should be less than 1";

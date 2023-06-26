@@ -18,38 +18,38 @@ public class FuzzyProfileService {
 
     public FuzzyProfile createDefaultProfile(boolean isDefaultActive) {
         FuzzyVariableYear fuzzyVariableYear = new FuzzyVariableYear(
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableYearFields.OLD.name(), null, 1950, 1990, 2010),
-                new FuzzyVariableDistributionPartTriangular(FuzzyVariableYearFields.RECENT.name(), 1990, 2010, 2018),
-                new FuzzyVariableDistributionPartTriangular(FuzzyVariableYearFields.NEW.name(), 2010, 2018, 2024),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableYearFields.VERY_NEW.name(), 2018, 2024, 2030, null)
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableYearFields.OLD.name(), null, 1950, 1990, 2010.0),
+                new FuzzyVariableDistributionPartTriangular(FuzzyVariableYearFields.RECENT.name(), 1990.0, 2010, 2018.0),
+                new FuzzyVariableDistributionPartTriangular(FuzzyVariableYearFields.NEW.name(), 2010.0, 2018, 2024.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableYearFields.VERY_NEW.name(), 2018.0, 2024, 2030, null)
         );
 
         FuzzyVariableRating fuzzyVariableRating = new FuzzyVariableRating(
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.BAD.name(), null, 1, 3, 5),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.AVERAGE.name(), 4, 5, 6, 7),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.GOOD.name(), 6, 7, 8, 9),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.VERY_GOOD.name(), 8, 9, 10, null)
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.BAD.name(), null, 1, 3, 5.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.AVERAGE.name(), 4.0, 5, 6, 7.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.GOOD.name(), 6.0, 7, 8, 9.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableRatingFields.VERY_GOOD.name(), 8.0, 9, 10, null)
         );
 
         FuzzyVariablePopularity fuzzyVariablePopularity = new FuzzyVariablePopularity(
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.VERY_POPULAR.name(), null, 1, 50, 100),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.POPULAR.name(), 50, 100, 160, 250),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.AVERAGE.name(), 160, 250, 350, 500),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.UNPOPULAR.name(), 350, 500, 800, null)
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.VERY_POPULAR.name(), null, 1, 50, 100.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.POPULAR.name(), 50.0, 100, 160, 250.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.AVERAGE.name(), 160.0, 250, 350, 500.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariablePopularityFields.UNPOPULAR.name(), 350.0, 500, 800, null)
         );
 
         FuzzyVariableDuration fuzzyVariableDuration = new FuzzyVariableDuration(
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableDurationFields.SMALL.name(), null, 1, 20, 60),
-                new FuzzyVariableDistributionPartTriangular(FuzzyVariableDurationFields.AVERAGE.name(), 20, 60, 120),
-                new FuzzyVariableDistributionPartTriangular(FuzzyVariableDurationFields.BIG.name(), 60, 120, 160),
-                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableDurationFields.HUGE.name(), 120, 160, 300, null)
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableDurationFields.SMALL.name(), null, 1, 20, 60.0),
+                new FuzzyVariableDistributionPartTriangular(FuzzyVariableDurationFields.AVERAGE.name(), 20.0, 60, 120.0),
+                new FuzzyVariableDistributionPartTriangular(FuzzyVariableDurationFields.BIG.name(), 60.0, 120, 160.0),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyVariableDurationFields.HUGE.name(), 120.0, 160, 300, null)
         );
 
         FuzzyWeights fuzzyWeights = new FuzzyWeights(
-                new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.LOW_IMPORTANCE.name(), null, 1, 3),
-                new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.AVERAGE_IMPORTANCE.name(), 2, 5, 7),
-                new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.HIGH_IMPORTANCE.name(), 6, 7, 8),
-                new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.VERY_HIGH_IMPORTANCE.name(), 7, 9, null)
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyWeightsFields.LOW_IMPORTANCE.name(), null, 0.1, 0.3, 0.5),
+                new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.AVERAGE_IMPORTANCE.name(), 0.3, 0.5, 0.7),
+                new FuzzyVariableDistributionPartTriangular(FuzzyWeightsFields.HIGH_IMPORTANCE.name(), 0.5, 0.7, 0.9),
+                new FuzzyVariableDistributionPartTrapezoidal(FuzzyWeightsFields.VERY_HIGH_IMPORTANCE.name(), 0.7, 0.9, 1.0, null)
         );
 
         ConcreteWeights concreteWeights = new ConcreteWeights(0.4, 0.3, 0.2, 0.1);

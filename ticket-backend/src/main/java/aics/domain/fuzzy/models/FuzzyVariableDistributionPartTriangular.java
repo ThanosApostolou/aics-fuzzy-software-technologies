@@ -17,11 +17,11 @@ import java.util.Objects;
 @Accessors(chain = true)
 public class FuzzyVariableDistributionPartTriangular extends FuzzyVariableDistributionPart implements Serializable {
     private String partName;
-    private Integer a;
-    private int b;
-    private Integer c;
+    private Double a;
+    private double b;
+    private Double c;
 
-    public FuzzyVariableDistributionPartTriangular(String partName, Integer a, int b, Integer c) {
+    public FuzzyVariableDistributionPartTriangular(String partName, Double a, double b, Double c) {
         this.setType(FuzzyVariableDistributionType.TRIANGULAR);
         this.partName = partName;
         this.a = a;
@@ -30,12 +30,12 @@ public class FuzzyVariableDistributionPartTriangular extends FuzzyVariableDistri
     }
 
     @Override
-    public int findFirstValue() {
+    public double findFirstValue() {
         return Objects.requireNonNullElse(this.a, this.b);
     }
 
     @Override
-    public int findLastValue() {
+    public double findLastValue() {
         return Objects.requireNonNullElse(this.c, this.b);
     }
 

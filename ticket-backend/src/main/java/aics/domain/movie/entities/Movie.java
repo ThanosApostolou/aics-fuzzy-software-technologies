@@ -46,7 +46,7 @@ public class Movie {
     @Column(name = "YEAR", nullable = false)
     private int year;
     @Column(name = "RATING", nullable = false)
-    private int rating;
+    private double rating;
     @Column(name = "POPULARITY", nullable = false)
     private int popularity;
     @Column(name = "CREATED_ON", nullable = false)
