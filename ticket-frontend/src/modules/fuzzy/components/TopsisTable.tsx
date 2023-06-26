@@ -96,7 +96,7 @@ export default function TopsisTable({ dataTable, yearCostCriteria, durationCostC
     }
 
     return (
-        <Box sx={{ height: '500px', padding: 2 }}>
+        <Box sx={{ height: '400px', padding: 2 }}>
             <DataGrid
                 rows={dataTable.rows}
                 columns={columns}
