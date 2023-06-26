@@ -17,5 +17,5 @@ public class FuzzyTopsisInfoDto implements Serializable {
     private TopsisDataTableDto table3FuzzifiedDistributionDataDto;
     private TopsisDataTableDto table4NormalizedDataDto;
     private TopsisDataTableDto table5WeightedDistributionDataDto;
-//    private TopsisDataTableDto table4TopsisScoreData;
+    private TopsisDataTableDto table6TopsisScoreDto;
 }
