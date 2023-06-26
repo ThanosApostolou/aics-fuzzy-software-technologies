@@ -3,6 +3,8 @@ package aics.domain.fuzzy.models;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 @Accessors(chain = true)
 public record FuzzyValue(double a, double b, double c, double d) implements Serializable {
@@ -25,6 +27,14 @@ public record FuzzyValue(double a, double b, double c, double d) implements Seri
                 Math.round(fuzzyValue1.c * fuzzyValue2.c * roundFactor) / roundFactor,
                 Math.round(fuzzyValue1.d * fuzzyValue2.d * roundFactor) / roundFactor
         );
+    }
+
+    public double max() {
+        return Collections.max(List.of(this.a, this.b, this.c, this.d));
+    }
+
+    public double min() {
+        return Collections.min(List.of(this.a, this.b, this.c, this.d));
     }
 
     public String toFormattedString() {

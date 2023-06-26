@@ -41,12 +41,14 @@ public class FuzzySearchService {
             List<TopsisDataFuzzyRow> table2FuzzifiedData = this.calculateTable2FuzzifiedData(table1InitialData, activeProfile.getFuzzyProfileData());
             // step3
             List<TopsisDataFuzzyRow> table3FuzzifiedDistributionData = this.calculateTable3FuzzifiedDistributionData(table2FuzzifiedData, activeProfile.getFuzzyProfileData());
-            // step3
+            // step4
+            List<TopsisDataFuzzyRow> table4NormalizedData = this.calculateTable4NormalizedData(table3FuzzifiedDistributionData, fuzzySearchFiltersDto);
+            // step5
             List<TopsisDataFuzzyRow> table5WeightedDistributionData = this.calculateTable5WeightedDistributionData(table2FuzzifiedData, choiceToFuzzyWeightMap);
 
 
             // generate FUZZY TOPSIS analysis
-            FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDtoForFuzzyTopsis(activeProfile, fuzzySearchFiltersDto, choiceToFuzzyWeightMap, table1InitialData, table2FuzzifiedData, table3FuzzifiedDistributionData, table5WeightedDistributionData);
+            FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDtoForFuzzyTopsis(activeProfile, fuzzySearchFiltersDto, choiceToFuzzyWeightMap, table1InitialData, table2FuzzifiedData, table3FuzzifiedDistributionData, table4NormalizedData, table5WeightedDistributionData);
 
 //            final TopsisDataFuzzyRow weightsDataRow = new TopsisDataFuzzyRow(0,
 //                    "FUZZY WEIGHTS",
@@ -255,6 +257,7 @@ public class FuzzySearchService {
                                                                                           List<TopsisDataRow> table1InitialData,
                                                                                           List<TopsisDataFuzzyRow> table2FuzzifiedData,
                                                                                           List<TopsisDataFuzzyRow> table3FuzzifiedDistributionData,
+                                                                                          List<TopsisDataFuzzyRow> table4NormalizedData,
                                                                                           List<TopsisDataFuzzyRow> table5WeightedDistributionData) {
         final double roundFactor = 1000.0;
         FuzzyWeightData weightRating = choiceToFuzzyWeightMap.get(FuzzySearchChoices.RATING);
@@ -276,11 +279,15 @@ public class FuzzySearchService {
         List<TopsisDataRowDto> table3FuzzifiedDistributionDataDtos = table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> TopsisDataRowDto.fromTopsisDataFuzzyRow(topsisDataFuzzyRow, false, false, false)).collect(Collectors.toList());
         table3FuzzifiedDistributionDataDtos.add(new TopsisDataRowDto(0L, "FUZZY WEIGHTS", weightRating.fuzzyValue().toFormattedString(), weightPopularity.fuzzyValue().toFormattedString(), weightYear.fuzzyValue().toFormattedString(), weightDuration.fuzzyValue().toFormattedString(), "", "", ""));
         TopsisDataTableDto table3FuzzifiedDistributionDataDto = new TopsisDataTableDto(table3FuzzifiedDistributionDataDtos, false, false, false);
+        // table4
+        List<TopsisDataRowDto> table4NormalizedDataDtos = table4NormalizedData.stream().map(topsisDataFuzzyRow -> TopsisDataRowDto.fromTopsisDataFuzzyRow(topsisDataFuzzyRow, false, false, false)).collect(Collectors.toList());
+        table4NormalizedDataDtos.add(new TopsisDataRowDto(0L, "FUZZY WEIGHTS", weightRating.fuzzyValue().toFormattedString(), weightPopularity.fuzzyValue().toFormattedString(), weightYear.fuzzyValue().toFormattedString(), weightDuration.fuzzyValue().toFormattedString(), "", "", ""));
+        TopsisDataTableDto table4NormalizedDataDto = new TopsisDataTableDto(table4NormalizedDataDtos, false, false, false);
         // table5
         List<TopsisDataRowDto> table5WeightedDistributionDataDtos = table5WeightedDistributionData.stream().map(topsisDataFuzzyRow -> TopsisDataRowDto.fromTopsisDataFuzzyRow(topsisDataFuzzyRow, false, false, false)).collect(Collectors.toList());
         TopsisDataTableDto table5WeightedDistributionDataDto = new TopsisDataTableDto(table5WeightedDistributionDataDtos, false, false, false);
 
-        FuzzyTopsisInfoDto fuzzyTopsisInfoDto = new FuzzyTopsisInfoDto(table1InitialDataDto, table2FuzzifiedDataDto, table3FuzzifiedDistributionDataDto, table5WeightedDistributionDataDto);
+        FuzzyTopsisInfoDto fuzzyTopsisInfoDto = new FuzzyTopsisInfoDto(table1InitialDataDto, table2FuzzifiedDataDto, table3FuzzifiedDistributionDataDto, table4NormalizedDataDto, table5WeightedDistributionDataDto);
 
         return new FuzzySearchTopsisAnalysisDto(FuzzyProfileDto.fromFuzzyProfile(activeProfile),
                 fuzzySearchFiltersDto,
@@ -329,6 +336,62 @@ public class FuzzySearchService {
         return table3WeightedFuzzifiedData;
     }
 
+    private List<TopsisDataFuzzyRow> calculateTable4NormalizedData(List<TopsisDataFuzzyRow> table3FuzzifiedDistributionData,
+                                                                   FuzzySearchFiltersDto fuzzySearchFiltersDto
+    ) {
+        double ratingFactor = table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> topsisDataFuzzyRow.getRating().max()).max(Double::compareTo).get();
+        double popularityFactor = table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> topsisDataFuzzyRow.getRating().min()).min(Double::compareTo).get();
+        double yearFactor = fuzzySearchFiltersDto.isYearCostCriteria()
+                ? table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> topsisDataFuzzyRow.getYear().min()).min(Double::compareTo).get()
+                : table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> topsisDataFuzzyRow.getYear().max()).max(Double::compareTo).get();
+        double durationFactor = fuzzySearchFiltersDto.isDurationCostCriteria()
+                ? table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> topsisDataFuzzyRow.getDuration().min()).min(Double::compareTo).get()
+                : table3FuzzifiedDistributionData.stream().map(topsisDataFuzzyRow -> topsisDataFuzzyRow.getDuration().max()).max(Double::compareTo).get();
+
+        List<TopsisDataFuzzyRow> table4NormalizedData = new ArrayList<>();
+        for (TopsisDataFuzzyRow topsisDataFuzzyRow : table3FuzzifiedDistributionData) {
+            FuzzyValue newRating = new FuzzyValue(topsisDataFuzzyRow.getRating().a() / ratingFactor,
+                    topsisDataFuzzyRow.getRating().b() / ratingFactor,
+                    topsisDataFuzzyRow.getRating().c() / ratingFactor,
+                    topsisDataFuzzyRow.getRating().d() / ratingFactor);
+
+            FuzzyValue newPopularity = new FuzzyValue(popularityFactor / topsisDataFuzzyRow.getPopularity().d(),
+                    popularityFactor / topsisDataFuzzyRow.getPopularity().c(),
+                    popularityFactor / topsisDataFuzzyRow.getPopularity().b(),
+                    popularityFactor / topsisDataFuzzyRow.getPopularity().a());
+
+            FuzzyValue newYear = fuzzySearchFiltersDto.isYearCostCriteria()
+                    ? new FuzzyValue(yearFactor / topsisDataFuzzyRow.getYear().d(),
+                    yearFactor / topsisDataFuzzyRow.getYear().c(),
+                    yearFactor / topsisDataFuzzyRow.getYear().b(),
+                    yearFactor / topsisDataFuzzyRow.getYear().a())
+                    : new FuzzyValue(topsisDataFuzzyRow.getYear().a() / yearFactor,
+                    topsisDataFuzzyRow.getYear().b() / yearFactor,
+                    topsisDataFuzzyRow.getYear().c() / yearFactor,
+                    topsisDataFuzzyRow.getYear().d() / yearFactor);
+
+            FuzzyValue newDuration = fuzzySearchFiltersDto.isDurationCostCriteria()
+                    ? new FuzzyValue(durationFactor / topsisDataFuzzyRow.getDuration().d(),
+                    durationFactor / topsisDataFuzzyRow.getDuration().c(),
+                    durationFactor / topsisDataFuzzyRow.getDuration().b(),
+                    durationFactor / topsisDataFuzzyRow.getDuration().a())
+                    : new FuzzyValue(topsisDataFuzzyRow.getDuration().a() / durationFactor,
+                    topsisDataFuzzyRow.getDuration().b() / durationFactor,
+                    topsisDataFuzzyRow.getDuration().c() / durationFactor,
+                    topsisDataFuzzyRow.getDuration().d() / durationFactor);
+
+            TopsisDataFuzzyRow newTopsisDataFuzzyRow = new TopsisDataFuzzyRow(
+                    topsisDataFuzzyRow.getMovieId(),
+                    topsisDataFuzzyRow.getName(),
+                    newRating,
+                    newPopularity,
+                    newYear,
+                    newDuration,
+                    0, 0, 0);
+            table4NormalizedData.add(newTopsisDataFuzzyRow);
+        }
+        return table4NormalizedData;
+    }
 
     private List<TopsisDataFuzzyRow> calculateTable5WeightedDistributionData(List<TopsisDataFuzzyRow> table2FuzzifiedData,
                                                                              EnumMap<FuzzySearchChoices, FuzzyWeightData> choiceToFuzzyWeightMap

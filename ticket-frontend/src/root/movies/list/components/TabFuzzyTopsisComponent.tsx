@@ -25,6 +25,9 @@ export default function TabFuzzyTopsisComponent({ fuzzyProfileDto, fuzzySearchFi
                 <h4>Step 3. Fuzzified Data according to Fuzzy Variables Distributions</h4>
                 <TopsisTable dataTable={fuzzyTopsisInfoDto.table3FuzzifiedDistributionDataDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
+                <h4>Step 4. Normalized Data</h4>
+                <TopsisTable dataTable={fuzzyTopsisInfoDto.table4NormalizedDataDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
+
                 <h4>Step 5. Weighted</h4>
                 <TopsisTable dataTable={fuzzyTopsisInfoDto.table5WeightedDistributionDataDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
             </Box>
