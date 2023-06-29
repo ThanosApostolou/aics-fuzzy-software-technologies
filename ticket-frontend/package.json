@@ -37,7 +37,7 @@
         "start": "dotenv -e .env.development react-scripts start",
         "build:dev": "dotenv -e .env.development react-scripts build && npm run copy",
         "build:prod": "dotenv -e .env.production react-scripts build && npm run copy",
-        "copy": "rsync -arP --delete build/ ../ticket-backend/src/main/resources/META-INF/resources",
+        "copy": "mkdir -p ../ticket-backend/src/main/resources/META-INF/resources && rsync -arP --delete build/ ../ticket-backend/src/main/resources/META-INF/resources",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "lint": "eslint --ext .ts,.tsx .",
