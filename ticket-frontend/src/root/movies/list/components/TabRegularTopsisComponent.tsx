@@ -25,7 +25,7 @@ export default function TabRegularTopsisComponent({ fuzzyProfileDto, fuzzySearch
                 <h4>Step 3. Weighted Normalized Data</h4>
                 <TopsisTable dataTable={regularTopsisInfoDto.table3WeightedNormalizedData} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
-                <h4>Step 4. Final Data ordered by TOPSIS distance</h4>
+                <h4>Step 4. Final Data ordered by TOPSIS Score</h4>
                 <TopsisTable dataTable={regularTopsisInfoDto.table4TopsisScoreData} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
             </Box>
         </Fragment>

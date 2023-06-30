@@ -31,7 +31,7 @@ export default function TabFuzzyTopsisComponent({ fuzzyProfileDto, fuzzySearchFi
                 <h4>Step 5. Weighted Normalized Data</h4>
                 <TopsisTable dataTable={fuzzyTopsisInfoDto.table5WeightedDistributionDataDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
-                <h4>Step 6. Final Data ordered by TOPSIS distance</h4>
+                <h4>Step 6. Final Data ordered by TOPSIS Score</h4>
                 <TopsisTable dataTable={fuzzyTopsisInfoDto.table6TopsisScoreDto} yearCostCriteria={fuzzySearchFiltersDto.yearCostCriteria} durationCostCriteria={fuzzySearchFiltersDto.durationCostCriteria}></TopsisTable>
 
             </Box>

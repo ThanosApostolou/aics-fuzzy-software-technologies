@@ -71,9 +71,12 @@ public class FuzzySearchService {
             // step3
             List<TopsisDataRow> table3WeightedNormalizedData = this.calculateTable3WeightedNormalizedData(table2NormalizedData, choiceToWeightMap);
             // step4
-            List<TopsisDataRow> table4TopsisScore = this.calculateTable4TopsisScore(table3WeightedNormalizedData, fuzzySearchFiltersDto.isYearCostCriteria(), fuzzySearchFiltersDto.isDurationCostCriteria());
+            Triple<List<TopsisDataRow>, TopsisDataRow, TopsisDataRow> calculateTable4TopsisScoreResult = this.calculateTable4TopsisScore(table3WeightedNormalizedData, fuzzySearchFiltersDto.isYearCostCriteria(), fuzzySearchFiltersDto.isDurationCostCriteria());
+            List<TopsisDataRow> table4TopsisScore = calculateTable4TopsisScoreResult.getLeft();
+            TopsisDataRow bestRow = calculateTable4TopsisScoreResult.getMiddle();
+            TopsisDataRow worstRow = calculateTable4TopsisScoreResult.getRight();
             // generate TOPSIS analysis
-            FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDtoForRegularTopsis(activeProfile, fuzzySearchFiltersDto, choiceToWeightMap, table1InitialData, table2NormalizedData, table3WeightedNormalizedData, table4TopsisScore);
+            FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDto = this.createFuzzySearchTopsisAnalysisDtoForRegularTopsis(activeProfile, fuzzySearchFiltersDto, choiceToWeightMap, table1InitialData, table2NormalizedData, table3WeightedNormalizedData, table4TopsisScore, bestRow, worstRow);
 
             List<MovieListItemDto> movieDtos = new ArrayList<>();
             for (TopsisDataRow topsisDataRow : table4TopsisScore) {
@@ -161,7 +164,7 @@ public class FuzzySearchService {
     }
 
 
-    private List<TopsisDataRow> calculateTable4TopsisScore(final List<TopsisDataRow> table3WeightedNormalizedData, boolean yearCostCriteria, boolean durationCostCriteria) {
+    private Triple<List<TopsisDataRow>, TopsisDataRow, TopsisDataRow> calculateTable4TopsisScore(final List<TopsisDataRow> table3WeightedNormalizedData, boolean yearCostCriteria, boolean durationCostCriteria) {
         List<TopsisDataRow> table4TopsisScore = new ArrayList<>();
 
         double ratingBest = table3WeightedNormalizedData.stream().map(TopsisDataRow::getRating).max(Double::compare).get();
@@ -208,14 +211,32 @@ public class FuzzySearchService {
             table4TopsisScore.add(normalizedDataRow);
         }
         table4TopsisScore.sort(Comparator.comparing(TopsisDataRow::getScore).reversed());
-        return table4TopsisScore;
+        TopsisDataRow bestRow = new TopsisDataRow(
+                -1L,
+                "BEST",
+                ratingBest,
+                popularityBest,
+                yearBest,
+                durationBest,
+                0, 0, 0
+        );
+        TopsisDataRow worstRow = new TopsisDataRow(
+                -2L,
+                "WORST",
+                ratingWorst,
+                popularityWorst,
+                yearWorst,
+                durationWorst,
+                0, 0, 0
+        );
+        return Triple.of(table4TopsisScore, bestRow, worstRow);
     }
 
     private FuzzySearchTopsisAnalysisDto createFuzzySearchTopsisAnalysisDtoForRegularTopsis(FuzzyProfile activeProfile,
                                                                                             FuzzySearchFiltersDto fuzzySearchFiltersDto,
                                                                                             EnumMap<FuzzySearchChoices, Double> choiceToWeightMap,
                                                                                             List<TopsisDataRow> table1InitialData,
-                                                                                            List<TopsisDataRow> table2NormalizedData, List<TopsisDataRow> table3WeightedNormalizedData, List<TopsisDataRow> table4TopsisScore) {
+                                                                                            List<TopsisDataRow> table2NormalizedData, List<TopsisDataRow> table3WeightedNormalizedData, List<TopsisDataRow> table4TopsisScore, TopsisDataRow bestRow, TopsisDataRow worstRow) {
         final double roundFactor = 1000.0;
         String weightRating = String.valueOf(Math.round(choiceToWeightMap.get(FuzzySearchChoices.RATING) * roundFactor) / roundFactor);
         String weightPopularity = String.valueOf(Math.round(choiceToWeightMap.get(FuzzySearchChoices.POPULARITY) * roundFactor) / roundFactor);
@@ -237,6 +258,8 @@ public class FuzzySearchService {
         TopsisDataTableDto table3WeightedNormalizedDataDto = new TopsisDataTableDto(table3WeightedNormalizedDataDtos, false, false, false);
         // table4
         List<TopsisDataRowDto> table4TopsisScoreDtos = table4TopsisScore.stream().map(topsisDataRow -> TopsisDataRowDto.fromTopsisDataRow(topsisDataRow, true, true, true)).collect(Collectors.toList());
+        table4TopsisScoreDtos.add(TopsisDataRowDto.fromTopsisDataRow(bestRow, false, false, false));
+        table4TopsisScoreDtos.add(TopsisDataRowDto.fromTopsisDataRow(worstRow, false, false, false));
         TopsisDataTableDto table4TopsisScoreDataDto = new TopsisDataTableDto(table4TopsisScoreDtos, true, true, true);
 
         RegularTopsisInfoDto regularTopsisInfoDto = new RegularTopsisInfoDto(table1InitialDataDto, table2NormalizedDataDto, table3WeightedNormalizedDataDto, table4TopsisScoreDataDto);
